@@ -25,18 +25,16 @@ public class Driver implements java.sql.Driver {
 		return null;
 	}
 
+
 	public int getMajorVersion() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int getMinorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	public boolean jdbcCompliant() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

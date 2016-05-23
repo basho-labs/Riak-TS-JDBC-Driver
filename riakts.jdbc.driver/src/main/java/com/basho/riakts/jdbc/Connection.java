@@ -50,25 +50,7 @@ public class Connection implements java.sql.Connection {
 		return null;
 	}
 
-	public void setAutoCommit(boolean autoCommit) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public boolean getAutoCommit() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void commit() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void rollback() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
@@ -85,45 +67,7 @@ public class Connection implements java.sql.Connection {
 		return null;
 	}
 
-	public void setReadOnly(boolean readOnly) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
-	public boolean isReadOnly() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void setCatalog(String catalog) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public String getCatalog() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setTransactionIsolation(int level) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public int getTransactionIsolation() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public SQLWarning getWarnings() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void clearWarnings() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public Statement createStatement(int resultSetType, int resultSetConcurrency)
 			throws SQLException {
@@ -223,23 +167,19 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public Clob createClob() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Blob createBlob() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public NClob createNClob() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public SQLXML createSQLXML() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean isValid(int timeout) throws SQLException {
@@ -305,6 +245,61 @@ public class Connection implements java.sql.Connection {
 	public int getNetworkTimeout() throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	
+	
+	/**
+	 * Unsupported Operations Below
+	 */
+	
+	public void setAutoCommit(boolean autoCommit) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean getAutoCommit() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void commit() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void rollback() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public void setReadOnly(boolean readOnly) throws SQLException {
+		// TODO Auto-generated method stub
+	}
+
+	public boolean isReadOnly() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setCatalog(String catalog) throws SQLException {
+		// TODO Auto-generated method stub
+	}
+
+	public String getCatalog() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setTransactionIsolation(int level) throws SQLException {
+		// TODO Auto-generated method stub
+	}
+
+	public int getTransactionIsolation() throws SQLException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public SQLWarning getWarnings() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void clearWarnings() throws SQLException {
+		// TODO Auto-generated method stub
 	}
 
 }
