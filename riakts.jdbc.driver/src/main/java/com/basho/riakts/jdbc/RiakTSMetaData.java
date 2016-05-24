@@ -7,24 +7,26 @@ import java.sql.SQLException;
 
 public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	
+	private static String databaseProductName = "Riak TS (Time Series)";
+	private static String databaseProductVersion = "1.3";
+	private static String driverProductName = "Riak TS JDBC";
+	private static String driverProductVersion = "0.1";
+	private static int driverMajorVersion = 0;
+	private static int driverMinorVersion = 1;
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean allProceduresAreCallable() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean allTablesAreSelectable() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -34,113 +36,91 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getUserName() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public boolean isReadOnly() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean nullsAreSortedHigh() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean nullsAreSortedLow() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean nullsAreSortedAtStart() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean nullsAreSortedAtEnd() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public String getDatabaseProductName() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseProductName;
 	}
 
 	public String getDatabaseProductVersion() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseProductVersion;
 	}
 
 	public String getDriverName() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return driverProductName;
 	}
 
 	public String getDriverVersion() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return driverProductVersion;
 	}
 
 	public int getDriverMajorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return driverMajorVersion;
 	}
 
 	public int getDriverMinorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return driverMinorVersion;
 	}
 
 	public boolean usesLocalFiles() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean usesLocalFilePerTable() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsMixedCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean storesUpperCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesLowerCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesMixedCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean supportsMixedCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean storesUpperCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesLowerCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesMixedCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public String getIdentifierQuoteString() throws SQLException {
