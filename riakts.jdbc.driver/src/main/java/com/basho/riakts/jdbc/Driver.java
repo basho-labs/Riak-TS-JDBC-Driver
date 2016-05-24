@@ -19,8 +19,7 @@ public class Driver implements java.sql.Driver {
 		return false;
 	}
 
-	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
-			throws SQLException {
+	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

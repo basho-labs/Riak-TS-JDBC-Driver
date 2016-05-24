@@ -20,16 +20,6 @@ import java.util.concurrent.Executor;
 
 public class Connection implements java.sql.Connection {
 
-	public Object unwrap(Class iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean isWrapperFor(Class iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	public Statement createStatement() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -40,16 +30,11 @@ public class Connection implements java.sql.Connection {
 		return null;
 	}
 
-	public CallableStatement prepareCall(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public String nativeSQL(String sql) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 
 	public void close() throws SQLException {
@@ -107,25 +92,6 @@ public class Connection implements java.sql.Connection {
 		return 0;
 	}
 
-	public Savepoint setSavepoint() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Savepoint setSavepoint(String name) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void rollback(Savepoint savepoint) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public Statement createStatement(int resultSetType,
 			int resultSetConcurrency, int resultSetHoldability)
@@ -166,21 +132,7 @@ public class Connection implements java.sql.Connection {
 		return null;
 	}
 
-	public Clob createClob() throws SQLException {
-		throw new UnsupportedOperationException();
-	}
 
-	public Blob createBlob() throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public NClob createNClob() throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public SQLXML createSQLXML() throws SQLException {
-		throw new UnsupportedOperationException();
-	}
 
 	public boolean isValid(int timeout) throws SQLException {
 		// TODO Auto-generated method stub
@@ -209,38 +161,7 @@ public class Connection implements java.sql.Connection {
 		return null;
 	}
 
-	public Array createArrayOf(String typeName, Object[] elements)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	public Struct createStruct(String typeName, Object[] attributes)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void setSchema(String schema) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public String getSchema() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void abort(Executor executor) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setNetworkTimeout(Executor executor, int milliseconds)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public int getNetworkTimeout() throws SQLException {
 		// TODO Auto-generated method stub
@@ -301,5 +222,75 @@ public class Connection implements java.sql.Connection {
 	public void clearWarnings() throws SQLException {
 		// TODO Auto-generated method stub
 	}
+	
+	public Object unwrap(Class iface) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
 
+	public boolean isWrapperFor(Class iface) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public CallableStatement prepareCall(String sql) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+
+	public Savepoint setSavepoint() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Savepoint setSavepoint(String name) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void rollback(Savepoint savepoint) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public Clob createClob() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Blob createBlob() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public NClob createNClob() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public SQLXML createSQLXML() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void setSchema(String schema) throws SQLException {
+		// TODO Auto-generated method stub
+	}
+
+	public String getSchema() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public void abort(Executor executor) throws SQLException {
+		// TODO Auto-generated method stub
+	}
+
+	public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+		// TODO Auto-generated method stub
+	}
 }

@@ -4,4 +4,12 @@
   <artifactId>riakts.jdbc.driver</artifactId>
   <version>0.1</version>
   <name>Riak TS JDBC Driver</name>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.basho.riak</groupId>
+  		<artifactId>riak-client</artifactId>
+  		<version>2.0.6</version>
+  	</dependency>
+  </dependencies>
 </project>
