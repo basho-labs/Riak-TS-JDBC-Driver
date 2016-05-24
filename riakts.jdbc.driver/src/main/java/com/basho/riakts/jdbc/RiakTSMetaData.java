@@ -13,6 +13,16 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	private static String driverProductVersion = "0.1";
 	private static int driverMajorVersion = 0;
 	private static int driverMinorVersion = 1;
+	private static String sqlKeywords = null;
+	private static String numericFunctions = null;
+	private static String stringFunctions = null;
+	private static String systemFunctions = null;
+	private static String timeDateFunctions = null;
+	private static String searchStringEscape = null;
+	private static String extraNameCharacters = null;
+	private static String schemaTerm = "Schema";
+	private static String procedureTerm = null;
+	private static String catalogTerm = null;
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -124,52 +134,42 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getIdentifierQuoteString() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getSQLKeywords() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlKeywords;
 	}
 
 	public String getNumericFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return numericFunctions;
 	}
 
 	public String getStringFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return stringFunctions;
 	}
 
 	public String getSystemFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return systemFunctions;
 	}
 
 	public String getTimeDateFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return timeDateFunctions;
 	}
 
 	public String getSearchStringEscape() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return searchStringEscape;
 	}
 
 	public String getExtraNameCharacters() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return extraNameCharacters;
 	}
 
 	public boolean supportsAlterTableWithAddColumn() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsAlterTableWithDropColumn() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -179,139 +179,112 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public boolean nullPlusNonNullIsNull() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsConvert() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean supportsConvert(int fromType, int toType)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public boolean supportsConvert(int fromType, int toType) throws SQLException {
 		return false;
 	}
 
 	public boolean supportsTableCorrelationNames() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsDifferentTableCorrelationNames() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsExpressionsInOrderBy() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsOrderByUnrelated() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsGroupBy() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsGroupByUnrelated() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsGroupByBeyondSelect() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsLikeEscapeClause() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsMultipleResultSets() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsMultipleTransactions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsNonNullableColumns() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean supportsMinimumSQLGrammar() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCoreSQLGrammar() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsExtendedSQLGrammar() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsANSI92EntryLevelSQL() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsANSI92IntermediateSQL() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsANSI92FullSQL() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsIntegrityEnhancementFacility() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsOuterJoins() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsFullOuterJoins() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsLimitedOuterJoins() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public String getSchemaTerm() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return schemaTerm;
 	}
 
 	public String getProcedureTerm() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return procedureTerm;
 	}
 
 	public String getCatalogTerm() throws SQLException {
 		// TODO Auto-generated method stub
-		return null;
+		return catalogTerm;
 	}
 
 	public boolean isCatalogAtStart() throws SQLException {
