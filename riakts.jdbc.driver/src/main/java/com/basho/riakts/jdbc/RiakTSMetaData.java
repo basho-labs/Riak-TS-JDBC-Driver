@@ -25,6 +25,35 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	private static String schemaTerm = "Schema";
 	private static String procedureTerm = null;
 	private static String catalogTerm = null;
+	
+
+	public Connection getConnection() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getURL() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResultSet getClientInfoProperties() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public ResultSet getTypeInfo() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ResultSet getIndexInfo(String catalog, String schema, String table,
+			boolean unique, boolean approximate) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -40,11 +69,6 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 
 	public boolean allTablesAreSelectable() throws SQLException {
 		return false;
-	}
-
-	public String getURL() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public String getUserName() throws SQLException {
@@ -176,7 +200,6 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public boolean supportsColumnAliasing() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -285,7 +308,6 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getCatalogTerm() throws SQLException {
-		// TODO Auto-generated method stub
 		return catalogTerm;
 	}
 
@@ -577,17 +599,6 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 		throw new UnsupportedOperationException();
 	}
 
-	public ResultSet getTypeInfo() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ResultSet getIndexInfo(String catalog, String schema, String table,
-			boolean unique, boolean approximate) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public boolean supportsResultSetType(int type) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
@@ -642,11 +653,6 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 		throw new UnsupportedOperationException();
 	}
 
-	public Connection getConnection() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public boolean supportsSavepoints() throws SQLException {
 		return false;
 	}
@@ -697,17 +703,14 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public int getJDBCMajorVersion() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int getJDBCMinorVersion() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int getSQLStateType() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -736,10 +739,6 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 		return false;
 	}
 
-	public ResultSet getClientInfoProperties() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public ResultSet getFunctions(String catalog, String schemaPattern,
 			String functionNamePattern) throws SQLException {
