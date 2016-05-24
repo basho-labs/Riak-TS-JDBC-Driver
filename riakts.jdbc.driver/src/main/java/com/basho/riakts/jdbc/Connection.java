@@ -18,8 +18,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+import com.basho.riak.client.api.RiakClient;
+
+
 public class Connection implements java.sql.Connection {
 
+	RiakClient client = null;
+	DatabaseMetaData databaseMetaData = null;
+	
 	public Statement createStatement() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -38,18 +44,12 @@ public class Connection implements java.sql.Connection {
 
 
 	public void close() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.shutdown();
 	}
 
-	public boolean isClosed() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	public DatabaseMetaData getMetaData() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return databaseMetaData;
 	}
 
 
@@ -293,4 +293,9 @@ public class Connection implements java.sql.Connection {
 	public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
 		// TODO Auto-generated method stub
 	}
+	
+	public boolean isClosed() throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
 }
