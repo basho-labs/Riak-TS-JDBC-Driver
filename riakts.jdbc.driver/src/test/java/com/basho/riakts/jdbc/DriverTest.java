@@ -1,35 +1,42 @@
 package com.basho.riakts.jdbc;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 public class DriverTest extends TestCase {
+	
+	Driver d;
+	
+	public void setUp() throws Exception {
+		d = new Driver();
+	}
+	
+	public void tearDown() throws Exception {
+		d = null;
+	}
 
 	public void testConnect() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	public void testAcceptsURL() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetPropertyInfo() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 
 	public void testGetMajorVersion() {
-		fail("Not yet implemented");
+		Assert.assertNotNull(d.getMajorVersion());
 	}
 
 	public void testGetMinorVersion() {
-		fail("Not yet implemented");
+		Assert.assertNotNull(d.getMinorVersion());
 	}
 
 	public void testJdbcCompliant() {
-		fail("Not yet implemented");
-	}
-
-	public void testGetParentLogger() {
-		fail("Not yet implemented");
+		Assert.assertFalse(d.jdbcCompliant());
 	}
 
 }

@@ -26,6 +26,12 @@ public class Connection implements java.sql.Connection {
 	RiakClient client = null;
 	DatabaseMetaData databaseMetaData = null;
 	
+	
+	public Connection( RiakClient connection ) {
+		client = connection;
+	}
+	
+	
 	public Statement createStatement() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
@@ -191,7 +197,7 @@ public class Connection implements java.sql.Connection {
 	}
 	
 	public void setReadOnly(boolean readOnly) throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it
 	}
 
 	public boolean isReadOnly() throws SQLException {
@@ -199,7 +205,7 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void setCatalog(String catalog) throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it
 	}
 
 	public String getCatalog() throws SQLException {
@@ -207,11 +213,11 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void setTransactionIsolation(int level) throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it
 	}
 
 	public int getTransactionIsolation() throws SQLException {
-		// TODO Auto-generated method stub
+		// Riak doesn't support transactions
 		return 0;
 	}
 
@@ -220,7 +226,7 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void clearWarnings() throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it
 	}
 	
 	public Object unwrap(Class iface) throws SQLException {
@@ -245,13 +251,11 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void rollback(Savepoint savepoint) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		// Does Nothing and silently laughs about it
 	}
 
 	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		// Does Nothing and silently laughs about it
 	}
 	
 	public Clob createClob() throws SQLException {
@@ -279,7 +283,7 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void setSchema(String schema) throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it
 	}
 
 	public String getSchema() throws SQLException {
@@ -287,11 +291,11 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void abort(Executor executor) throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it
 	}
 
 	public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
-		// TODO Auto-generated method stub
+		// Does Nothing and silently laughs about it		
 	}
 	
 	public boolean isClosed() throws SQLException {
