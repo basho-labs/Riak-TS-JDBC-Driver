@@ -7,24 +7,24 @@ import java.sql.SQLException;
 
 public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	
-	private static String databaseProductName = "Riak TS (Time Series)";
-	private static String databaseProductVersion = "1.3";
-	private static int dbMajorVersion = 1;
-	private static int dbMinorVersion = 3;
-	private static String driverProductName = "Riak TS JDBC";
-	private static String driverProductVersion = "0.1";
-	private static int driverMajorVersion = 0;
-	private static int driverMinorVersion = 1;
-	private static String sqlKeywords = null;
-	private static String numericFunctions = null;
-	private static String stringFunctions = null;
-	private static String systemFunctions = null;
-	private static String timeDateFunctions = null;
-	private static String searchStringEscape = null;
-	private static String extraNameCharacters = null;
-	private static String schemaTerm = "Schema";
-	private static String procedureTerm = null;
-	private static String catalogTerm = null;
+	private static String DATABASE_PRODUCT_NAME = "Riak TS (Time Series)";
+	private static String DATABASE_PRODUCT_VERSION = "1.3";
+	private static int DB_MAJOR_VERSION = 1;
+	private static int DB_MINOR_VERSION = 3;
+	private static String DRIVER_PRODUCT_NAME = "Riak TS JDBC";
+	private static String DRIVER_PRODUCT_VERSION = "0.1";
+	private static int DRIVER_MAJOR_VERSION = 0;
+	private static int DRIVER_MINOR_VERSION = 1;
+	private static String SQL_KEYWORDS = null;
+	private static String NUMERIC_FUNCTIONS = null;
+	private static String STRING_FUNCTIONS = null;
+	private static String SYSTEM_FUNCTIONS = null;
+	private static String TIME_DATE_FUNCTIONS = null;
+	private static String SEARCH_STRING_ESCAPE = null;
+	private static String EXTRA_NAME_CHARACTERS = null;
+	private static String SCHEMA_TERM = "Schema";
+	private static String PROCEDURE_TERM = null;
+	private static String CATALOG_TERM = null;
 	
 
 	public Connection getConnection() throws SQLException {
@@ -96,27 +96,27 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getDatabaseProductName() throws SQLException {
-		return databaseProductName;
+		return DATABASE_PRODUCT_NAME;
 	}
 
 	public String getDatabaseProductVersion() throws SQLException {
-		return databaseProductVersion;
+		return DATABASE_PRODUCT_VERSION;
 	}
 
 	public String getDriverName() throws SQLException {
-		return driverProductName;
+		return DRIVER_PRODUCT_NAME;
 	}
 
 	public String getDriverVersion() throws SQLException {
-		return driverProductVersion;
+		return DRIVER_PRODUCT_VERSION;
 	}
 
 	public int getDriverMajorVersion() {
-		return driverMajorVersion;
+		return DRIVER_MAJOR_VERSION;
 	}
 
 	public int getDriverMinorVersion() {
-		return driverMinorVersion;
+		return DRIVER_MINOR_VERSION;
 	}
 
 	public boolean usesLocalFiles() throws SQLException {
@@ -164,31 +164,31 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getSQLKeywords() throws SQLException {
-		return sqlKeywords;
+		return SQL_KEYWORDS;
 	}
 
 	public String getNumericFunctions() throws SQLException {
-		return numericFunctions;
+		return NUMERIC_FUNCTIONS;
 	}
 
 	public String getStringFunctions() throws SQLException {
-		return stringFunctions;
+		return STRING_FUNCTIONS;
 	}
 
 	public String getSystemFunctions() throws SQLException {
-		return systemFunctions;
+		return SYSTEM_FUNCTIONS;
 	}
 
 	public String getTimeDateFunctions() throws SQLException {
-		return timeDateFunctions;
+		return TIME_DATE_FUNCTIONS;
 	}
 
 	public String getSearchStringEscape() throws SQLException {
-		return searchStringEscape;
+		return SEARCH_STRING_ESCAPE;
 	}
 
 	public String getExtraNameCharacters() throws SQLException {
-		return extraNameCharacters;
+		return EXTRA_NAME_CHARACTERS;
 	}
 
 	public boolean supportsAlterTableWithAddColumn() throws SQLException {
@@ -300,15 +300,15 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getSchemaTerm() throws SQLException {
-		return schemaTerm;
+		return SCHEMA_TERM;
 	}
 
 	public String getProcedureTerm() throws SQLException {
-		return procedureTerm;
+		return PROCEDURE_TERM;
 	}
 
 	public String getCatalogTerm() throws SQLException {
-		return catalogTerm;
+		return CATALOG_TERM;
 	}
 
 	public boolean isCatalogAtStart() throws SQLException {
@@ -695,11 +695,11 @@ public class RiakTSMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public int getDatabaseMajorVersion() throws SQLException {
-		return dbMajorVersion;
+		return DB_MAJOR_VERSION;
 	}
 
 	public int getDatabaseMinorVersion() throws SQLException {
-		return dbMinorVersion;
+		return DB_MINOR_VERSION;
 	}
 
 	public int getJDBCMajorVersion() throws SQLException {
