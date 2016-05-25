@@ -1,5 +1,7 @@
 package com.basho.riakts.jdbc;
 
+import java.sql.SQLException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,8 +25,8 @@ public class DriverTest extends TestCase {
 //		fail("Not yet implemented");
 	}
 
-	public void testAcceptsURL() {
-//		fail("Not yet implemented");
+	public void testAcceptsURL() throws SQLException {
+		assertTrue(d.acceptsURL("riakts://127.0.0.1:8087"));
 	}
 
 	public void testGetMajorVersion() {
