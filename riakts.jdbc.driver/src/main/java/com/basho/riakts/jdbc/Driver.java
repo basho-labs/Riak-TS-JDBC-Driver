@@ -8,6 +8,10 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class Driver implements java.sql.Driver {
+	
+	private static int MAJOR_VERSION = 0;
+	private static int MINOR_VERSION = 1;
+	private static boolean JDBC_COMPLIANT = false;
 
 	public Connection connect(String url, Properties info) throws SQLException {
 		// TODO Auto-generated method stub
@@ -15,34 +19,28 @@ public class Driver implements java.sql.Driver {
 	}
 
 	public boolean acceptsURL(String url) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return Utility.validateRiakUrl( url );
 	}
 
-	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
-			throws SQLException {
+	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public int getMajorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return MAJOR_VERSION;
 	}
 
 	public int getMinorVersion() {
-		// TODO Auto-generated method stub
-		return 0;
+		return MINOR_VERSION;
 	}
 
 	public boolean jdbcCompliant() {
-		// TODO Auto-generated method stub
-		return false;
+		return JDBC_COMPLIANT;
 	}
 
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 }
