@@ -21,7 +21,7 @@ import java.util.concurrent.Executor;
 import com.basho.riak.client.api.RiakClient;
 
 
-public class Connection implements java.sql.Connection {
+public class Connection {
 
 	RiakClient client = null;
 	DatabaseMetaData databaseMetaData = null;
