@@ -20,7 +20,7 @@ public class Utility {
 		if (url.startsWith(RIAKTS_URL_PREFIX)) {
 			String[] urlParsed = url.replace(RIAKTS_URL_PREFIX, "").split(":");
 			
-			String testUrl = urlParsed[0];
+			String riakUrl = urlParsed[0];
 			int testPort = -1;
 			try {
 				testPort = Integer.parseInt(urlParsed[1]);
@@ -29,14 +29,11 @@ public class Utility {
 			}
 			
 			// Check that the IP Address and port are valid
-			if (!InetAddresses.isInetAddress(testUrl)) return false;
-			if (testPort < 0 || testPort > 64000) return false;
-			
-			return true;
+			if (isInetAddress( riakUrl ) && isValidPort( testPort )) {
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	/***
@@ -49,7 +46,6 @@ public class Utility {
 		// Make sure info isn't empty or null
 		if (info.isEmpty() != true && info != null) {
 			String riakUrl = info.getProperty("RiakUrl");
-			
 			int testPort = -1;
 			try {
 				testPort = Integer.parseInt( info.getProperty("RiakPort") );
@@ -58,10 +54,26 @@ public class Utility {
 			}
 			
 			// Check that the IP Address and port are valid
-			if (!InetAddresses.isInetAddress( riakUrl )) return false;
-			if (testPort < 0 || testPort > 64000) return false;
-			
-			return true;	
+			if (isInetAddress( riakUrl ) && isValidPort( testPort )) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	private static boolean isInetAddress( String url ) {
+		if ( InetAddresses.isInetAddress( url )) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	private static boolean isValidPort( int port ) {
+		if (port > 0 || port < 64000) {
+			return true;
 		}
 		else {
 			return false;
