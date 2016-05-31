@@ -19,17 +19,9 @@ public class Utility {
 		// Supported URL Format: riakts://127.0.0.1:8087 or riakts://something.com:8087
 		if (url.startsWith(RIAKTS_URL_PREFIX)) {
 			String[] urlParsed = url.replace(RIAKTS_URL_PREFIX, "").split(":");
-			
-			String riakUrl = urlParsed[0];
-			int testPort = -1;
-			try {
-				testPort = Integer.parseInt(urlParsed[1]);
-			} catch (Exception e) {
-				return false;
-			}
-			
+
 			// Check that the IP Address and port are valid
-			if (isInetAddress( riakUrl ) && isValidPort( testPort )) {
+			if (isInetAddress( urlParsed[0] ) && isValidPort( urlParsed[1] )) {
 				return true;
 			}
 		}
@@ -45,16 +37,8 @@ public class Utility {
 	public static boolean validateRiakProperties(Properties info) {
 		// Make sure info isn't empty or null
 		if (info.isEmpty() != true && info != null) {
-			String riakUrl = info.getProperty("RiakUrl");
-			int testPort = -1;
-			try {
-				testPort = Integer.parseInt( info.getProperty("RiakPort") );
-			} catch (Exception e) {
-				return false;
-			}
-			
 			// Check that the IP Address and port are valid
-			if (isInetAddress( riakUrl ) && isValidPort( testPort )) {
+			if (isInetAddress( info.getProperty("RiakUrl") ) && isValidPort( info.getProperty("RiakPort") )) {
 				return true;
 			}
 		}
@@ -71,8 +55,15 @@ public class Utility {
 		}
 	}
 	
-	private static boolean isValidPort( int port ) {
-		if (port > 0 || port < 64000) {
+	private static boolean isValidPort( String port ) {
+		int testPort = -1;
+		try {
+			testPort = Integer.parseInt( port );
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (testPort > 0 || testPort < 64000) {
 			return true;
 		}
 		else {
