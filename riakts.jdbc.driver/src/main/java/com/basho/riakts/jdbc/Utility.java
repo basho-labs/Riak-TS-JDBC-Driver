@@ -50,9 +50,7 @@ public class Utility {
 		if ( InetAddresses.isInetAddress( url )) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	
 	private static boolean isValidPort( String port ) {
@@ -66,9 +64,7 @@ public class Utility {
 		if (testPort > 0 || testPort < 64000) {
 			return true;
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 }
