@@ -19,6 +19,10 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class Connection implements java.sql.Connection {
+	
+	public Connection() {
+		
+	}
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		// TODO Auto-generated method stub

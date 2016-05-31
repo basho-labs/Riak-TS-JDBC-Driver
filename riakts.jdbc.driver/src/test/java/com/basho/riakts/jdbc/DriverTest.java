@@ -1,6 +1,8 @@
 package com.basho.riakts.jdbc;
 
-import static org.junit.Assert.*;
+import java.sql.SQLException;
+
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,8 +19,10 @@ public class DriverTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testAcceptsURL() throws SQLException {
+		Driver d = new Driver();
+		Assert.assertTrue( d.acceptsURL("riakts://127.0.0.1:8087") );
+		d = null;
 	}
 
 }

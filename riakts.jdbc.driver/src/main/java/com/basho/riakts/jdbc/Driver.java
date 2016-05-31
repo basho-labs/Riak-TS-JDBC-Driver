@@ -14,8 +14,12 @@ public class Driver implements java.sql.Driver {
 	private static boolean JDBC_COMPLIANT = false;
 
 	public Connection connect(String url, Properties info) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		// Validate that either the URL is valid or required 
+		// information has been been passed via Properties (URL, Port)
+		
+		Connection conn = new  com.basho.riakts.jdbc.Connection();
+	
+		return conn;
 	}
 
 	public boolean acceptsURL(String url) throws SQLException {
@@ -23,8 +27,7 @@ public class Driver implements java.sql.Driver {
 	}
 
 	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public int getMajorVersion() {
