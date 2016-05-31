@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 public class Driver implements java.sql.Driver {
 	
+	// Variables need to be updated on a per release basis
 	private static int MAJOR_VERSION = 0;
 	private static int MINOR_VERSION = 1;
 	private static boolean JDBC_COMPLIANT = false;
