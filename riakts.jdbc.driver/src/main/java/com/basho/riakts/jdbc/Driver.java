@@ -17,14 +17,33 @@ public class Driver implements java.sql.Driver {
 	public Connection connect(String url, Properties info) throws SQLException {
 		// Validate that either the URL is valid or required 
 		// information has been been passed via Properties (URL, Port)
+		if (acceptsURL(url) || acceptsProperties(info)) {
+			Connection conn = new  com.basho.riakts.jdbc.Connection();
 		
-		Connection conn = new  com.basho.riakts.jdbc.Connection();
+			return conn;
+		}
+		else {
+			return null;
+		}
+	}
 	
-		return conn;
+	public Connection connect(String url) throws SQLException {
+		if (acceptsURL(url)) {
+			Connection conn = new  com.basho.riakts.jdbc.Connection();
+		
+			return conn;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public boolean acceptsURL(String url) throws SQLException {
 		return Utility.validateRiakUrl( url );
+	}
+	
+	public boolean acceptsProperties(Properties info) throws SQLException {
+		return Utility.validateRiakProperties( info );
 	}
 
 	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
