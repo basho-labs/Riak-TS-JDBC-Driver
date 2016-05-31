@@ -46,7 +46,26 @@ public class Utility {
 	 * @return True or False
 	 */
 	public static boolean validateRiakProperties(Properties info) {
-		return false;
+		// Make sure info isn't empty or null
+		if (info.isEmpty() != true && info != null) {
+			String riakUrl = info.getProperty("RiakUrl");
+			
+			int testPort = -1;
+			try {
+				testPort = Integer.parseInt( info.getProperty("RiakPort") );
+			} catch (Exception e) {
+				return false;
+			}
+			
+			// Check that the IP Address and port are valid
+			if (!InetAddresses.isInetAddress( riakUrl )) return false;
+			if (testPort < 0 || testPort > 64000) return false;
+			
+			return true;	
+		}
+		else {
+			return false;
+		}
 	}
 
 }
