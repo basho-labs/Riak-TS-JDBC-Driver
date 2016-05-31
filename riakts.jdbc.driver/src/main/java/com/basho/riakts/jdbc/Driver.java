@@ -26,17 +26,6 @@ public class Driver implements java.sql.Driver {
 			return null;
 		}
 	}
-	
-	public Connection connect(String url) throws SQLException {
-		if (acceptsURL(url)) {
-			Connection conn = new  com.basho.riakts.jdbc.Connection();
-		
-			return conn;
-		}
-		else {
-			return null;
-		}
-	}
 
 	public boolean acceptsURL(String url) throws SQLException {
 		return Utility.validateRiakUrl( url );
