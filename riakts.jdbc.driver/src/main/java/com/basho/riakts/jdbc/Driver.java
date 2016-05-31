@@ -26,6 +26,7 @@ public class Driver implements java.sql.Driver {
 			return null;
 		}
 	}
+	
 
 	public boolean acceptsURL(String url) throws SQLException {
 		return Utility.validateRiakUrl( url );

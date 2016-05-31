@@ -10,19 +10,28 @@ import org.junit.Test;
 
 public class DriverTest {
 
+	Driver d = null;
+	
 	@Before
 	public void setUp() throws Exception {
+		d = new Driver();
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		d = null;
+	}
+	
+	@Test 
+	public void testConnection() throws SQLException {
+		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
+		Assert.assertTrue( true );
+		conn.close();
 	}
 
 	@Test
 	public void testAcceptsURL() throws SQLException {
-		Driver d = new Driver();
 		Assert.assertTrue( d.acceptsURL("riakts://127.0.0.1:8087") );
-		d = null;
 	}
 
 }
