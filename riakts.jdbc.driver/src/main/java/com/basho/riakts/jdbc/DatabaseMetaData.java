@@ -19,7 +19,14 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	private static String DRIVER_VERSION = "0.1";
 	private static int DRIVER_MAJOR_VERSION = 0;
 	private static int DRIVER_MINOR_VERSION = 1;
-
+	private static boolean USES_LOCAL_FILES = false;
+	private static String SQL_KEYWORDS = "";
+	private static String STRING_FUNCTIONS = "";
+	private static String NUMERIC_FUNCTIONS = "";
+	private static String SYSTEM_FUNCTIONS = "";
+	private static String TIME_DATE_FUNCTIONS = "";
+	
+	
 	public DatabaseMetaData() {
 		
 	}
@@ -94,83 +101,67 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public boolean usesLocalFiles() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return USES_LOCAL_FILES;
 	}
 
 	public boolean usesLocalFilePerTable() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsMixedCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean storesUpperCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesLowerCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesMixedCaseIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean supportsMixedCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public boolean storesUpperCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesLowerCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean storesMixedCaseQuotedIdentifiers() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public String getIdentifierQuoteString() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return " ";
 	}
 
 	public String getSQLKeywords() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return SQL_KEYWORDS;
 	}
 
 	public String getNumericFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return NUMERIC_FUNCTIONS;
 	}
 
 	public String getStringFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return STRING_FUNCTIONS;
 	}
 
 	public String getSystemFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return SYSTEM_FUNCTIONS;
 	}
 
 	public String getTimeDateFunctions() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return TIME_DATE_FUNCTIONS;
 	}
 
 	public String getSearchStringEscape() throws SQLException {
