@@ -18,20 +18,25 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+import com.basho.riak.client.api.RiakClient;
+
 public class Connection implements java.sql.Connection {
 	
-	public Connection() {
+	RiakClient client = null;
+	DatabaseMetaData metaData = null;
+	
+	public Connection(String url, Properties info) {
+		
+		metaData = new com.basho.riakts.jdbc.DatabaseMetaData();
 		
 	}
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	public Statement createStatement() throws SQLException {
@@ -45,8 +50,7 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public CallableStatement prepareCall(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public String nativeSQL(String sql) throws SQLException {
@@ -55,23 +59,19 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void setAutoCommit(boolean autoCommit) throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public boolean getAutoCommit() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	public void commit() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	public void rollback() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	public void close() throws SQLException {
@@ -90,47 +90,41 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void setReadOnly(boolean readOnly) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	public boolean isReadOnly() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public void setCatalog(String catalog) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	public String getCatalog() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void setTransactionIsolation(int level) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException();
 	}
 
 	public int getTransactionIsolation() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public SQLWarning getWarnings() throws SQLException {
-		// TODO Auto-generated method stub
+		if (this.isClosed()) {
+			throw new UnsupportedOperationException();
+		}
 		return null;
 	}
 
 	public void clearWarnings() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
-	public Statement createStatement(int resultSetType, int resultSetConcurrency)
-			throws SQLException {
+	public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -251,14 +245,12 @@ public class Connection implements java.sql.Connection {
 		return false;
 	}
 
-	public void setClientInfo(String name, String value)
-			throws SQLClientInfoException {
+	public void setClientInfo(String name, String value) throws SQLClientInfoException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void setClientInfo(Properties properties)
-			throws SQLClientInfoException {
+	public void setClientInfo(Properties properties) throws SQLClientInfoException {
 		// TODO Auto-generated method stub
 		
 	}
@@ -273,41 +265,33 @@ public class Connection implements java.sql.Connection {
 		return null;
 	}
 
-	public Array createArrayOf(String typeName, Object[] elements)
-			throws SQLException {
+	public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Struct createStruct(String typeName, Object[] attributes)
-			throws SQLException {
+	public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void setSchema(String schema) throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public String getSchema() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public void abort(Executor executor) throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
-	public void setNetworkTimeout(Executor executor, int milliseconds)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+		throw new UnsupportedOperationException();
 	}
 
 	public int getNetworkTimeout() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
