@@ -1,5 +1,6 @@
 package com.basho.riakts.jdbc;
 
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
@@ -19,7 +20,11 @@ public class Driver implements java.sql.Driver {
 		// Validate that either the URL is valid or required 
 		// information has been been passed via Properties (URL, Port)
 		if (acceptsURL(url) || acceptsProperties(info)) {
-			return new com.basho.riakts.jdbc.Connection(url, info);
+			try {
+				return new com.basho.riakts.jdbc.Connection(url, info);
+			} catch (UnknownHostException e) {
+				throw new SQLException(e);
+			}
 		}
 		else {
 			return null;

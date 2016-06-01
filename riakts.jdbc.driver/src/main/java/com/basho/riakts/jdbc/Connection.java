@@ -1,5 +1,6 @@
 package com.basho.riakts.jdbc;
 
+import java.net.UnknownHostException;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -23,11 +24,13 @@ import com.basho.riak.client.api.RiakClient;
 public class Connection implements java.sql.Connection {
 	
 	RiakClient client = null;
-	DatabaseMetaData metaData = null;
+	private DatabaseMetaData metaData = null;
 	
-	public Connection(String url, Properties info) {
+	public Connection(String url, Properties info) throws UnknownHostException {
 		
-		metaData = new com.basho.riakts.jdbc.DatabaseMetaData();
+		client = RiakClient.newClient(8087, "127.0.0.1");
+		
+		this.metaData = new com.basho.riakts.jdbc.DatabaseMetaData(url);
 		
 	}
 
@@ -75,8 +78,7 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public void close() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		client.shutdown();
 	}
 
 	public boolean isClosed() throws SQLException {
@@ -85,8 +87,7 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public DatabaseMetaData getMetaData() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return metaData;
 	}
 
 	public void setReadOnly(boolean readOnly) throws SQLException {

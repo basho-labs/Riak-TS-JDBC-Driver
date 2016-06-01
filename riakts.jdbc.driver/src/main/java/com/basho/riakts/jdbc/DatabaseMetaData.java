@@ -27,8 +27,10 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	private static String TIME_DATE_FUNCTIONS = "";
 	
 	
-	public DatabaseMetaData() {
-		
+	private String _url = null;
+	
+	public DatabaseMetaData(String url) {
+		_url = url;
 	}
 	
 	public <T> T unwrap(Class<T> iface) throws SQLException {
