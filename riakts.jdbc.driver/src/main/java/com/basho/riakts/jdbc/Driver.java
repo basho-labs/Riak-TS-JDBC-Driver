@@ -32,6 +32,15 @@ public class Driver implements java.sql.Driver {
 		return Utility.validateRiakUrl( url );
 	}
 	
+	/***
+	 * Retrieves whether the driver thinks that it can open a connection via the properties
+	 * passed in (For Riak RiakUrl and RiakPort are required properties). 
+	 * Typically drivers will return true if they understand the protocols 
+	 * specified and false if they do not.
+	 * @param info java.util.Properties - list of tag/value pairs
+	 * @return true if the driver understands the properties passed; false if not
+	 * @throws SQLException
+	 */
 	public boolean acceptsProperties(Properties info) throws SQLException {
 		return Utility.validateRiakProperties( info );
 	}
