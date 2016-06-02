@@ -91,12 +91,14 @@ public class Connection implements java.sql.Connection {
 	}
 
 	public boolean isClosed() throws SQLException {
+		// Retrieves a list of nodes, if at least one of the nodes
+		// is in RUNNING state returns false
 		List<RiakNode> nodes = client.getRiakCluster().getNodes();
 		for (RiakNode node : nodes)
 		{
-		    if ( node.getNodeState().toString().equalsIgnoreCase("RUNNING") ) return true;
+		    if ( node.getNodeState().toString().equalsIgnoreCase("RUNNING") ) return false;
 		}
-		return false;
+		return true;
 	}
 
 	public DatabaseMetaData getMetaData() throws SQLException {
