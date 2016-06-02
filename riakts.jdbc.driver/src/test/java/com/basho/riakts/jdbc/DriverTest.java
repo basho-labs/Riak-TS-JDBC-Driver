@@ -26,6 +26,7 @@ public class DriverTest {
 	public void testConnection() throws SQLException {
 		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 		Assert.assertTrue( true );
+		conn.isClosed();
 		conn.close();
 	}
 
