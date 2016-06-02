@@ -16,7 +16,7 @@ public class UtilityTest {
 	
 	@Test
 	public void testGetRiakProperties() throws SQLException {
-		Properties info = Utility.getRiakProperties("riakts://127.0.0.1:8087");
+		Properties info = Utility.getRiakPropertiesFromUrl("riakts://127.0.0.1:8087");
 		Assert.assertFalse( info.isEmpty() );
 	}
 	

@@ -16,7 +16,7 @@ public class Utility {
 	 * @return Properties object with RiakPort and RiakUrl key/value pairs
 	 * @throws SQLException
 	 */
-	public static Properties getRiakProperties(String url) throws SQLException {
+	public static Properties getRiakPropertiesFromUrl(String url) throws SQLException {
 		if (validateRiakUrl(url)) {
 			String[] urlParsed = url.replace(RIAKTS_URL_PREFIX, "").split(":");
 			Properties riakProperties = new Properties();

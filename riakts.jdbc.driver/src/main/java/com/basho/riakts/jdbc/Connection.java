@@ -26,9 +26,16 @@ public class Connection implements java.sql.Connection {
 	RiakClient client = null;
 	private DatabaseMetaData metaData = null;
 	
+	/***
+	 * 
+	 * @param url
+	 * @param info
+	 * @throws UnknownHostException
+	 * @throws SQLException
+	 */
 	public Connection(String url, Properties info) throws UnknownHostException, SQLException {
 		if (Utility.validateRiakUrl(url)) { // Use the URL passed in to connect
-			info = Utility.getRiakProperties(url);
+			info = Utility.getRiakPropertiesFromUrl(url);
 		}
 		
 		client = RiakClient.newClient(Integer.parseInt( info.getProperty("RiakPort") ), info.getProperty("RiakUrl"));
