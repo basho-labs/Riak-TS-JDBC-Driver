@@ -26,12 +26,13 @@ public class Connection implements java.sql.Connection {
 	RiakClient client = null;
 	private DatabaseMetaData metaData = null;
 	
-	public Connection(String url, Properties info) throws UnknownHostException {
+	public Connection(String url, Properties info) throws UnknownHostException, SQLException {
+		if (Utility.validateRiakUrl(url)) { // Use the URL passed in to connect
+			info = Utility.getRiakProperties(url);
+		}
 		
-		client = RiakClient.newClient(8087, "127.0.0.1");
-		
+		client = RiakClient.newClient(Integer.parseInt( info.getProperty("RiakPort") ), info.getProperty("RiakUrl"));
 		this.metaData = new com.basho.riakts.jdbc.DatabaseMetaData(url);
-		
 	}
 
 	public <T> T unwrap(Class<T> iface) throws SQLException {
