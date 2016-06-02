@@ -1,6 +1,8 @@
 package com.basho.riakts.jdbc;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import junit.framework.Assert;
 
@@ -25,14 +27,30 @@ public class DriverTest {
 	@Test 
 	public void testConnection() throws SQLException {
 		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
-		Assert.assertTrue( true );
-		conn.isClosed();
+		Assert.assertFalse( conn.isClosed() );
 		conn.close();
 	}
 
 	@Test
 	public void testAcceptsURL() throws SQLException {
 		Assert.assertTrue( d.acceptsURL("riakts://127.0.0.1:8087") );
+	}
+	
+	@Test
+	public void testExecuteStatement() throws SQLException {
+		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
+		Assert.assertFalse( conn.isClosed() );
+		
+		String sqlStatement = "SELECT * FROM WaterMeterData WHERE time_stamp >= 1464739200000 AND time_stamp < 1464770000000;";
+		
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery(sqlStatement);
+		
+		while (rs.next()) {
+			
+		}
+		
+		conn.close();
 	}
 
 }
