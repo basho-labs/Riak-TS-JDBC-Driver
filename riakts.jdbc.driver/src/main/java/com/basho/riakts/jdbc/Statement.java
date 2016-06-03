@@ -35,6 +35,7 @@ public class Statement implements java.sql.Statement {
 		
 		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
 	}
+	
 
 	public ResultSet executeQuery(String sql) throws SQLException {
 		try {

@@ -16,8 +16,9 @@ public class Utility {
 	 * @return
 	 */
 	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) {
-		// TODO Auto-generated method stub
-		return null;
+		com.basho.riakts.jdbc.ResultSet out = new com.basho.riakts.jdbc.ResultSet();
+		
+		return out;
 	}
 	
 	
