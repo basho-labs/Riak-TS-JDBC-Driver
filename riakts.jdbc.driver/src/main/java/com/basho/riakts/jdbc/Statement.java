@@ -4,36 +4,60 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.util.concurrent.ExecutionException;
 
 import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.timeseries.Query;
+import com.basho.riak.client.core.query.timeseries.QueryResult;
 
 public class Statement implements java.sql.Statement {
 	
 	RiakClient _client;
-	ResultSet _rs;
+	ResultSet _resultSet;
 	
 	
 	Statement(RiakClient client, int type, int concurrency, int holdability) {
 		if ( type != 0 || concurrency != 0 || holdability != 0 )
             throw new UnsupportedOperationException(  );
-		
 		_client = client;
 	}
 	
+	
+	/***
+	 * 
+	 * @param sql
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
+	private void query(String sql) throws ExecutionException, InterruptedException {
+		Query query = new Query.Builder(sql).build();
+		QueryResult queryResult = _client.execute(query);
+		
+		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
+	}
 
 	public ResultSet executeQuery(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			query(sql);
+			return _resultSet;
+		} 
+		catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 	
 	public boolean execute(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			query(sql);
+			return true;
+		} 
+		catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	public ResultSet getResultSet() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return _resultSet;
 	}
 	
 	public Connection getConnection() throws SQLException {

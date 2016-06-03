@@ -1,11 +1,25 @@
 package com.basho.riakts.jdbc;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.basho.riak.client.core.query.timeseries.QueryResult;
 import com.google.common.net.InetAddresses;
 
 public class Utility {
+	
+	
+	/***
+	 * Converts a Riak TS QueryResult object to a JDBC ResultSet 
+	 * @param queryResult
+	 * @return
+	 */
+	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 	private static String RIAKTS_URL_PREFIX = "riakts://";
 	
@@ -84,5 +98,5 @@ public class Utility {
 		}
 		return false;
 	}
-	
+
 }
