@@ -52,11 +52,20 @@ public class Connection implements java.sql.Connection {
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
+	
 
 	public Statement createStatement() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return createStatement(0, 0, 0);
 	}
+	
+	public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+		return createStatement(resultSetType, resultSetConcurrency, 0);
+	}
+
+	public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+		return new com.basho.riakts.jdbc.Statement(client, resultSetType, resultSetConcurrency, resultSetHoldability);
+	}
+	
 
 	public PreparedStatement prepareStatement(String sql) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -135,10 +144,7 @@ public class Connection implements java.sql.Connection {
 		
 	}
 
-	public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -178,11 +184,6 @@ public class Connection implements java.sql.Connection {
 
 	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
 
-	}
-
-	public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)

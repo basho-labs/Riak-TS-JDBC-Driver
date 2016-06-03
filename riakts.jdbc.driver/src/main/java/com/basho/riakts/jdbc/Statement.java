@@ -5,24 +5,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 
+import com.basho.riak.client.api.RiakClient;
+
 public class Statement implements java.sql.Statement {
 	
-	Connection _conn;
+	RiakClient _client;
 	ResultSet _rs;
 	
-	Statement(Connection conn, int type, int concurrency, int holdability) {
+	Statement(RiakClient client, int type, int concurrency, int holdability) {
 		if ( type != 0 || concurrency != 0 || holdability != 0 )
             throw new UnsupportedOperationException(  );
 		
-		_conn = conn;
-	}
-
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		throw new UnsupportedOperationException(  );
-	}
-
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		throw new UnsupportedOperationException(  );
+		_client = client;
 	}
 
 	public ResultSet executeQuery(String sql) throws SQLException {
@@ -178,14 +172,12 @@ public class Statement implements java.sql.Statement {
 		return false;
 	}
 
-	public boolean execute(String sql, String[] columnNames)
-			throws SQLException {
+	public boolean execute(String sql, String[] columnNames) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public int getResultSetHoldability() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -195,23 +187,27 @@ public class Statement implements java.sql.Statement {
 	}
 
 	public void setPoolable(boolean poolable) throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public boolean isPoolable() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public void closeOnCompletion() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public boolean isCloseOnCompletion() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+		throw new UnsupportedOperationException(  );
+	}
+
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+		throw new UnsupportedOperationException(  );
 	}
 
 }
