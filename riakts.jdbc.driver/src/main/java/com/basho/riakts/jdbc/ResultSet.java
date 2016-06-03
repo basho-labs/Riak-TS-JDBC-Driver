@@ -95,7 +95,6 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public byte[] getBytes(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -115,17 +114,14 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public InputStream getAsciiStream(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public InputStream getBinaryStream(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -140,7 +136,6 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public byte getByte(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -169,14 +164,12 @@ public class ResultSet implements java.sql.ResultSet {
 		return 0;
 	}
 
-	public BigDecimal getBigDecimal(String columnLabel, int scale)
-			throws SQLException {
+	public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public byte[] getBytes(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -186,7 +179,6 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public Time getTime(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -196,37 +188,28 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public InputStream getAsciiStream(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public InputStream getUnicodeStream(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public InputStream getBinaryStream(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public SQLWarning getWarnings() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void clearWarnings() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void clearWarnings() throws SQLException { }
 
 	public String getCursorName() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public ResultSetMetaData getMetaData() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -246,12 +229,10 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public Reader getCharacterStream(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Reader getCharacterStream(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -325,34 +306,24 @@ public class ResultSet implements java.sql.ResultSet {
 		return false;
 	}
 
-	public void setFetchDirection(int direction) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setFetchDirection(int direction) throws SQLException { }
 
 	public int getFetchDirection() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	public void setFetchSize(int rows) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setFetchSize(int rows) throws SQLException { }
 
 	public int getFetchSize() throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public int getType() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return TYPE_FORWARD_ONLY;
 	}
 
 	public int getConcurrency() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return CONCUR_READ_ONLY;
 	}
 
 	public boolean rowUpdated() throws SQLException {
@@ -421,10 +392,7 @@ public class ResultSet implements java.sql.ResultSet {
 		
 	}
 
-	public void updateBytes(int columnIndex, byte[] x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBytes(int columnIndex, byte[] x) throws SQLException { }
 
 	public void updateDate(int columnIndex, Date x) throws SQLException {
 		// TODO Auto-generated method stub
@@ -442,55 +410,29 @@ public class ResultSet implements java.sql.ResultSet {
 		
 	}
 
-	public void updateAsciiStream(int columnIndex, InputStream x, int length)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateAsciiStream(int columnIndex, InputStream x, int length) throws SQLException { }
 
-	public void updateBinaryStream(int columnIndex, InputStream x, int length)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBinaryStream(int columnIndex, InputStream x, int length) throws SQLException {  }
 
-	public void updateCharacterStream(int columnIndex, Reader x, int length)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateCharacterStream(int columnIndex, Reader x, int length) throws SQLException { }
 
-	public void updateObject(int columnIndex, Object x, int scaleOrLength)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateObject(int columnIndex, Object x, int scaleOrLength) throws SQLException { }
 
-	public void updateObject(int columnIndex, Object x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateObject(int columnIndex, Object x) throws SQLException { }
 
 	public void updateNull(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void updateBoolean(String columnLabel, boolean x)
-			throws SQLException {
+	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void updateByte(String columnLabel, byte x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateByte(String columnLabel, byte x) throws SQLException { }
 
-	public void updateShort(String columnLabel, short x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateShort(String columnLabel, short x) throws SQLException { }
 
 	public void updateInt(String columnLabel, int x) throws SQLException {
 		// TODO Auto-generated method stub
@@ -523,10 +465,7 @@ public class ResultSet implements java.sql.ResultSet {
 		
 	}
 
-	public void updateBytes(String columnLabel, byte[] x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBytes(String columnLabel, byte[] x) throws SQLException { }
 
 	public void updateDate(String columnLabel, Date x) throws SQLException {
 		// TODO Auto-generated method stub
@@ -544,34 +483,15 @@ public class ResultSet implements java.sql.ResultSet {
 		
 	}
 
-	public void updateAsciiStream(String columnLabel, InputStream x, int length)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateAsciiStream(String columnLabel, InputStream x, int length) throws SQLException { }
 
-	public void updateBinaryStream(String columnLabel, InputStream x, int length)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBinaryStream(String columnLabel, InputStream x, int length) throws SQLException { }
 
-	public void updateCharacterStream(String columnLabel, Reader reader,
-			int length) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateCharacterStream(String columnLabel, Reader reader, int length) throws SQLException { }
 
-	public void updateObject(String columnLabel, Object x, int scaleOrLength)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateObject(String columnLabel, Object x, int scaleOrLength) throws SQLException { }
 
-	public void updateObject(String columnLabel, Object x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateObject(String columnLabel, Object x) throws SQLException { }
 
 	public void insertRow() throws SQLException {
 		// TODO Auto-generated method stub
