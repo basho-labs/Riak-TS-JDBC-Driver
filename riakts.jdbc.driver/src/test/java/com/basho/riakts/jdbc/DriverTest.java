@@ -37,7 +37,7 @@ public class DriverTest {
 	}
 	
 	@Test
-	public void testExecuteStatement() throws SQLException {
+	public void testExecuteQuery() throws SQLException {
 		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 		Assert.assertFalse( conn.isClosed() );
 		
@@ -46,10 +46,12 @@ public class DriverTest {
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		
-		while (rs.next()) {
-			
+		if (rs != null) {
+			while (rs.next()) {
+				
+			}
 		}
-		
+
 		conn.close();
 	}
 
