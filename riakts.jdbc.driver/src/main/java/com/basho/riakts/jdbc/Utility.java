@@ -1,5 +1,6 @@
 package com.basho.riakts.jdbc;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -15,8 +16,8 @@ public class Utility {
 	
 	/***
 	 * Converts a Riak TS QueryResult object to a JDBC ResultSet 
-	 * @param queryResult
-	 * @return
+	 * @param queryResult com.basho.riak.client.core.query.timeseries.QueryResult
+	 * @return java.sql.ResultSet
 	 * @throws SQLException 
 	 */
 	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
@@ -29,14 +30,16 @@ public class Utility {
 			// Retrieve Row from QueryResult set
 			Row row = (Row) rows.next();
 			// Create new row in our ResultSet
-			out.insertRow();
+			out.moveToInsertRow();
 			
-			// Iterate over each cell in current ResultSet row
-			//
+			// Iterate over each cell in current QueryResult row add matching column to
+			// the current ResultSet row
 			Iterator<Cell> cells = row.iterator();
 			int colIndex = 0;
 			while (cells.hasNext()) {
 				Cell cell = (Cell) cells.next();
+				// Check cell type for the 5 data types and add a new column to the
+				// row of the correct type (boolean, double, long, date, varchar)
 				if (cell.hasBoolean()) {
 					out.updateBoolean(colIndex, cell.getBoolean());
 				}
@@ -47,14 +50,21 @@ public class Utility {
 					out.updateLong(colIndex, cell.getLong());
 				}
 				else if (cell.hasTimestamp()) {
-					
+					try {
+						// Convert from Epoch as Long to java.sql.Date
+						out.updateDate(colIndex, new Date(cell.getTimestamp()));
+					} 
+					catch (Exception e) {
+						out.updateDate(colIndex, null);
+					}
 				}
 				else if (cell.hasVarcharValue()) {
-					out.updateString(colIndex, cell.getVarcharAsUTF8String());
+					// Get varchar as plain string for compatibility
+					out.updateString(colIndex, cell.getVarcharValue().toString());
 				}
 				colIndex++;
 			}
-			
+			out.insertRow();
 		}
 		
 		return out;
