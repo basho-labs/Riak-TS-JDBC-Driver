@@ -2,9 +2,12 @@ package com.basho.riakts.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.Properties;
 
+import com.basho.riak.client.core.query.timeseries.Cell;
 import com.basho.riak.client.core.query.timeseries.QueryResult;
+import com.basho.riak.client.core.query.timeseries.Row;
 import com.google.common.net.InetAddresses;
 
 public class Utility {
@@ -14,9 +17,45 @@ public class Utility {
 	 * Converts a Riak TS QueryResult object to a JDBC ResultSet 
 	 * @param queryResult
 	 * @return
+	 * @throws SQLException 
 	 */
-	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) {
+	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
+		// Create new empty ResultSet
 		com.basho.riakts.jdbc.ResultSet out = new com.basho.riakts.jdbc.ResultSet();
+		
+		// Iterate over each row in our QueryResult object
+		Iterator<Row> rows = queryResult.iterator();
+		while (rows.hasNext()) {
+			// Retrieve Row from QueryResult set
+			Row row = (Row) rows.next();
+			// Create new row in our ResultSet
+			out.insertRow();
+			
+			// Iterate over each cell in current ResultSet row
+			//
+			Iterator<Cell> cells = row.iterator();
+			int colIndex = 0;
+			while (cells.hasNext()) {
+				Cell cell = (Cell) cells.next();
+				if (cell.hasBoolean()) {
+					out.updateBoolean(colIndex, cell.getBoolean());
+				}
+				else if (cell.hasDouble()) {
+					out.updateDouble(colIndex, cell.getDouble());
+				}
+				else if (cell.hasLong()) {
+					out.updateLong(colIndex, cell.getLong());
+				}
+				else if (cell.hasTimestamp()) {
+					
+				}
+				else if (cell.hasVarcharValue()) {
+					out.updateString(colIndex, cell.getVarcharAsUTF8String());
+				}
+				colIndex++;
+			}
+			
+		}
 		
 		return out;
 	}

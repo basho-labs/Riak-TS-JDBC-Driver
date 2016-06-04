@@ -28,8 +28,9 @@ public class Statement implements java.sql.Statement {
 	 * @param sql
 	 * @throws ExecutionException
 	 * @throws InterruptedException
+	 * @throws SQLException 
 	 */
-	private void query(String sql) throws ExecutionException, InterruptedException {
+	private void query(String sql) throws ExecutionException, InterruptedException, SQLException {
 		Query query = new Query.Builder(sql).build();
 		QueryResult queryResult = _client.execute(query);
 		
