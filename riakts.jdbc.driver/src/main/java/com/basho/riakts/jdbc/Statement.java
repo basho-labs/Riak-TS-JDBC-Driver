@@ -15,16 +15,15 @@ public class Statement implements java.sql.Statement {
 	RiakClient _client;
 	ResultSet _resultSet;
 	
-	
 	Statement(RiakClient client, int type, int concurrency, int holdability) {
 		if ( type != 0 || concurrency != 0 || holdability != 0 )
             throw new UnsupportedOperationException(  );
 		_client = client;
 	}
 	
-	
 	/***
-	 * 
+	 * Executes SQL query against Riak TS and converts QueryResult object
+	 * to ResultSet and sets _resultSet value
 	 * @param sql
 	 * @throws ExecutionException
 	 * @throws InterruptedException
@@ -33,7 +32,6 @@ public class Statement implements java.sql.Statement {
 	private void query(String sql) throws ExecutionException, InterruptedException, SQLException {
 		Query query = new Query.Builder(sql).build();
 		QueryResult queryResult = _client.execute(query);
-		
 		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
 	}
 	
@@ -66,8 +64,6 @@ public class Statement implements java.sql.Statement {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 
 	public int executeUpdate(String sql) throws SQLException {
 		throw new UnsupportedOperationException(  );
