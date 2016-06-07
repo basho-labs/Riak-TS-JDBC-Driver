@@ -4,9 +4,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.basho.riak.client.core.query.timeseries.Cell;
+import com.basho.riak.client.core.query.timeseries.ColumnDescription;
 import com.basho.riak.client.core.query.timeseries.QueryResult;
 import com.basho.riak.client.core.query.timeseries.Row;
 import com.google.common.net.InetAddresses;
@@ -23,14 +26,24 @@ public class Utility {
 		// Create new empty ResultSet
 		com.basho.riakts.jdbc.ResultSet out = new com.basho.riakts.jdbc.ResultSet();
 		
+		int rowCount = queryResult.getRowsCount();
+		
+		// Get column information
+		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
+		while (columns.hasNext()) {
+			ColumnDescription desc = columns.next();
+			out.columns.put(desc.getName(), desc.getType().toString());
+		}
+		
 		// Iterate over each row in our QueryResult object
 		Iterator<Row> rows = queryResult.iterator();
 		while (rows.hasNext()) {
 			// Retrieve Row from QueryResult set
 			Row row = (Row) rows.next();
 			
-			// Create new row in our ResultSet
-			out.moveToInsertRow();
+			// Create new row for the ResultSet, need to set length based
+			// on the number of columns we are storing in the row
+			// Object[] newRow = new Object[];
 			
 			// Iterate over each cell in current QueryResult row add matching column to
 			// the current ResultSet row

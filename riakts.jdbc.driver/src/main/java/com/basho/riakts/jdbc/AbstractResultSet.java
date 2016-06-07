@@ -32,9 +32,9 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 	protected int rowsInResult;
 	protected int direction = FETCH_FORWARD;
 	protected int resultSetType;
-	protected int columnCount;
-	protected Object[] currentRow;
+	
 	protected ArrayList<Object[]> rowData;
+	protected Map<String, String> columns;
 	
 	protected boolean closed;
 	protected boolean cancell;
