@@ -13,7 +13,6 @@ import com.google.common.net.InetAddresses;
 
 public class Utility {
 	
-	
 	/***
 	 * Converts a Riak TS QueryResult object to a JDBC ResultSet 
 	 * @param queryResult com.basho.riak.client.core.query.timeseries.QueryResult
@@ -29,6 +28,7 @@ public class Utility {
 		while (rows.hasNext()) {
 			// Retrieve Row from QueryResult set
 			Row row = (Row) rows.next();
+			
 			// Create new row in our ResultSet
 			out.moveToInsertRow();
 			

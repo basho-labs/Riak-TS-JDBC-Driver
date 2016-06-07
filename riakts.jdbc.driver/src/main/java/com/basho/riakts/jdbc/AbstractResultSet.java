@@ -18,10 +18,27 @@ import java.sql.SQLXML;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
 public abstract class AbstractResultSet implements java.sql.ResultSet {
+	
+	static final int HOLD_CURSORS_OVER_COMMIT = 1;
+    static final int CLOSE_CURSORS_AT_COMMIT  = 2;
+    protected static final int POS_BEFORE_FIRST = 0;
+    protected static final int POS_AFTER_LAST = -1;
+	
+	protected int rowsInResult;
+	protected int direction = FETCH_FORWARD;
+	protected int resultSetType;
+	protected int columnCount;
+	protected Object[] currentRow;
+	protected ArrayList rowData;
+	
+	protected boolean closed;
+	protected boolean cancell;
+	protected int fetchDirection = FETCH_FORWARD;
 	
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		throw new UnsupportedOperationException();
