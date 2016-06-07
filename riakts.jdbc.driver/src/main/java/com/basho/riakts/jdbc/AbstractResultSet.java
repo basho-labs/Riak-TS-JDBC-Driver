@@ -34,19 +34,13 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 	protected int resultSetType;
 	protected int columnCount;
 	protected Object[] currentRow;
-	protected ArrayList rowData;
+	protected ArrayList<Object[]> rowData;
 	
 	protected boolean closed;
 	protected boolean cancell;
 	protected int fetchDirection = FETCH_FORWARD;
 	
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
 
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
 
 	public boolean next() throws SQLException {
 		// TODO Auto-generated method stub
@@ -103,14 +97,13 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 		return 0;
 	}
 
-	public BigDecimal getBigDecimal(int columnIndex, int scale)
-			throws SQLException {
+	public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public byte[] getBytes(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Date getDate(int columnIndex) throws SQLException {
@@ -128,17 +121,7 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 		return null;
 	}
 
-	public InputStream getAsciiStream(int columnIndex) throws SQLException {
-		return null;
-	}
 
-	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
-		return null;
-	}
-
-	public InputStream getBinaryStream(int columnIndex) throws SQLException {
-		return null;
-	}
 
 	public String getString(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
@@ -184,9 +167,6 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 		return null;
 	}
 
-	public byte[] getBytes(String columnLabel) throws SQLException {
-		return null;
-	}
 
 	public Date getDate(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
@@ -202,17 +182,7 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 		return null;
 	}
 
-	public InputStream getAsciiStream(String columnLabel) throws SQLException {
-		return null;
-	}
 
-	public InputStream getUnicodeStream(String columnLabel) throws SQLException {
-		return null;
-	}
-
-	public InputStream getBinaryStream(String columnLabel) throws SQLException {
-		return null;
-	}
 
 	public SQLWarning getWarnings() throws SQLException {
 		return null;
@@ -241,14 +211,6 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 	public int findColumn(String columnLabel) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	public Reader getCharacterStream(int columnIndex) throws SQLException {
-		return null;
-	}
-
-	public Reader getCharacterStream(String columnLabel) throws SQLException {
-		return null;
 	}
 
 	public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
@@ -828,4 +790,49 @@ public abstract class AbstractResultSet implements java.sql.ResultSet {
 	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
+	
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public InputStream getAsciiStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getUnicodeStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getBinaryStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public InputStream getAsciiStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getBinaryStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public byte[] getBytes(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Reader getCharacterStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Reader getCharacterStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
 }
