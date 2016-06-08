@@ -72,6 +72,21 @@ public class ResultSet implements java.sql.ResultSet {
 			rowPosition++;
 		}
 	}
+	
+	
+	/***
+	 * 
+	 * @param columnIndex
+	 * @param dataType
+	 * @param value
+	 * @param length
+	 * @throws SQLException 
+	 */
+	protected void setColumnValue(int columnIndex, Object value) throws SQLException {
+		if (columnIndex < 0 || columnIndex > columnCount - 1) throw new SQLException();
+		
+		currentRow[columnIndex] = value;
+	}
 
 
 	public boolean next() throws SQLException {
@@ -336,88 +351,56 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean rowUpdated() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean rowInserted() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean rowDeleted() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public void updateNull(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		setColumnValue(columnIndex, null);
 	}
 
 	public void updateBoolean(int columnIndex, boolean x) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		setColumnValue(columnIndex, x);
 	}
 
-	public void updateByte(int columnIndex, byte x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateByte(int columnIndex, byte x) throws SQLException { }
 
-	public void updateShort(int columnIndex, short x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateShort(int columnIndex, short x) throws SQLException { }
 
-	public void updateInt(int columnIndex, int x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateInt(int columnIndex, int x) throws SQLException { }
 
 	public void updateLong(int columnIndex, long x) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		setColumnValue(columnIndex, x);
 	}
 
-	public void updateFloat(int columnIndex, float x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateFloat(int columnIndex, float x) throws SQLException { }
 
 	public void updateDouble(int columnIndex, double x) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		setColumnValue(columnIndex, x);
 	}
 
-	public void updateBigDecimal(int columnIndex, BigDecimal x)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBigDecimal(int columnIndex, BigDecimal x) throws SQLException { }
 
 	public void updateString(int columnIndex, String x) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		setColumnValue(columnIndex, x);
 	}
 
 	public void updateBytes(int columnIndex, byte[] x) throws SQLException { }
 
 	public void updateDate(int columnIndex, Date x) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		setColumnValue(columnIndex, x);
 	}
 
-	public void updateTime(int columnIndex, Time x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateTime(int columnIndex, Time x) throws SQLException { }
 
-	public void updateTimestamp(int columnIndex, Timestamp x)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateTimestamp(int columnIndex, Timestamp x) throws SQLException { }
 
 	public void updateAsciiStream(int columnIndex, InputStream x, int length) throws SQLException { }
 
@@ -430,8 +413,9 @@ public class ResultSet implements java.sql.ResultSet {
 	public void updateObject(int columnIndex, Object x) throws SQLException { }
 
 	public void updateNull(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		
+		// TODO Figure out columnIndex from columnLabel
+		int columnIndex = 0;
+		setColumnValue(columnIndex, null);
 	}
 
 	public void updateBoolean(String columnLabel, boolean x) throws SQLException {

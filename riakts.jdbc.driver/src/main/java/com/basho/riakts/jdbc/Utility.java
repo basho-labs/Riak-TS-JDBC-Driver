@@ -54,26 +54,18 @@ public class Utility {
 				// Check cell type for the 5 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
 				if (cell.hasBoolean()) {
-					
 					out.updateBoolean(colIndex, cell.getBoolean());
-					
 				}
 				else if (cell.hasDouble()) {
-					
 					out.updateDouble(colIndex, cell.getDouble());
-					
 				}
 				else if (cell.hasLong()) {
-					
 					out.updateLong(colIndex, cell.getLong());
-					
 				}
 				else if (cell.hasTimestamp()) {
 					try {
-					
 						// Convert from Epoch as Long to java.sql.Date
 						out.updateDate(colIndex, new Date(cell.getTimestamp()));
-						
 					} 
 					catch (Exception e) {
 						out.updateDate(colIndex, null);
