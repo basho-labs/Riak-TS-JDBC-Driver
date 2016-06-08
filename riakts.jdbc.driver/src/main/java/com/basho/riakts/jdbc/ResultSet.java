@@ -27,7 +27,7 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	static final int HOLD_CURSORS_OVER_COMMIT = 1;
     static final int CLOSE_CURSORS_AT_COMMIT  = 2;
-    protected static final int POS_BEFORE_FIRST = 0;
+    protected static final int POS_BEFORE_FIRST = -1;
     protected static final int POS_AFTER_LAST = -1;
 	
     protected int direction = FETCH_FORWARD;
@@ -88,9 +88,6 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 
-	public boolean next() throws SQLException {
-		return false;
-	}
 
 	public void close() throws SQLException {
 		
@@ -103,6 +100,19 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 
+
+
+
+	
+	// Start - Get Methods that have been implemented for Riak TS
+	public Date getDate(int columnIndex) throws SQLException {
+		return (Date) currentRow[columnIndex];
+	}
+
+	public double getDouble(int columnIndex) throws SQLException {
+		return Double.parseDouble( (String) currentRow[columnIndex] );
+	}
+
 	public String getString(int columnIndex) throws SQLException {
 		return (String) currentRow[columnIndex];
 	}
@@ -110,111 +120,42 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean getBoolean(int columnIndex) throws SQLException {
 		return Boolean.valueOf( (String) currentRow[columnIndex] );
 	}
-
-	public byte getByte(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public short getShort(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getInt(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
+	
 	public long getLong(int columnIndex) throws SQLException {
 		return Long.parseLong( (String) currentRow[columnIndex] );
 	}
 
-	public float getFloat(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public double getDouble(int columnIndex) throws SQLException {
-		return Double.parseDouble( (String) currentRow[columnIndex] );
-	}
-
-	public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public byte[] getBytes(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public Date getDate(int columnIndex) throws SQLException {
-		return (Date) currentRow[columnIndex];
-	}
-
-	public Time getTime(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public Timestamp getTimestamp(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-
-
 	public String getString(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) currentRow[ columnList.indexOf(columnLabel) ];
 	}
 
 	public boolean getBoolean(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public byte getByte(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public short getShort(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public int getInt(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
+		return Boolean.valueOf( (String) currentRow[ columnList.indexOf(columnLabel) ] );
 	}
 
 	public long getLong(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public float getFloat(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
+		return Long.parseLong( (String) currentRow[ columnList.indexOf(columnLabel) ] );
 	}
 
 	public double getDouble(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Double.parseDouble( (String) currentRow[ columnList.indexOf(columnLabel) ] );
 	}
-
-	public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	public Date getDate(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (Date) currentRow[ columnList.indexOf(columnLabel) ];
+	}
+	
+	public Object getObject(int columnIndex) throws SQLException {
+		return currentRow[columnIndex];
 	}
 
-	public Time getTime(String columnLabel) throws SQLException {
-		return null;
+	public Object getObject(String columnLabel) throws SQLException {
+		return currentRow[ columnList.indexOf(columnLabel) ];
 	}
-
-	public Timestamp getTimestamp(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	// End - Get Methods that have been implemented for Riak TS
 
 
-
+	
 	public SQLWarning getWarnings() throws SQLException {
 		return null;
 	}
@@ -229,78 +170,78 @@ public class ResultSet implements java.sql.ResultSet {
 		return null;
 	}
 
-	public Object getObject(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object getObject(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public int findColumn(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public BigDecimal getBigDecimal(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	
+	
+	// Start - Row/Cursor position related methods
 	public boolean isBeforeFirst() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowPosition == -1) {
+			return true;
+		}
 		return false;
 	}
 
 	public boolean isAfterLast() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowPosition > rowData.size() - 1) {
+			return true;
+		}
 		return false;
 	}
 
 	public boolean isFirst() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowPosition == 0) {
+			return true;
+		}
 		return false;
 	}
 
 	public boolean isLast() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowPosition == rowData.size() - 1) {
+			return true;
+		}
 		return false;
 	}
 
 	public void beforeFirst() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		rowPosition = -1;
 	}
 
 	public void afterLast() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		rowPosition = -1;
 	}
 
 	public boolean first() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowData.size() > 0) {
+			rowPosition = 0;
+			return true;
+		}
 		return false;
 	}
 
 	public boolean last() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowData.size() > 0) {
+			rowPosition = rowData.size() - 1;
+			return true;
+		}
 		return false;
 	}
 
 	public int getRow() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return rowPosition;
 	}
 
 	public boolean absolute(int row) throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowData.size() > 0 && row <= rowData.size()) {
+			rowPosition = row;
+			return true;
+		}
+		if (row == -1 && rowData.size() > 0) {
+			rowPosition = rowData.size() - 1;
+			return true;
+		}
 		return false;
 	}
 
@@ -310,9 +251,23 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean previous() throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowData.size() > 0 && rowPosition > 0) {
+			rowPosition--;
+			return true;
+		}
 		return false;
 	}
+		
+	public boolean next() throws SQLException {
+		if (rowData.size() > 0 && rowPosition < rowData.size() - 1) {
+			rowPosition++;
+			return true;
+		}
+		return false;
+	}
+	// End - Row/Cursor position related methods
+	
+
 
 	public void setFetchDirection(int direction) throws SQLException { }
 
@@ -400,7 +355,7 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 	
-	// Un-Implemented Update Methods from ResultSet
+	// Update methods not implement for Riak TS
 	public void updateFloat(int columnIndex, float x) throws SQLException { }
 
 	public void updateBytes(int columnIndex, byte[] x) throws SQLException { }
@@ -574,10 +529,6 @@ public class ResultSet implements java.sql.ResultSet {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
-	
 
 	public Statement getStatement() throws SQLException {
 		// TODO Auto-generated method stub
@@ -622,86 +573,199 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 	
-	// Un-Implemented Get Methods from ResultSet
+	// Get Methods not implemented for Riak TS
+	public byte getByte(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public short getShort(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public int getInt(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public float getFloat(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public byte[] getBytes(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Time getTime(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Timestamp getTimestamp(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
 	public Blob getBlob(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Clob getClob(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Array getArray(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Blob getBlob(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Clob getClob(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Array getArray(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Time getTime(int columnIndex, Calendar cal) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Time getTime(String columnLabel, Calendar cal) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public URL getURL(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public URL getURL(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public NClob getNClob(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public NClob getNClob(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public SQLXML getSQLXML(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public SQLXML getSQLXML(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
 	public String getNString(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public String getNString(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Reader getNCharacterStream(int columnIndex) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Reader getNCharacterStream(String columnLabel) throws SQLException {
-		return null;
+		throw new UnsupportedOperationException();
 	}
+	
+	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public InputStream getAsciiStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getUnicodeStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getBinaryStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public InputStream getAsciiStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public InputStream getBinaryStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public byte[] getBytes(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Reader getCharacterStream(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Reader getCharacterStream(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public byte getByte(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public short getShort(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public int getInt(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public float getFloat(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Time getTime(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public Timestamp getTimestamp(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public BigDecimal getBigDecimal(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
 	
 	
 	
@@ -745,13 +809,9 @@ public class ResultSet implements java.sql.ResultSet {
 
 
 
-	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
+	
+	
+	
 	
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -760,41 +820,7 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
+
 	
-	public InputStream getAsciiStream(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public InputStream getUnicodeStream(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public InputStream getBinaryStream(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-	
-	public InputStream getAsciiStream(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public InputStream getBinaryStream(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-	
-	public byte[] getBytes(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public Reader getCharacterStream(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public Reader getCharacterStream(String columnLabel) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
 	
 }
