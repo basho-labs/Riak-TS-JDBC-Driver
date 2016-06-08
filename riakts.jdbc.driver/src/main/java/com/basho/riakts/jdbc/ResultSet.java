@@ -246,7 +246,13 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean relative(int rows) throws SQLException {
-		// TODO Auto-generated method stub
+		if (rowData.size() > 0) {
+			int newRowPosition = rowPosition + rows;
+			if (newRowPosition > -1 && newRowPosition < rowData.size()) {
+				rowPosition = newRowPosition;
+				return true;
+			}
+		}
 		return false;
 	}
 
