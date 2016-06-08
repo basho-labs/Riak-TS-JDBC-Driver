@@ -26,15 +26,15 @@ public class Utility {
 	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
 		// Create new empty ResultSet
 		com.basho.riakts.jdbc.ResultSet out = new com.basho.riakts.jdbc.ResultSet();
-		
-		int rowCount = queryResult.getRowsCount();
-		
-		// Get column information
+
+		// Get column information (name, datatype, number of)
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
 			out.columns.put(desc.getName(), desc.getType().toString());
 		}
+		out.columnCount = out.columns.size();
+		out.rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object
 		Iterator<Row> rows = queryResult.iterator();
@@ -42,9 +42,8 @@ public class Utility {
 			// Retrieve Row from QueryResult set
 			Row row = (Row) rows.next();
 			
-			// Create new row for the ResultSet, need to set length based
-			// on the number of columns we are storing in the row
-			// Object[] newRow = new Object[];
+			// Adds new row to ResultSet object
+			out.addRow();
 			
 			// Iterate over each cell in current QueryResult row add matching column to
 			// the current ResultSet row
@@ -55,18 +54,26 @@ public class Utility {
 				// Check cell type for the 5 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
 				if (cell.hasBoolean()) {
+					
 					out.updateBoolean(colIndex, cell.getBoolean());
+					
 				}
 				else if (cell.hasDouble()) {
+					
 					out.updateDouble(colIndex, cell.getDouble());
+					
 				}
 				else if (cell.hasLong()) {
+					
 					out.updateLong(colIndex, cell.getLong());
+					
 				}
 				else if (cell.hasTimestamp()) {
 					try {
+					
 						// Convert from Epoch as Long to java.sql.Date
 						out.updateDate(colIndex, new Date(cell.getTimestamp()));
+						
 					} 
 					catch (Exception e) {
 						out.updateDate(colIndex, null);
@@ -78,7 +85,7 @@ public class Utility {
 				}
 				colIndex++;
 			}
-			out.insertRow();
+			
 		}
 		
 		return out;

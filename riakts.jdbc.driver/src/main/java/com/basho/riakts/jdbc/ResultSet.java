@@ -30,20 +30,47 @@ public class ResultSet implements java.sql.ResultSet {
     protected static final int POS_BEFORE_FIRST = 0;
     protected static final int POS_AFTER_LAST = -1;
 	
-	protected int rowsInResult;
-	protected int direction = FETCH_FORWARD;
-	protected int resultSetType;
+    protected int direction = FETCH_FORWARD;
+	protected int fetchDirection = FETCH_FORWARD;
+	
+	/** The current row number that is being written to or read from. */
+    protected int rowPosition = POS_BEFORE_FIRST;
+    /** Total number of rows in the ResultSet */
+	protected int rowsInResult = 0;
+	/** Number of columns in the ResultSet */
+	protected int columnCount = 0;
 	
 	protected ArrayList<Object[]> rowData;
+	protected Object[] currentRow;
 	protected Map<String, String> columns;
 	
 	protected boolean closed;
 	protected boolean cancell;
-	protected int fetchDirection = FETCH_FORWARD;
+	
 	
 	ResultSet() { 
 		rowData = new ArrayList<Object[]>();
 		columns = new HashMap<String, String>();
+	}
+	
+	
+	/***
+	 * Adds new row to result set (currentRow) upon which update statements will act.
+	 * Updates pos value to equal current row position in ResultSet.
+	 * @throws SQLException 
+	 */
+	public void addRow() throws SQLException {
+		// Throw exception if there are now columns or rows
+		if (columnCount == 0 || rowsInResult == 0) throw new SQLException();
+		
+		// Create new row, set position in ResultSet
+		currentRow = new Object[columnCount];
+		if (rowData.size() == 0) {
+			rowPosition = 0;
+		}
+		else {
+			rowPosition++;
+		}
 	}
 
 
