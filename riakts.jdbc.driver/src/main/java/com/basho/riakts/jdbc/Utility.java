@@ -3,6 +3,7 @@ package com.basho.riakts.jdbc;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,13 +28,14 @@ public class Utility {
 		// Create new empty ResultSet
 		com.basho.riakts.jdbc.ResultSet out = new com.basho.riakts.jdbc.ResultSet();
 
-		// Get column information (name, datatype, number of)
+		// Get column names from the QueryResult object
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
-			out.columns.put(desc.getName(), desc.getType().toString());
+			out.columnList.add(desc.getName());
 		}
-		out.columnCount = out.columns.size();
+		out.columnCount = out.columnList.size();
+		
 		out.rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object

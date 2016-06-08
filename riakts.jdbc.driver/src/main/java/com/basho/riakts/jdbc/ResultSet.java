@@ -42,7 +42,7 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	protected ArrayList<Object[]> rowData;
 	protected Object[] currentRow;
-	protected Map<String, String> columns;
+	ArrayList<String> columnList;
 	
 	protected boolean closed;
 	protected boolean cancell;
@@ -50,7 +50,7 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	ResultSet() { 
 		rowData = new ArrayList<Object[]>();
-		columns = new HashMap<String, String>();
+		columnList = new ArrayList<String>();
 	}
 	
 	
@@ -75,7 +75,7 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 	/***
-	 * 
+	 * Takes the column index and value as an object
 	 * @param columnIndex
 	 * @param dataType
 	 * @param value
@@ -84,69 +84,59 @@ public class ResultSet implements java.sql.ResultSet {
 	 */
 	protected void setColumnValue(int columnIndex, Object value) throws SQLException {
 		if (columnIndex < 0 || columnIndex > columnCount - 1) throw new SQLException();
-		
 		currentRow[columnIndex] = value;
 	}
 
 
 	public boolean next() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public void close() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public boolean wasNull() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	
+	
 
 	public String getString(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) currentRow[columnIndex];
 	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return Boolean.valueOf( (String) currentRow[columnIndex] );
 	}
 
 	public byte getByte(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public short getShort(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public int getInt(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public long getLong(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Long.parseLong( (String) currentRow[columnIndex] );
 	}
 
 	public float getFloat(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public double getDouble(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		return Double.parseDouble( (String) currentRow[columnIndex] );
 	}
 
 	public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public byte[] getBytes(int columnIndex) throws SQLException {
@@ -154,18 +144,15 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public Date getDate(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return (Date) currentRow[columnIndex];
 	}
 
 	public Time getTime(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Timestamp getTimestamp(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 
@@ -181,17 +168,15 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public byte getByte(String columnLabel) throws SQLException {
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public short getShort(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public int getInt(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public long getLong(String columnLabel) throws SQLException {
@@ -200,8 +185,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public float getFloat(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new UnsupportedOperationException();
 	}
 
 	public double getDouble(String columnLabel) throws SQLException {
@@ -361,7 +345,9 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean rowDeleted() throws SQLException {
 		return false;
 	}
-
+	
+	
+	// Update Column Methods
 	public void updateNull(int columnIndex) throws SQLException {
 		setColumnValue(columnIndex, null);
 	}
@@ -370,33 +356,62 @@ public class ResultSet implements java.sql.ResultSet {
 		setColumnValue(columnIndex, x);
 	}
 
+	public void updateLong(int columnIndex, long x) throws SQLException {
+		setColumnValue(columnIndex, x);
+	}
+
+	public void updateDouble(int columnIndex, double x) throws SQLException {
+		setColumnValue(columnIndex, x);
+	}
+
+	public void updateString(int columnIndex, String x) throws SQLException {
+		setColumnValue(columnIndex, x);
+	}
+
+	public void updateDate(int columnIndex, Date x) throws SQLException {
+		setColumnValue(columnIndex, x);
+	}
+	
+	public void updateNull(String columnLabel) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), null);
+	}
+
+	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+
+	public void updateLong(String columnLabel, long x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+
+	public void updateDouble(String columnLabel, double x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+
+
+	public void updateString(String columnLabel, String x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+
+	public void updateDate(String columnLabel, Date x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+
+	
+	
+	
+	// Un-Implemented Update Methods from ResultSet
+	public void updateFloat(int columnIndex, float x) throws SQLException { }
+
+	public void updateBytes(int columnIndex, byte[] x) throws SQLException { }
+
 	public void updateByte(int columnIndex, byte x) throws SQLException { }
 
 	public void updateShort(int columnIndex, short x) throws SQLException { }
 
 	public void updateInt(int columnIndex, int x) throws SQLException { }
 
-	public void updateLong(int columnIndex, long x) throws SQLException {
-		setColumnValue(columnIndex, x);
-	}
-
-	public void updateFloat(int columnIndex, float x) throws SQLException { }
-
-	public void updateDouble(int columnIndex, double x) throws SQLException {
-		setColumnValue(columnIndex, x);
-	}
-
 	public void updateBigDecimal(int columnIndex, BigDecimal x) throws SQLException { }
-
-	public void updateString(int columnIndex, String x) throws SQLException {
-		setColumnValue(columnIndex, x);
-	}
-
-	public void updateBytes(int columnIndex, byte[] x) throws SQLException { }
-
-	public void updateDate(int columnIndex, Date x) throws SQLException {
-		setColumnValue(columnIndex, x);
-	}
 
 	public void updateTime(int columnIndex, Time x) throws SQLException { }
 
@@ -412,69 +427,13 @@ public class ResultSet implements java.sql.ResultSet {
 
 	public void updateObject(int columnIndex, Object x) throws SQLException { }
 
-	public void updateNull(String columnLabel) throws SQLException {
-		// TODO Figure out columnIndex from columnLabel
-		int columnIndex = 0;
-		setColumnValue(columnIndex, null);
-	}
+	public void updateFloat(String columnLabel, float x) throws SQLException { }
+	
+	public void updateBigDecimal(String columnLabel, BigDecimal x) throws SQLException { }
+	
+	public void updateTime(String columnLabel, Time x) throws SQLException { }
 
-	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateByte(String columnLabel, byte x) throws SQLException { }
-
-	public void updateShort(String columnLabel, short x) throws SQLException { }
-
-	public void updateInt(String columnLabel, int x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateLong(String columnLabel, long x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateFloat(String columnLabel, float x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateDouble(String columnLabel, double x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateBigDecimal(String columnLabel, BigDecimal x)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateString(String columnLabel, String x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateBytes(String columnLabel, byte[] x) throws SQLException { }
-
-	public void updateDate(String columnLabel, Date x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateTime(String columnLabel, Time x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateTimestamp(String columnLabel, Timestamp x)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateTimestamp(String columnLabel, Timestamp x) throws SQLException { }
 
 	public void updateAsciiStream(String columnLabel, InputStream x, int length) throws SQLException { }
 
@@ -486,263 +445,42 @@ public class ResultSet implements java.sql.ResultSet {
 
 	public void updateObject(String columnLabel, Object x) throws SQLException { }
 
-	public void insertRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateByte(String columnLabel, byte x) throws SQLException { }
 
-	public void updateRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateShort(String columnLabel, short x) throws SQLException { }
 
-	public void deleteRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateInt(String columnLabel, int x) throws SQLException { }
 
-	public void refreshRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBytes(String columnLabel, byte[] x) throws SQLException { }
 
-	public void cancelRowUpdates() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateRef(int columnIndex, Ref x) throws SQLException { }
 
-	public void moveToInsertRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateRef(String columnLabel, Ref x) throws SQLException { }
 
-	public void moveToCurrentRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateBlob(int columnIndex, Blob x) throws SQLException { }
 
-	public Statement getStatement() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void updateBlob(String columnLabel, Blob x) throws SQLException { }
 
-	public Object getObject(int columnIndex, Map<String, Class<?>> map)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void updateClob(int columnIndex, Clob x) throws SQLException { }
 
-	public Ref getRef(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void updateClob(String columnLabel, Clob x) throws SQLException { }
 
-	public Blob getBlob(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void updateArray(int columnIndex, Array x) throws SQLException { }
 
-	public Clob getClob(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void updateArray(String columnLabel, Array x) throws SQLException { }
+	
+	public void updateNString(int columnIndex, String nString) throws SQLException { }
 
-	public Array getArray(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Object getObject(String columnLabel, Map<String, Class<?>> map)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Ref getRef(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Blob getBlob(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Clob getClob(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Array getArray(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Date getDate(int columnIndex, Calendar cal) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Date getDate(String columnLabel, Calendar cal) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Time getTime(int columnIndex, Calendar cal) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Time getTime(String columnLabel, Calendar cal) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Timestamp getTimestamp(int columnIndex, Calendar cal)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Timestamp getTimestamp(String columnLabel, Calendar cal)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public URL getURL(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public URL getURL(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void updateRef(int columnIndex, Ref x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateRef(String columnLabel, Ref x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateBlob(int columnIndex, Blob x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateBlob(String columnLabel, Blob x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateClob(int columnIndex, Clob x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateClob(String columnLabel, Clob x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateArray(int columnIndex, Array x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateArray(String columnLabel, Array x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public RowId getRowId(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public RowId getRowId(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void updateRowId(int columnIndex, RowId x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateRowId(String columnLabel, RowId x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public int getHoldability() throws SQLException {
-		return 0;
-	}
-
-	public boolean isClosed() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void updateNString(int columnIndex, String nString)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateNString(String columnLabel, String nString)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	public void updateNString(String columnLabel, String nString) throws SQLException { }
 
 	public void updateNClob(int columnIndex, NClob nClob) throws SQLException { }
 
 	public void updateNClob(String columnLabel, NClob nClob) throws SQLException { }
-
-	public NClob getNClob(int columnIndex) throws SQLException {
-		return null;
-	}
-
-	public NClob getNClob(String columnLabel) throws SQLException {
-		return null;
-	}
-
-	public SQLXML getSQLXML(int columnIndex) throws SQLException {
-		return null;
-	}
-
-	public SQLXML getSQLXML(String columnLabel) throws SQLException {
-		return null;
-	}
-
+	
 	public void updateSQLXML(int columnIndex, SQLXML xmlObject) throws SQLException { }
 
 	public void updateSQLXML(String columnLabel, SQLXML xmlObject) throws SQLException { }
-
-	public String getNString(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String getNString(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Reader getNCharacterStream(int columnIndex) throws SQLException {
-		return null;
-	}
-
-	public Reader getNCharacterStream(String columnLabel) throws SQLException {
-		return null;
-	}
-
+	
 	public void updateNCharacterStream(int columnIndex, Reader x, long length) throws SQLException { }
 
 	public void updateNCharacterStream(String columnLabel, Reader reader, long length) throws SQLException { }
@@ -798,6 +536,214 @@ public class ResultSet implements java.sql.ResultSet {
 	public void updateNClob(int columnIndex, Reader reader) throws SQLException { }
 
 	public void updateNClob(String columnLabel, Reader reader) throws SQLException { }
+	
+	
+	
+	
+	public void insertRow() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateRow() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteRow() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void refreshRow() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void cancelRowUpdates() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void moveToInsertRow() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void moveToCurrentRow() throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
+
+	public Statement getStatement() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	
+	// Column Get Methods
+	public Object getObject(int columnIndex, Map<String, Class<?>> map)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Object getObject(String columnLabel, Map<String, Class<?>> map)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Ref getRef(int columnIndex) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Ref getRef(String columnLabel) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Date getDate(int columnIndex, Calendar cal) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Date getDate(String columnLabel, Calendar cal) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
+	// Un-Implemented Get Methods from ResultSet
+	public Blob getBlob(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public Clob getClob(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public Array getArray(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public Blob getBlob(String columnLabel) throws SQLException {
+		return null;
+	}
+
+	public Clob getClob(String columnLabel) throws SQLException {
+		return null;
+	}
+
+	public Array getArray(String columnLabel) throws SQLException {
+		return null;
+	}
+
+	public Time getTime(int columnIndex, Calendar cal) throws SQLException {
+		return null;
+	}
+
+	public Time getTime(String columnLabel, Calendar cal) throws SQLException {
+		return null;
+	}
+
+	public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
+		return null;
+	}
+
+	public Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
+		return null;
+	}
+
+	public URL getURL(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public URL getURL(String columnLabel) throws SQLException {
+		return null;
+	}
+	
+	public NClob getNClob(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public NClob getNClob(String columnLabel) throws SQLException {
+		return null;
+	}
+
+	public SQLXML getSQLXML(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public SQLXML getSQLXML(String columnLabel) throws SQLException {
+		return null;
+	}
+	
+	public String getNString(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public String getNString(String columnLabel) throws SQLException {
+		return null;
+	}
+
+	public Reader getNCharacterStream(int columnIndex) throws SQLException {
+		return null;
+	}
+
+	public Reader getNCharacterStream(String columnLabel) throws SQLException {
+		return null;
+	}
+	
+	
+	
+
+	public RowId getRowId(int columnIndex) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public RowId getRowId(String columnLabel) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void updateRowId(int columnIndex, RowId x) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateRowId(String columnLabel, RowId x) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+	public int getHoldability() throws SQLException {
+		return 0;
+	}
+
+	public boolean isClosed() throws SQLException {
+		return false;
+	}
+
+
+
+
+
+
+
+
+
+
 
 	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
 		throw new UnsupportedOperationException();
