@@ -104,44 +104,44 @@ public class ResultSet implements java.sql.ResultSet {
 
 	
 	// Start - Get Methods that have been implemented for Riak TS
-	public Date getDate(int columnIndex) throws SQLException {
-		return (Date) currentRow[columnIndex];
+	public Timestamp getTimestamp(int columnIndex) throws SQLException {
+		return (Timestamp) currentRow[columnIndex];
+	}
+
+	public Timestamp getTimestamp(String columnLabel) throws SQLException {
+		return (Timestamp) currentRow[ columnList.indexOf(columnLabel) ];
 	}
 
 	public double getDouble(int columnIndex) throws SQLException {
 		return Double.parseDouble( (String) currentRow[columnIndex] );
 	}
+	
+	public double getDouble(String columnLabel) throws SQLException {
+		return Double.parseDouble( (String) currentRow[ columnList.indexOf(columnLabel) ] );
+	}
 
 	public String getString(int columnIndex) throws SQLException {
 		return (String) currentRow[columnIndex];
 	}
+	
+	public String getString(String columnLabel) throws SQLException {
+		return (String) currentRow[ columnList.indexOf(columnLabel) ];
+	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {
 		return Boolean.valueOf( (String) currentRow[columnIndex] );
+	}
+
+	public boolean getBoolean(String columnLabel) throws SQLException {
+		return Boolean.valueOf( (String) currentRow[ columnList.indexOf(columnLabel) ] );
 	}
 	
 	public long getLong(int columnIndex) throws SQLException {
 		return Long.parseLong( (String) currentRow[columnIndex] );
 	}
 
-	public String getString(String columnLabel) throws SQLException {
-		return (String) currentRow[ columnList.indexOf(columnLabel) ];
-	}
-
-	public boolean getBoolean(String columnLabel) throws SQLException {
-		return Boolean.valueOf( (String) currentRow[ columnList.indexOf(columnLabel) ] );
-	}
-
 	public long getLong(String columnLabel) throws SQLException {
 		return Long.parseLong( (String) currentRow[ columnList.indexOf(columnLabel) ] );
-	}
-
-	public double getDouble(String columnLabel) throws SQLException {
-		return Double.parseDouble( (String) currentRow[ columnList.indexOf(columnLabel) ] );
-	}
-
-	public Date getDate(String columnLabel) throws SQLException {
-		return (Date) currentRow[ columnList.indexOf(columnLabel) ];
 	}
 	
 	public Object getObject(int columnIndex) throws SQLException {
@@ -329,54 +329,60 @@ public class ResultSet implements java.sql.ResultSet {
 	public void updateNull(int columnIndex) throws SQLException {
 		setColumnValue(columnIndex, null);
 	}
+	
+	public void updateNull(String columnLabel) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), null);
+	}
 
 	public void updateBoolean(int columnIndex, boolean x) throws SQLException {
 		setColumnValue(columnIndex, x);
+	}
+	
+	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
 	}
 
 	public void updateLong(int columnIndex, long x) throws SQLException {
 		setColumnValue(columnIndex, x);
 	}
+	
+	public void updateLong(String columnLabel, long x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
 
 	public void updateDouble(int columnIndex, double x) throws SQLException {
 		setColumnValue(columnIndex, x);
+	}
+	
+	public void updateDouble(String columnLabel, double x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
 	}
 
 	public void updateString(int columnIndex, String x) throws SQLException {
 		setColumnValue(columnIndex, x);
 	}
 
+	public void updateString(String columnLabel, String x) throws SQLException {
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+	
 	public void updateDate(int columnIndex, Date x) throws SQLException {
 		setColumnValue(columnIndex, x);
 	}
 	
-	public void updateNull(String columnLabel) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), null);
-	}
-
-	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
-	}
-
-	public void updateLong(String columnLabel, long x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
-	}
-
-	public void updateDouble(String columnLabel, double x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
-	}
-
-
-	public void updateString(String columnLabel, String x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
-	}
-
 	public void updateDate(String columnLabel, Date x) throws SQLException {
 		setColumnValue(columnList.indexOf(columnLabel), x);
 	}
+	
+	public void updateTimestamp(String columnLabel, Timestamp x) throws SQLException { 
+		setColumnValue(columnList.indexOf(columnLabel), x);
+	}
+	
+	public void updateTimestamp(int columnIndex, Timestamp x) throws SQLException { 
+		setColumnValue(columnIndex, x);
+	}
 
-	
-	
+
 	
 	// Update methods not implement for Riak TS
 	public void updateFloat(int columnIndex, float x) throws SQLException { }
@@ -393,8 +399,6 @@ public class ResultSet implements java.sql.ResultSet {
 
 	public void updateTime(int columnIndex, Time x) throws SQLException { }
 
-	public void updateTimestamp(int columnIndex, Timestamp x) throws SQLException { }
-
 	public void updateAsciiStream(int columnIndex, InputStream x, int length) throws SQLException { }
 
 	public void updateBinaryStream(int columnIndex, InputStream x, int length) throws SQLException {  }
@@ -410,8 +414,6 @@ public class ResultSet implements java.sql.ResultSet {
 	public void updateBigDecimal(String columnLabel, BigDecimal x) throws SQLException { }
 	
 	public void updateTime(String columnLabel, Time x) throws SQLException { }
-
-	public void updateTimestamp(String columnLabel, Timestamp x) throws SQLException { }
 
 	public void updateAsciiStream(String columnLabel, InputStream x, int length) throws SQLException { }
 
@@ -545,218 +547,380 @@ public class ResultSet implements java.sql.ResultSet {
 	
 
 	// Get Methods not implemented for Riak TS
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
+	public Date getDate(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
+	public Date getDate(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Date getDate(int columnIndex, Calendar cal) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Date getDate(String columnLabel, Calendar cal) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Object getObject(String columnLabel, Map<String, Class<?>> map) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Ref getRef(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Ref getRef(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public byte getByte(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public short getShort(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public int getInt(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public float getFloat(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public BigDecimal getBigDecimal(int columnIndex, int scale) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public byte[] getBytes(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Time getTime(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
-	public Timestamp getTimestamp(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Blob getBlob(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Clob getClob(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Array getArray(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Blob getBlob(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Clob getClob(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Array getArray(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Time getTime(int columnIndex, Calendar cal) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Time getTime(String columnLabel, Calendar cal) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
-	public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Timestamp getTimestamp(String columnLabel, Calendar cal) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public URL getURL(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public URL getURL(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public NClob getNClob(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public NClob getNClob(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public SQLXML getSQLXML(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public SQLXML getSQLXML(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public String getNString(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public String getNString(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Reader getNCharacterStream(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Reader getNCharacterStream(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public <T> T getObject(int columnIndex, Class<T> type) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public <T> T getObject(String columnLabel, Class<T> type) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public InputStream getAsciiStream(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public InputStream getUnicodeStream(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public InputStream getBinaryStream(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public InputStream getAsciiStream(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public InputStream getUnicodeStream(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public InputStream getBinaryStream(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public byte[] getBytes(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Reader getCharacterStream(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Reader getCharacterStream(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public byte getByte(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public short getShort(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public int getInt(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public float getFloat(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public BigDecimal getBigDecimal(String columnLabel, int scale) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public Time getTime(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
-
-	public Timestamp getTimestamp(String columnLabel) throws SQLException {
+	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
+	public Timestamp getTimestamp(int columnIndex, Calendar cal) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public BigDecimal getBigDecimal(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public BigDecimal getBigDecimal(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}

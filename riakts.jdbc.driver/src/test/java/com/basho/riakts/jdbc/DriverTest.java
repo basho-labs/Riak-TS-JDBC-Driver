@@ -48,7 +48,7 @@ public class DriverTest {
 		
 		if (rs != null) {
 			while (rs.next()) {
-				System.out.println( rs.getString("customer_id") + " - " + rs.getString("meter_id"));
+				System.out.println( rs.getString("customer_id") + " | " + rs.getString("meter_id")  + " | " + rs.getTimestamp("time_stamp") );
 			}
 		}
 		

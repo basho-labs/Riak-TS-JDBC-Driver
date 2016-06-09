@@ -3,6 +3,7 @@ package com.basho.riakts.jdbc;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -66,8 +67,8 @@ public class Utility {
 				}
 				else if (cell.hasTimestamp()) {
 					try {
-						// Convert from Epoch as Long to java.sql.Date
-						rs.updateDate(colIndex, new Date(cell.getTimestamp()));
+						// Convert from Epoch as Long to java.sql.Timestamp
+						rs.updateTimestamp(colIndex, new Timestamp(cell.getTimestamp()));
 					} 
 					catch (Exception e) {
 						rs.updateDate(colIndex, null);
