@@ -1,6 +1,7 @@
 # Riak TS JDBC Driver
 This code is a rough attempt at implementing a JDBC driver for Basho's open source Riak TS (Time Series) database (docs.basho.com/riakts/latest/).
 
+Basic driver usage is demonstrated in the code block below. More example code is available in the project's tests.
 ```Java
 Driver d = new Driver();
 Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
