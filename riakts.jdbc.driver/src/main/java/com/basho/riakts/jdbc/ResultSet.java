@@ -66,23 +66,20 @@ public class ResultSet implements java.sql.ResultSet {
 		
 		// Set inserting to true versus updating an existing row
 		inserting = true;
-		
-		// Set current row position to -1 since we are beyond existing rows
-		rowPosition = -1;
 	}
 	
 	public void insertRow() throws SQLException {
 		// Add the new row to the rowData ArrayList<Object[]>
 		rowData.add(insertRow);
+		
+		// Clear insertRow
 		insertRow = null;
 		
 		// Set inserting back to false
 		inserting = false;
 		
-		// Update row position to last position in rowData and
-		// update currentRow to equal or newly added row
-		rowPosition = rowData.size() - 1;
-		currentRow = rowData.get(rowPosition);
+		// Update currentRow to equal or newly added row
+		currentRow = rowData.get(rowData.size() - 1);
 	}
 	
 	
