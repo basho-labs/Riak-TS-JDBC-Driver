@@ -54,28 +54,41 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	
-	/***
-	 * Adds new row to result set (currentRow) upon which update statements will act.
-	 * Updates pos value to equal current row position in ResultSet.
-	 * @throws SQLException 
-	 */
-	public void addRow() throws SQLException {
+	protected Object[] insertRow;
+	protected boolean inserting = false;
+	
+	public void moveToInsertRow() throws SQLException {
 		// Throw exception if there are now columns or rows
 		if (columnCount == 0 || rowsInResult == 0) throw new SQLException();
 		
-		// Create new row, set position in ResultSet
-		currentRow = new Object[columnCount];
-		if (rowData.size() == 0) {
-			rowPosition = 0;
-		}
-		else {
-			rowPosition++;
-		}
+		// Create a new Object[] to store column values
+		insertRow = new Object[columnCount];
+		
+		// Set inserting to true versus updating an existing row
+		inserting = true;
+		
+		// Set current row position to -1 since we are beyond existing rows
+		rowPosition = -1;
+	}
+	
+	public void insertRow() throws SQLException {
+		// Add the new row to the rowData ArrayList<Object[]>
+		rowData.add(insertRow);
+		insertRow = null;
+		
+		// Set inserting back to false
+		inserting = false;
+		
+		// Update row position to last position in rowData and
+		// update currentRow to equal or newly added row
+		rowPosition = rowData.size() - 1;
+		currentRow = rowData.get(rowPosition);
 	}
 	
 	
 	/***
-	 * Takes the column index and value as an object
+	 * Updates a column based on its index, works for both inserts of new rows
+	 * and updates of 
 	 * @param columnIndex
 	 * @param dataType
 	 * @param value
@@ -84,24 +97,13 @@ public class ResultSet implements java.sql.ResultSet {
 	 */
 	protected void setColumnValue(int columnIndex, Object value) throws SQLException {
 		if (columnIndex < 0 || columnIndex > columnCount - 1) throw new SQLException();
-		currentRow[columnIndex] = value;
+		if (inserting) {
+			insertRow[columnIndex] = value;
+		}
+		else {
+			currentRow[columnIndex] = value;
+		}
 	}
-
-
-
-	public void close() throws SQLException {
-		
-	}
-
-	public boolean wasNull() throws SQLException {
-		return false;
-	}
-	
-	
-	
-
-
-
 
 	
 	// Start - Get Methods that have been implemented for Riak TS
@@ -177,6 +179,15 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 	// Start - Row/Cursor position related methods
+	/***
+	 * Retrieve our Object[] for the specified row
+	 * @param i
+	 * @throws SQLException
+	 */
+	private void setCurrentRow(int i) throws SQLException {
+		currentRow = rowData.get(i);
+	}
+	
 	public boolean isBeforeFirst() throws SQLException {
 		if (rowPosition == -1) {
 			return true;
@@ -206,16 +217,19 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public void beforeFirst() throws SQLException {
+		currentRow = null;
 		rowPosition = -1;
 	}
 
 	public void afterLast() throws SQLException {
+		currentRow = null;
 		rowPosition = -1;
 	}
 
 	public boolean first() throws SQLException {
 		if (rowData.size() > 0) {
 			rowPosition = 0;
+			setCurrentRow(0);
 			return true;
 		}
 		return false;
@@ -224,6 +238,7 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean last() throws SQLException {
 		if (rowData.size() > 0) {
 			rowPosition = rowData.size() - 1;
+			setCurrentRow(rowPosition);
 			return true;
 		}
 		return false;
@@ -236,10 +251,12 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean absolute(int row) throws SQLException {
 		if (rowData.size() > 0 && row <= rowData.size()) {
 			rowPosition = row;
+			setCurrentRow(rowPosition);
 			return true;
 		}
 		if (row == -1 && rowData.size() > 0) {
 			rowPosition = rowData.size() - 1;
+			setCurrentRow(rowPosition);
 			return true;
 		}
 		return false;
@@ -250,6 +267,7 @@ public class ResultSet implements java.sql.ResultSet {
 			int newRowPosition = rowPosition + rows;
 			if (newRowPosition > -1 && newRowPosition < rowData.size()) {
 				rowPosition = newRowPosition;
+				setCurrentRow(rowPosition);
 				return true;
 			}
 		}
@@ -259,6 +277,7 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean previous() throws SQLException {
 		if (rowData.size() > 0 && rowPosition > 0) {
 			rowPosition--;
+			setCurrentRow(rowPosition);
 			return true;
 		}
 		return false;
@@ -267,6 +286,7 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean next() throws SQLException {
 		if (rowData.size() > 0 && rowPosition < rowData.size() - 1) {
 			rowPosition++;
+			setCurrentRow(rowPosition);
 			return true;
 		}
 		return false;
@@ -497,89 +517,61 @@ public class ResultSet implements java.sql.ResultSet {
 	public void updateNClob(int columnIndex, Reader reader) throws SQLException { }
 
 	public void updateNClob(String columnLabel, Reader reader) throws SQLException { }
+
 	
-	
-	
-	
-	public void insertRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void updateRow() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void deleteRow() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		rowData.remove(rowPosition);
 	}
 
 	public void refreshRow() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void cancelRowUpdates() throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void moveToInsertRow() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public void moveToCurrentRow() throws SQLException {
-		// TODO Auto-generated method stub
 		
 	}
 
 	public Statement getStatement() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	
 	
-	
-	// Column Get Methods
-	public Object getObject(int columnIndex, Map<String, Class<?>> map)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Object getObject(String columnLabel, Map<String, Class<?>> map)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Ref getRef(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Ref getRef(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
+	// Get Methods not implemented for Riak TS
 	public Date getDate(int columnIndex, Calendar cal) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 	public Date getDate(String columnLabel, Calendar cal) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 	
+	public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
 	
+	public Object getObject(String columnLabel, Map<String, Class<?>> map) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
 	
-	// Get Methods not implemented for Riak TS
+	public Ref getRef(int columnIndex) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
+	public Ref getRef(String columnLabel) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
 	public byte getByte(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
@@ -805,19 +797,6 @@ public class ResultSet implements java.sql.ResultSet {
 		return false;
 	}
 
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
 	
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		throw new UnsupportedOperationException();
@@ -826,7 +805,13 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
+	
+	public void close() throws SQLException {
+		
+	}
 
-	
-	
+	public boolean wasNull() throws SQLException {
+		return false;
+	}
+
 }

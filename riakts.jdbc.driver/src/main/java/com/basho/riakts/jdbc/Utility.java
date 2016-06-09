@@ -26,17 +26,17 @@ public class Utility {
 	 */
 	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
 		// Create new empty ResultSet
-		com.basho.riakts.jdbc.ResultSet out = new com.basho.riakts.jdbc.ResultSet();
+		com.basho.riakts.jdbc.ResultSet rs = new com.basho.riakts.jdbc.ResultSet();
 
 		// Get column names from the QueryResult object
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
-			out.columnList.add(desc.getName());
+			rs.columnList.add(desc.getName());
 		}
-		out.columnCount = out.columnList.size();
+		rs.columnCount = rs.columnList.size();
 		
-		out.rowsInResult = queryResult.getRowsCount();
+		rs.rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object
 		Iterator<Row> rows = queryResult.iterator();
@@ -44,8 +44,8 @@ public class Utility {
 			// Retrieve Row from QueryResult set
 			Row row = (Row) rows.next();
 			
-			// Adds new row to ResultSet object
-			out.addRow();
+			// Creates new row to add to the ResultSet
+			rs.moveToInsertRow();
 			
 			// Iterate over each cell in current QueryResult row add matching column to
 			// the current ResultSet row
@@ -56,33 +56,35 @@ public class Utility {
 				// Check cell type for the 5 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
 				if (cell.hasBoolean()) {
-					out.updateBoolean(colIndex, cell.getBoolean());
+					rs.updateBoolean(colIndex, cell.getBoolean());
 				}
 				else if (cell.hasDouble()) {
-					out.updateDouble(colIndex, cell.getDouble());
+					rs.updateDouble(colIndex, cell.getDouble());
 				}
 				else if (cell.hasLong()) {
-					out.updateLong(colIndex, cell.getLong());
+					rs.updateLong(colIndex, cell.getLong());
 				}
 				else if (cell.hasTimestamp()) {
 					try {
 						// Convert from Epoch as Long to java.sql.Date
-						out.updateDate(colIndex, new Date(cell.getTimestamp()));
+						rs.updateDate(colIndex, new Date(cell.getTimestamp()));
 					} 
 					catch (Exception e) {
-						out.updateDate(colIndex, null);
+						rs.updateDate(colIndex, null);
 					}
 				}
 				else if (cell.hasVarcharValue()) {
 					// Get varchar as plain string for compatibility
-					out.updateString(colIndex, cell.getVarcharValue().toString());
+					rs.updateString(colIndex, cell.getVarcharValue().toString());
 				}
 				colIndex++;
 			}
 			
+			// Adds new row to the ResultSet
+			rs.insertRow();
 		}
 		
-		return out;
+		return rs;
 	}
 	
 	
