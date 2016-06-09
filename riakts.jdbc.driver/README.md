@@ -20,6 +20,17 @@ rs.close();
 conn.close();
 ```
 
+*Important Note*
+This driver only implements a small portion of the JDBC specification. When reading from a ResultSet the following operations are supported:
+
+- next()
+- getTimestamp(int columnIndex), getTimestamp(String columnLabel)
+- getDouble(int columnIndex), getDouble(String columnLabel)
+- getString(int columnIndex), getString(String columnLabel)
+- getBoolean(int columnIndex), getBoolean(String columnLabel)
+- getLong(int columnIndex), getLong(String columnLabel)
+- getObject(int columnIndex), getObject(String columnLabel)
+
 # Riak TS to JDBC Data Types
 When writing data from the Riak TS QueryResult object to the JDBC ResultSet object the driver converts Riak TS's data types in the following mapping:
 
@@ -32,3 +43,5 @@ When writing data from the Riak TS QueryResult object to the JDBC ResultSet obje
 # Release Notes
 
 Version 0.1:
+- Initial Release
+
