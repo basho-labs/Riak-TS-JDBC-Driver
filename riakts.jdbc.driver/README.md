@@ -20,7 +20,7 @@ rs.close();
 conn.close();
 ```
 
-*Important Note*
+**Important Note**
 This driver only implements a small portion of the JDBC specification. When reading from a ResultSet the following operations are supported:
 
 - next()
