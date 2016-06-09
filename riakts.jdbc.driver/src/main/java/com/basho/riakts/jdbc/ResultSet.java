@@ -45,12 +45,26 @@ public class ResultSet implements java.sql.ResultSet {
 	ArrayList<String> columnList;
 	
 	protected boolean closed;
-	protected boolean cancell;
 	
 	
 	ResultSet() { 
+		closed = false;
 		rowData = new ArrayList<Object[]>();
 		columnList = new ArrayList<String>();
+	}
+	
+	public void close() throws SQLException {
+		rowData = null;
+		currentRow = null;
+		columnList = null;
+		rowsInResult = 0;
+		columnCount = 0;
+		rowPosition = -1;
+		closed = true;
+	}
+	
+	public boolean isClosed() throws SQLException {
+		return closed;
 	}
 	
 	
@@ -385,140 +399,276 @@ public class ResultSet implements java.sql.ResultSet {
 
 	
 	// Update methods not implement for Riak TS
+	
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateFloat(int columnIndex, float x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBytes(int columnIndex, byte[] x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateByte(int columnIndex, byte x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateShort(int columnIndex, short x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateInt(int columnIndex, int x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBigDecimal(int columnIndex, BigDecimal x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateTime(int columnIndex, Time x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateAsciiStream(int columnIndex, InputStream x, int length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBinaryStream(int columnIndex, InputStream x, int length) throws SQLException {  }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateCharacterStream(int columnIndex, Reader x, int length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateObject(int columnIndex, Object x, int scaleOrLength) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateObject(int columnIndex, Object x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateFloat(String columnLabel, float x) throws SQLException { }
-	
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBigDecimal(String columnLabel, BigDecimal x) throws SQLException { }
-	
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateTime(String columnLabel, Time x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateAsciiStream(String columnLabel, InputStream x, int length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBinaryStream(String columnLabel, InputStream x, int length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateCharacterStream(String columnLabel, Reader reader, int length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateObject(String columnLabel, Object x, int scaleOrLength) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateObject(String columnLabel, Object x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateByte(String columnLabel, byte x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateShort(String columnLabel, short x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateInt(String columnLabel, int x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBytes(String columnLabel, byte[] x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateRef(int columnIndex, Ref x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateRef(String columnLabel, Ref x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBlob(int columnIndex, Blob x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBlob(String columnLabel, Blob x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateClob(int columnIndex, Clob x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateClob(String columnLabel, Clob x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateArray(int columnIndex, Array x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateArray(String columnLabel, Array x) throws SQLException { }
-	
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNString(int columnIndex, String nString) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNString(String columnLabel, String nString) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNClob(int columnIndex, NClob nClob) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNClob(String columnLabel, NClob nClob) throws SQLException { }
-	
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateSQLXML(int columnIndex, SQLXML xmlObject) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateSQLXML(String columnLabel, SQLXML xmlObject) throws SQLException { }
-	
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNCharacterStream(int columnIndex, Reader x, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNCharacterStream(String columnLabel, Reader reader, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateAsciiStream(int columnIndex, InputStream x, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBinaryStream(int columnIndex, InputStream x, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateCharacterStream(int columnIndex, Reader x, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateAsciiStream(String columnLabel, InputStream x, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBinaryStream(String columnLabel, InputStream x, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateCharacterStream(String columnLabel, Reader reader, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBlob(int columnIndex, InputStream inputStream, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBlob(String columnLabel, InputStream inputStream, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateClob(int columnIndex, Reader reader, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateClob(String columnLabel, Reader reader, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNClob(int columnIndex, Reader reader, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNClob(String columnLabel, Reader reader, long length) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNCharacterStream(int columnIndex, Reader x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNCharacterStream(String columnLabel, Reader reader) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateAsciiStream(int columnIndex, InputStream x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBinaryStream(int columnIndex, InputStream x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateCharacterStream(int columnIndex, Reader x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateAsciiStream(String columnLabel, InputStream x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBinaryStream(String columnLabel, InputStream x) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateCharacterStream(String columnLabel, Reader reader) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBlob(int columnIndex, InputStream inputStream) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateBlob(String columnLabel, InputStream inputStream) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateClob(int columnIndex, Reader reader) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateClob(String columnLabel, Reader reader) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNClob(int columnIndex, Reader reader) throws SQLException { }
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateNClob(String columnLabel, Reader reader) throws SQLException { }
 
 	
-
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void updateRow() throws SQLException {
 		
 	}
@@ -527,18 +677,30 @@ public class ResultSet implements java.sql.ResultSet {
 		rowData.remove(rowPosition);
 	}
 
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void refreshRow() throws SQLException {
 		
 	}
 
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void cancelRowUpdates() throws SQLException {
 		
 	}
 
+	/***
+	 * Method not implemented - no value returned
+	 */
 	public void moveToCurrentRow() throws SQLException {
 		
 	}
 
+	/***
+	 * Method not implemented - null value returned
+	 */
 	public Statement getStatement() throws SQLException {
 		return null;
 	}
@@ -928,51 +1090,51 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 	
-
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public RowId getRowId(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
-
+	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public RowId getRowId(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
-
-	public void updateRowId(int columnIndex, RowId x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateRowId(String columnLabel, RowId x) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	/***
+	 * Not implemented - no value returned
+	 */
+	public void updateRowId(int columnIndex, RowId x) throws SQLException { }
+	/***
+	 * Not implemented - no value returned
+	 */
+	public void updateRowId(String columnLabel, RowId x) throws SQLException { }
 	
 
 	public int getHoldability() throws SQLException {
 		return 0;
 	}
 
-	public boolean isClosed() throws SQLException {
-		return false;
-	}
-
-	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
-
+	
+	/***
+	 * Not implemented - throws UnsupportedOperationException
+	 */
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
-	
-	public void close() throws SQLException {
-		
-	}
+
 
 	public boolean wasNull() throws SQLException {
 		return false;
-	}
+	}	
 
 }
