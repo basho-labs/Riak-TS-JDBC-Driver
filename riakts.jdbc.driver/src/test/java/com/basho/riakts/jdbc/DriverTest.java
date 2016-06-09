@@ -44,7 +44,7 @@ public class DriverTest {
 		String sqlStatement = "SELECT * FROM WaterMeterData WHERE time_stamp >= 1464739200000 AND time_stamp < 1464770000000;";
 		
 		Statement statement = conn.createStatement();
-		com.basho.riakts.jdbc.ResultSet rs = (com.basho.riakts.jdbc.ResultSet) statement.executeQuery(sqlStatement);
+		ResultSet rs = statement.executeQuery(sqlStatement);
 		
 		if (rs != null) {
 			while (rs.next()) {
