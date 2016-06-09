@@ -24,6 +24,7 @@ conn.close();
 This driver only implements a small portion of the JDBC specification. When reading from a ResultSet the following operations are supported:
 
 - next()
+- close()
 - getTimestamp(int columnIndex), getTimestamp(String columnLabel)
 - getDouble(int columnIndex), getDouble(String columnLabel)
 - getString(int columnIndex), getString(String columnLabel)
