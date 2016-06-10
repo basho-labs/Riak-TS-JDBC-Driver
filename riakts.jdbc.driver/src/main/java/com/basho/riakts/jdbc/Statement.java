@@ -35,6 +35,18 @@ public class Statement implements java.sql.Statement {
 		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
 	}
 	
+	
+	public int executeUpdate(String sql) throws SQLException {
+		Query query = new Query.Builder(sql).build();
+		try {
+			QueryResult queryResult = _client.execute(query);
+			return queryResult.getRowsCount();
+		}
+		catch (Exception e) {
+			throw new SQLException(e);
+		}
+	}
+	
 
 	public ResultSet executeQuery(String sql) throws SQLException {
 		try {
@@ -65,9 +77,7 @@ public class Statement implements java.sql.Statement {
 		return null;
 	}
 
-	public int executeUpdate(String sql) throws SQLException {
-		throw new UnsupportedOperationException(  );
-	}
+
 
 	public void close() throws SQLException {
 		
