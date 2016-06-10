@@ -55,3 +55,5 @@ A copy of the current version of the compiled JAR file is located in https://git
 Version 0.1:
 - Initial Release
 
+# Feedback
+Please submit Issues and/or Pull Requests.
