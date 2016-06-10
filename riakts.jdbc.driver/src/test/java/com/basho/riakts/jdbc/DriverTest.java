@@ -27,10 +27,16 @@ public class DriverTest {
 	
 	
 	@Test
-	public void testSqlCreateTable() {
+	/***
+	 * Test creates the jdbcDriverTest table in the Riak TS cluster with one of two
+	 * possible valid outcomes:
+	 *    1. The table is created successfully and executeUpdate() returns 0
+	 *    2. The table already exists and executeUpdate() throws an error that says:
+	 *       "Failed to create table jdbcDriverTest: already_active"
+	 */
+	public void testSqlCreateTableSuccess() {
 		try {
 			Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
-			Assert.assertFalse( conn.isClosed() );
 			String sqlStatement = "CREATE TABLE jdbcDriverTest " + 
 	    		"( " +
 	    			"name 			varchar   	not null, " +
@@ -46,15 +52,47 @@ public class DriverTest {
 			
 			Statement statement = conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
-	    	Assert.assertTrue(result > -1);
+	    	Assert.assertTrue(result == 0);
 			conn.close();
 	    }
 	    catch (Exception e) {
 	    	String error = e.getMessage();
 	    	Assert.assertTrue(error.contains("already_active"));
 	    }
-
 	}
+	
+	@Test
+	/***
+	 * This test passes a bad table create DDL to Riak TS to verify that TS
+	 * throws an error
+	 */
+	public void testSqlCreateTableFailure() {
+		try {
+			Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
+			String sqlStatement = "CREATE TABLE dontCreateMe " + 
+	    		"( " +
+	    			"name 			varchar   	not null, " +
+	    			"age			sint64   	not null, " +
+	    			"joined        	timestamp 	not null, " +
+	    			"weight		 	double		not null, " +
+	    			"active 		boolean, " +
+	    			"PRIMARY KEY ( " +
+	    			"(quantum(joined, 365, 'd')), " +
+	    			"	badColumn, name, age " +
+	    			") " +
+	    		")";
+			
+			Statement statement = conn.createStatement();
+	    	int result = statement.executeUpdate(sqlStatement);
+	    	Assert.assertFalse(result > -1);
+			conn.close();
+	    }
+	    catch (Exception e) {
+	    	Assert.assertTrue( e != null );
+	    }
+	}
+	
+	
 	
 	@Test
 	public void testSqlDescribeTable() {
