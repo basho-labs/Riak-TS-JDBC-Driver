@@ -48,7 +48,7 @@ A copy of the current version of the compiled JAR file is located in https://git
 2. Open the projects root directory from the command line: > /riakts.jdbc.driver
 3. Build the JAR using the following Maven command: > mvn install -DskipTests
 
-** Important Note*** right now the JUnit tests included in the project are incomplete and one or more are likely to fail due to required Riak TS tables not existing on your build machine. Version 0.2 will add more complete tests that can be successfully executed.  
+** Important Note** right now the JUnit tests included in the project are incomplete and one or more are likely to fail due to required Riak TS tables not existing on your build machine. Version 0.2 will add more complete tests that can be successfully executed.  
 
 # Release Notes
 
