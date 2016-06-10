@@ -3,6 +3,9 @@ package com.basho.riakts.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import junit.framework.Assert;
@@ -43,7 +46,6 @@ public class DriverTest {
 	    			"age			sint64   	not null, " +
 	    			"joined        	timestamp 	not null, " +
 	    			"weight		 	double		not null, " +
-	    			"active 		boolean, " +
 	    			"PRIMARY KEY ( " +
 	    			"(quantum(joined, 365, 'd')), " +
 	    			"	joined, name, age " +
@@ -52,6 +54,7 @@ public class DriverTest {
 			
 			Statement statement = conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
+	    	// Create Table returns 0 on success
 	    	Assert.assertTrue(result == 0);
 			conn.close();
 	    }
@@ -75,7 +78,6 @@ public class DriverTest {
 	    			"age			sint64   	not null, " +
 	    			"joined        	timestamp 	not null, " +
 	    			"weight		 	double		not null, " +
-	    			"active 		boolean, " +
 	    			"PRIMARY KEY ( " +
 	    			"(quantum(joined, 365, 'd')), " +
 	    			"	badColumn, name, age " +
@@ -114,15 +116,34 @@ public class DriverTest {
 		while (rs.next()) {
 			columnCount++;
 		}
-		Assert.assertTrue(columnCount == 5);
+		Assert.assertTrue(columnCount == 4);
 		
 		rs.close();
 		conn.close();
 	}
 	
 	@Test
-	public void testSqlInsertData() {
+	public void testSqlInsertData() throws SQLException, ParseException {
+		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 		
+		// Create timestamp string for our record
+		String timeStamp = "06/06/2016 12:30:00.00";
+				
+		// Convert string format to epoch for TS
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+		Date date = sdf.parse(timeStamp);
+		long timeStampEpoch = date.getTime();
+		
+		String sqlStatement = "INSERT INTO jdbcDriverTest " +
+				"(name, age, joined, weight) " +
+				"VALUES " +
+				"('Craig', 92, " + timeStampEpoch + ", 202.5);";
+		
+		Statement statement = conn.createStatement();
+    	int result = statement.executeUpdate(sqlStatement);
+    	// Insert returns 0 on success
+    	Assert.assertTrue(result == 0);
+		conn.close();
 	}
 
 	
