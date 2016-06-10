@@ -95,6 +95,12 @@ public class DriverTest {
 	
 	
 	@Test
+	/***
+	 * Tests to see if the jdbcDriverTest table exists using the DESCRIBE command
+	 * also verifies that the right number of rows is returned in the ResultSet
+	 * to match the number of columns in the table (5)
+	 * @throws SQLException
+	 */
 	public void testSqlDescribeTable() throws SQLException {
 		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 		
@@ -102,11 +108,13 @@ public class DriverTest {
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		
-		if (rs != null) {
-			while (rs.next()) {
-				
-			}
+		Assert.assertTrue(rs != null);
+		
+		int columnCount = 0;
+		while (rs.next()) {
+			columnCount++;
 		}
+		Assert.assertTrue(columnCount == 5);
 		
 		rs.close();
 		conn.close();
