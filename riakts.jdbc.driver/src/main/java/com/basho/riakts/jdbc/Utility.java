@@ -56,7 +56,11 @@ public class Utility {
 				Cell cell = (Cell) cells.next();
 				// Check cell type for the 5 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
-				if (cell.hasBoolean()) {
+				// Start by handling null cell values returned
+				if (cell == null) {
+					rs.updateNull(colIndex);
+				}
+				else if (cell.hasBoolean()) {
 					rs.updateBoolean(colIndex, cell.getBoolean());
 				}
 				else if (cell.hasDouble()) {

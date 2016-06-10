@@ -54,7 +54,7 @@ public class Statement implements java.sql.Statement {
 			return _resultSet;
 		} 
 		catch (Exception e) {
-			throw new SQLException();
+			throw new SQLException(e);
 		}
 	}
 	

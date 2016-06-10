@@ -95,8 +95,21 @@ public class DriverTest {
 	
 	
 	@Test
-	public void testSqlDescribeTable() {
+	public void testSqlDescribeTable() throws SQLException {
+		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 		
+		String sqlStatement = "DESCRIBE jdbcDriverTest;";
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery(sqlStatement);
+		
+		if (rs != null) {
+			while (rs.next()) {
+				
+			}
+		}
+		
+		rs.close();
+		conn.close();
 	}
 	
 	@Test
