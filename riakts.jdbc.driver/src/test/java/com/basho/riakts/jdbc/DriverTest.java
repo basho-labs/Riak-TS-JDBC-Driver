@@ -143,23 +143,31 @@ public class DriverTest {
 
 	
 	@Test
-	public void testSqlSelect() throws SQLException {
-		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= 1465230400000 and joined <=1465230800000;";
+	public void testSqlSelect() throws SQLException, ParseException {
+		// Start and end date to search on
+		String startDateStr = "06/01/2016 12:30:00.00";
+		String endDateStr = "06/10/2016 12:30:00.00";
+		
+		// Convert string formats to epoch for TS
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+		Date date = sdf.parse(startDateStr);
+		long startDate = date.getTime();
+		date = sdf.parse(endDateStr);
+		long endDate = date.getTime();
+		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + startDate +
+				"AND joined <= " + endDate + ";";
+		
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
 		if (rs != null) {
 			while (rs.next()) {
-				String name = rs.getString("name");
-				long age = rs.getLong("age");
-				Timestamp joined = rs.getTimestamp("joined");
-				double weight = rs.getDouble("weight");
-				
-				//System.out.println( name + " | " + Long.toString(age) + " | " + joined );
+				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
 			}
 		}
-		
 		rs.close();
 	}
 	

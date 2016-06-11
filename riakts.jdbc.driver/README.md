@@ -4,24 +4,38 @@ A basic JDBC driver for Basho's open source Riak TS (Time Series) database (docs
 - executeQuery(String sql) for SELECT and DESCRIBE TABLE statements
 - executeUpdate(String sql) for CREATE TABLE and INSERT statements
 
-Basic driver usage is demonstrated in the code block below. More example code is available in the project's tests.
+The following example code demonstrates how to use the driver to execute a SELECT statement:
 ```Java
-Driver d = new Driver();
-Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
+// Start and end date to search on
+String startDateStr = "06/01/2016 12:30:00.00";
+String endDateStr = "06/10/2016 12:30:00.00";
 		
-String sqlStatement = "SELECT * FROM WaterMeterData WHERE time_stamp >= 1464739200000 AND time_stamp < 1464770000000;";
+// Convert string formats to epoch for TS
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+Date date = sdf.parse(startDateStr);
+long startDate = date.getTime();
+date = sdf.parse(endDateStr);
+long endDate = date.getTime();
+		
+String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + startDate +
+	"AND joined <= " + endDate + ";";
+		
 Statement statement = conn.createStatement();
 ResultSet rs = statement.executeQuery(sqlStatement);
+Assert.assertTrue(rs != null);
 		
 if (rs != null) {
 	while (rs.next()) {
-		System.out.println( rs.getString("customer_id") +  " | " + rs.getTimestamp("time_stamp") );
+		System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+			" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
 	}
 }
-		
-rs.close();
-conn.close();
+rs.close();;
 ```
+**Note** Riak TS stores dates as Unix Epochs and the code above demonstrates how to convert Java dates to Epoch for queries.
+
+Basic driver usage is demonstrated in the code block below. More example code is available in the project's tests.
+
 
 **Important Note**
 This driver only implements a small portion of the JDBC specification. When reading from a ResultSet the following operations are supported:
