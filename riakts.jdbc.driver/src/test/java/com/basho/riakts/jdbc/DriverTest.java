@@ -3,6 +3,7 @@ package com.basho.riakts.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,14 +18,17 @@ import org.junit.Test;
 public class DriverTest {
 
 	Driver d = null;
+	Connection conn = null;
 	
 	@Before
 	public void setUp() throws Exception {
 		d = new Driver();
+		conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		conn.close();
 		d = null;
 	}
 	
@@ -39,7 +43,6 @@ public class DriverTest {
 	 */
 	public void testSqlCreateTableSuccess() {
 		try {
-			Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 			String sqlStatement = "CREATE TABLE jdbcDriverTest " + 
 	    		"( " +
 	    			"name 			varchar   	not null, " +
@@ -56,13 +59,13 @@ public class DriverTest {
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	// Create Table returns 0 on success
 	    	Assert.assertTrue(result == 0);
-			conn.close();
 	    }
 	    catch (Exception e) {
 	    	String error = e.getMessage();
 	    	Assert.assertTrue(error.contains("already_active"));
 	    }
 	}
+	
 	
 	@Test
 	/***
@@ -71,7 +74,6 @@ public class DriverTest {
 	 */
 	public void testSqlCreateTableFailure() {
 		try {
-			Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 			String sqlStatement = "CREATE TABLE dontCreateMe " + 
 	    		"( " +
 	    			"name 			varchar   	not null, " +
@@ -87,13 +89,11 @@ public class DriverTest {
 			Statement statement = conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	Assert.assertFalse(result > -1);
-			conn.close();
 	    }
 	    catch (Exception e) {
 	    	Assert.assertTrue( e != null );
 	    }
-	}
-	
+	}	
 	
 	
 	@Test
@@ -104,8 +104,6 @@ public class DriverTest {
 	 * @throws SQLException
 	 */
 	public void testSqlDescribeTable() throws SQLException {
-		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
-		
 		String sqlStatement = "DESCRIBE jdbcDriverTest;";
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
@@ -119,13 +117,11 @@ public class DriverTest {
 		Assert.assertTrue(columnCount == 4);
 		
 		rs.close();
-		conn.close();
 	}
+	
 	
 	@Test
 	public void testSqlInsertData() throws SQLException, ParseException {
-		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
-		
 		// Create timestamp string for our record
 		String timeStamp = "06/06/2016 12:30:00.00";
 				
@@ -143,36 +139,34 @@ public class DriverTest {
     	int result = statement.executeUpdate(sqlStatement);
     	// Insert returns 0 on success
     	Assert.assertTrue(result == 0);
-		conn.close();
 	}
 
 	
 	@Test
 	public void testSqlSelect() throws SQLException {
-		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
-		Assert.assertFalse( conn.isClosed() );
-		
-		String sqlStatement = "SELECT * FROM WaterMeterData WHERE time_stamp >= 1464739200000 AND time_stamp < 1464770000000;";
-		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= 1465230400000 and joined <=1465230800000;";
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
+		Assert.assertTrue(rs != null);
 		
 		if (rs != null) {
 			while (rs.next()) {
-				System.out.println( rs.getString("customer_id") + " | " + rs.getString("meter_id")  + " | " + rs.getTimestamp("time_stamp") );
+				String name = rs.getString("name");
+				long age = rs.getLong("age");
+				Timestamp joined = rs.getTimestamp("joined");
+				double weight = rs.getDouble("weight");
+				
+				//System.out.println( name + " | " + Long.toString(age) + " | " + joined );
 			}
 		}
 		
 		rs.close();
-		conn.close();
 	}
 	
 	
 	@Test 
 	public void testConnection() throws SQLException {
-		Connection conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
 		Assert.assertFalse( conn.isClosed() );
-		conn.close();
 	}
 
 	@Test

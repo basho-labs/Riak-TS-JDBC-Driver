@@ -131,7 +131,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public double getDouble(String columnLabel) throws SQLException {
-		return Double.parseDouble( (String) currentRow[ columnList.indexOf(columnLabel) ] );
+		return (Double) currentRow[ columnList.indexOf(columnLabel) ];
 	}
 
 	public String getString(int columnIndex) throws SQLException {
@@ -143,19 +143,19 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {
-		return Boolean.valueOf( (String) currentRow[columnIndex] );
+		return (Boolean) currentRow[columnIndex];
 	}
 
 	public boolean getBoolean(String columnLabel) throws SQLException {
-		return Boolean.valueOf( (String) currentRow[ columnList.indexOf(columnLabel) ] );
+		return (Boolean) currentRow[ columnList.indexOf(columnLabel) ];
 	}
 	
 	public long getLong(int columnIndex) throws SQLException {
-		return Long.parseLong( (String) currentRow[columnIndex] );
+		return (Long) currentRow[columnIndex] ;
 	}
 
 	public long getLong(String columnLabel) throws SQLException {
-		return Long.parseLong( (String) currentRow[ columnList.indexOf(columnLabel) ] );
+		return (Long) currentRow[ columnList.indexOf(columnLabel) ];
 	}
 	
 	public Object getObject(int columnIndex) throws SQLException {
