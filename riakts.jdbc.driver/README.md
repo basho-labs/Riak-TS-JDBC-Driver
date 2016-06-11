@@ -34,8 +34,46 @@ rs.close();;
 ```
 **Note** Riak TS stores dates as Unix Epochs and the code above demonstrates how to convert Java dates to Epoch for queries.
 
-Basic driver usage is demonstrated in the code block below. More example code is available in the project's tests.
+See the following documentation for more information on querying Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/querying/
 
+The driver allow you to create new tables in Riak TS using CREATE TABLE and executeUpdate() as demonstrated below:
+```Java
+String sqlStatement = "CREATE TABLE jdbcDriverTest " + 
+	"( " +
+		"name 			varchar   	not null, " +
+	    "age			sint64   	not null, " +
+	    "joined        	timestamp 	not null, " +
+	    "weight		 	double		not null, " +
+	    "PRIMARY KEY ( " +
+	    "(quantum(joined, 365, 'd')), " +
+	    "	joined, name, age " +
+	") " +
+")";
+			
+Statement statement = conn.createStatement();
+int result = statement.executeUpdate(sqlStatement);
+```
+See the following documentation for more information about creating Riak TS tables: http://docs.basho.com/riak/ts/latest/using/creating-activating/
+
+The example below demonstrates how to add data to Riak TS using INSERT and executeUpdate():
+```Java
+// Create timestamp string for our record
+String timeStamp = "06/06/2016 12:30:00.00";
+				
+// Convert string format to epoch for TS
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+Date date = sdf.parse(timeStamp);
+long timeStampEpoch = date.getTime();
+		
+String sqlStatement = "INSERT INTO jdbcDriverTest " +
+	"(name, age, joined, weight) " +
+	"VALUES " +
+	"('Craig', 92, " + timeStampEpoch + ", 202.5);";
+		
+Statement statement = conn.createStatement();
+int result = statement.executeUpdate(sqlStatement);
+```
+**Important Note** In Riak TS 1.3 there is a bug that prevents insertion of boolean values via the SQL Insert command. This bug should be corrected in 1.4. See the following documentation for more information about adding data to Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/writingdata/#adding-data-via-sql
 
 **Important Note**
 This driver only implements a small portion of the JDBC specification. When reading from a ResultSet the following operations are supported:

@@ -162,12 +162,13 @@ public class DriverTest {
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
-		if (rs != null) {
-			while (rs.next()) {
-				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-			}
-		}
+		// Print out ResultSet for demonstraiton purposes only, commented out for normal test runs 
+//		if (rs != null) {
+//			while (rs.next()) {
+//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
+//			}
+//		}
 		rs.close();
 	}
 	
