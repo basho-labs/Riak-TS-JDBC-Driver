@@ -1,5 +1,8 @@
 # Riak TS JDBC Driver
-This code is a rough attempt at implementing a JDBC driver for Basho's open source Riak TS (Time Series) database (docs.basho.com/riakts/latest/).
+A basic JDBC driver for Basho's open source Riak TS (Time Series) database (docs.basho.com/riakts/latest/). The driver implements support for the following JDBC features also supported by Riak TS:
+
+- executeQuery(String sql) for SELECT and DESCRIBE TABLE statements
+- executeUpdate(String sql) for CREATE TABLE and INSERT statements
 
 Basic driver usage is demonstrated in the code block below. More example code is available in the project's tests.
 ```Java
@@ -48,9 +51,14 @@ A copy of the current version of the compiled JAR file is located in https://git
 2. Open the projects root directory from the command line: > /riakts.jdbc.driver
 3. Build the JAR using the following Maven command: > mvn install -DskipTests
 
-**Important Note** right now the JUnit tests included in the project are incomplete and one or more are likely to fail due to required Riak TS tables not existing on your build machine. Version 0.2 will add more complete tests that can be successfully executed.  
+**Important Note** remove **-DskipTests** if you want the JUnit tests to execute during the build.  
 
 # Release Notes
+Version 0.2:
+- Added executeUpdate() for CREATE TABLE and INSERT
+- Fixed Type conversion bugs in ResultSet
+- Added and corrected tests in DriverTest to verify support for CREATE TABLE, INSERT, SELECT, DESCRIBE TABLE
+- Updated and expanded documentation
 
 Version 0.1:
 - Initial Release
