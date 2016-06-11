@@ -1,14 +1,9 @@
 package com.basho.riakts.jdbc;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.basho.riak.client.core.query.timeseries.Cell;
