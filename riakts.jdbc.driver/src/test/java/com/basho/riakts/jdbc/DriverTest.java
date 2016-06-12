@@ -3,10 +3,7 @@ package com.basho.riakts.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 import junit.framework.Assert;
@@ -54,7 +51,7 @@ public class DriverTest {
 	    			"	joined, name, age " +
 	    			") " +
 	    		") WITH (n_val = 1)";
-			System.out.println(sqlStatement);
+			//System.out.println(sqlStatement);
 			
 			Statement statement = conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
@@ -138,27 +135,27 @@ public class DriverTest {
 	}
 	
 	
-	String[][] people = {
-			{"Lucy", "22", "06/06/2016 10:30:00.00", "104"},
-			{"Tom", "35", "06/06/2016 11:30:00.00", "180"},
-			{"Sarah", "15", "06/06/2016 13:30:00.00", "100"},
-			{"Mark", "42", "06/06/2016 14:30:00.00", "160"}
+	private static String[][] PEOPLE = {
+			{"Lucy", "22", "06/06/2016 10:30:00.00", "104.0"},
+			{"Tom", "35", "06/06/2016 11:30:00.00", "180.5"},
+			{"Sarah", "15", "06/06/2016 13:30:00.00", "100.1"},
+			{"Mark", "42", "06/06/2016 14:30:00.00", "160.8"}
 	};
 	
 	@Test
 	public void testSqlInsertMultipleRows() throws SQLException, ParseException {
-		// Create timestamp string for our record
-		String timeStamp = "06/06/2016 12:30:00.00";
-
-		String sqlStatement = "INSERT INTO jdbcDriverTest " +
-				"(name, age, joined, weight) " +
-				"VALUES " +
-				"('Craig', 92, " + Utility.dateStringToEpoch(timeStamp) + ", 202.5);";
-		
-		Statement statement = conn.createStatement();
-    	int result = statement.executeUpdate(sqlStatement);
-    	// Insert returns 0 on success
-    	Assert.assertTrue(result == 0);
+		for (String[] person : PEOPLE) {
+			String sqlStatement = "INSERT INTO jdbcDriverTest " +
+					"(name, age, joined, weight) " +
+					"VALUES " +
+					"('" + person[0] + "', " + person[1] + ", " + Utility.dateStringToEpoch(person[2]) + 
+					", " + person[3] + ");";
+			//System.out.println(sqlStatement);
+			Statement statement = conn.createStatement();
+	    	int result = statement.executeUpdate(sqlStatement);
+	    	// Insert returns 0 on success
+	    	Assert.assertTrue(result == 0);			
+		}
 	}
 	
 	
