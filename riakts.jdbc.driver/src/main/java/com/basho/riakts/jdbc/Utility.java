@@ -3,6 +3,9 @@ package com.basho.riakts.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -142,6 +145,19 @@ public class Utility {
 			}
 		}
 		return false;
+	}
+	
+	
+	/***
+	 * 
+	 * @param dateString
+	 * @return
+	 * @throws ParseException
+	 */
+	public static long dateStringToEpoch(String dateString) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+		Date date = sdf.parse(dateString);
+		return date.getTime();
 	}
 	
 	

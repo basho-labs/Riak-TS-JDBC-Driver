@@ -7,18 +7,12 @@ A basic JDBC driver for Basho's open source Riak TS (Time Series) database (docs
 The following example code demonstrates how to use the driver to execute a SELECT statement:
 ```Java
 // Start and end date to search on
-String startDateStr = "06/01/2016 12:30:00.00";
-String endDateStr = "06/10/2016 12:30:00.00";
+String startDateStr = "06/06/2016 0:00:00.00";
+String endDateStr = "06/06/2016 23:59:59.59";
 		
-// Convert string formats to epoch for TS
-SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-Date date = sdf.parse(startDateStr);
-long startDate = date.getTime();
-date = sdf.parse(endDateStr);
-long endDate = date.getTime();
-		
-String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + startDate +
-	"AND joined <= " + endDate + ";";
+String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+	Utility.dateStringToEpoch(startDateStr) +
+	" AND joined <= " + Utility.dateStringToEpoch(endDateStr) + ";";
 		
 Statement statement = conn.createStatement();
 ResultSet rs = statement.executeQuery(sqlStatement);
@@ -59,19 +53,16 @@ The example below demonstrates how to add data to Riak TS using INSERT and execu
 ```Java
 // Create timestamp string for our record
 String timeStamp = "06/06/2016 12:30:00.00";
-				
-// Convert string format to epoch for TS
-SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-Date date = sdf.parse(timeStamp);
-long timeStampEpoch = date.getTime();
 		
 String sqlStatement = "INSERT INTO jdbcDriverTest " +
 	"(name, age, joined, weight) " +
 	"VALUES " +
-	"('Craig', 92, " + timeStampEpoch + ", 202.5);";
+	"('Craig', 92, " + Utility.dateStringToEpoch(timeStamp) + ", 202.5);";
 		
 Statement statement = conn.createStatement();
 int result = statement.executeUpdate(sqlStatement);
+// Insert returns 0 on success
+Assert.assertTrue(result == 0);
 ```
 **Important Note** In Riak TS 1.3 there is a bug that prevents insertion of boolean values via the SQL Insert command. This bug should be corrected in 1.4. See the following documentation for more information about adding data to Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/writingdata/#adding-data-via-sql
 

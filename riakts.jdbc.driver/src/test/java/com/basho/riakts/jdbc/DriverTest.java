@@ -50,10 +50,11 @@ public class DriverTest {
 	    			"joined        	timestamp 	not null, " +
 	    			"weight		 	double		not null, " +
 	    			"PRIMARY KEY ( " +
-	    			"(quantum(joined, 365, 'd')), " +
+	    			"(quantum(joined, 5, 'd')), " +
 	    			"	joined, name, age " +
 	    			") " +
-	    		")";
+	    		") WITH (n_val = 1)";
+			System.out.println(sqlStatement);
 			
 			Statement statement = conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
@@ -81,10 +82,10 @@ public class DriverTest {
 	    			"joined        	timestamp 	not null, " +
 	    			"weight		 	double		not null, " +
 	    			"PRIMARY KEY ( " +
-	    			"(quantum(joined, 365, 'd')), " +
+	    			"(quantum(joined, 5, 'd')), " +
 	    			"	badColumn, name, age " +
 	    			") " +
-	    		")";
+	    		")  WITH (n_val = 1)";
 			
 			Statement statement = conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
@@ -124,39 +125,53 @@ public class DriverTest {
 	public void testSqlInsertData() throws SQLException, ParseException {
 		// Create timestamp string for our record
 		String timeStamp = "06/06/2016 12:30:00.00";
-				
-		// Convert string format to epoch for TS
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-		Date date = sdf.parse(timeStamp);
-		long timeStampEpoch = date.getTime();
 		
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
 				"(name, age, joined, weight) " +
 				"VALUES " +
-				"('Craig', 92, " + timeStampEpoch + ", 202.5);";
+				"('Craig', 92, " + Utility.dateStringToEpoch(timeStamp) + ", 202.5);";
 		
 		Statement statement = conn.createStatement();
     	int result = statement.executeUpdate(sqlStatement);
     	// Insert returns 0 on success
     	Assert.assertTrue(result == 0);
 	}
+	
+	
+	String[][] people = {
+			{"Lucy", "22", "06/06/2016 10:30:00.00", "104"},
+			{"Tom", "35", "06/06/2016 11:30:00.00", "180"},
+			{"Sarah", "15", "06/06/2016 13:30:00.00", "100"},
+			{"Mark", "42", "06/06/2016 14:30:00.00", "160"}
+	};
+	
+	@Test
+	public void testSqlInsertMultipleRows() throws SQLException, ParseException {
+		// Create timestamp string for our record
+		String timeStamp = "06/06/2016 12:30:00.00";
 
+		String sqlStatement = "INSERT INTO jdbcDriverTest " +
+				"(name, age, joined, weight) " +
+				"VALUES " +
+				"('Craig', 92, " + Utility.dateStringToEpoch(timeStamp) + ", 202.5);";
+		
+		Statement statement = conn.createStatement();
+    	int result = statement.executeUpdate(sqlStatement);
+    	// Insert returns 0 on success
+    	Assert.assertTrue(result == 0);
+	}
+	
 	
 	@Test
 	public void testSqlSelect() throws SQLException, ParseException {
 		// Start and end date to search on
-		String startDateStr = "06/01/2016 12:30:00.00";
-		String endDateStr = "06/10/2016 12:30:00.00";
+		String startDateStr = "06/06/2016 0:00:00.00";
+		String endDateStr = "06/06/2016 23:59:59.59";
 		
-		// Convert string formats to epoch for TS
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
-		Date date = sdf.parse(startDateStr);
-		long startDate = date.getTime();
-		date = sdf.parse(endDateStr);
-		long endDate = date.getTime();
-		
-		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + startDate +
-				"AND joined <= " + endDate + ";";
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringToEpoch(endDateStr) + ";";
+		//System.out.println(sqlStatement);
 		
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
