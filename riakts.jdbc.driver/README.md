@@ -30,6 +30,17 @@ rs.close();;
 
 See the following documentation for more information on querying Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/querying/
 
+Currently the Riak TS JDBC driver only implements a small subset of the functionality typically found in a fully featured driver. When reading from a ResultSet the following operations are supported:
+
+- next()
+- close()
+- getTimestamp(int columnIndex), getTimestamp(String columnLabel)
+- getDouble(int columnIndex), getDouble(String columnLabel)
+- getString(int columnIndex), getString(String columnLabel)
+- getBoolean(int columnIndex), getBoolean(String columnLabel)
+- getLong(int columnIndex), getLong(String columnLabel)
+- getObject(int columnIndex), getObject(String columnLabel)
+
 The driver allow you to create new tables in Riak TS using CREATE TABLE and executeUpdate() as demonstrated below:
 ```Java
 String sqlStatement = "CREATE TABLE jdbcDriverTest " + 
@@ -65,18 +76,6 @@ int result = statement.executeUpdate(sqlStatement);
 Assert.assertTrue(result == 0);
 ```
 **Important Note** In Riak TS 1.3 there is a bug that prevents insertion of boolean values via the SQL Insert command. This bug should be corrected in 1.4. See the following documentation for more information about adding data to Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/writingdata/#adding-data-via-sql
-
-**Important Note**
-This driver only implements a small portion of the JDBC specification. When reading from a ResultSet the following operations are supported:
-
-- next()
-- close()
-- getTimestamp(int columnIndex), getTimestamp(String columnLabel)
-- getDouble(int columnIndex), getDouble(String columnLabel)
-- getString(int columnIndex), getString(String columnLabel)
-- getBoolean(int columnIndex), getBoolean(String columnLabel)
-- getLong(int columnIndex), getLong(String columnLabel)
-- getObject(int columnIndex), getObject(String columnLabel)
 
 # Riak TS to JDBC Data Types
 When writing data from the Riak TS QueryResult object to the JDBC ResultSet object the driver converts Riak TS's data types in the following mapping:
