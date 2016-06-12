@@ -12,8 +12,8 @@ import com.basho.riak.client.core.query.timeseries.QueryResult;
 
 public class Statement implements java.sql.Statement {
 	
-	RiakClient _client;
-	ResultSet _resultSet;
+	private RiakClient _client;
+	private ResultSet _resultSet;
 	
 	Statement(RiakClient client, int type, int concurrency, int holdability) {
 		if ( type != 0 || concurrency != 0 || holdability != 0 )

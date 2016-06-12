@@ -23,27 +23,32 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class ResultSet implements java.sql.ResultSet {
-	
-	static final int HOLD_CURSORS_OVER_COMMIT = 1;
-    static final int CLOSE_CURSORS_AT_COMMIT  = 2;
-    protected static final int POS_BEFORE_FIRST = -1;
+	protected static final int POS_BEFORE_FIRST = -1;
     protected static final int POS_AFTER_LAST = -1;
-	
-    protected int direction = FETCH_FORWARD;
+	protected int direction = FETCH_FORWARD;
 	protected int fetchDirection = FETCH_FORWARD;
 	
 	/** The current row number that is being written to or read from. */
     protected int rowPosition = POS_BEFORE_FIRST;
+    
     /** Total number of rows in the ResultSet */
 	protected int rowsInResult = 0;
+	
 	/** Number of columns in the ResultSet */
 	protected int columnCount = 0;
 	
-	protected ArrayList<Object[]> rowData;
-	protected Object[] currentRow;
-	ArrayList<String> columnList;
+	/** List of column names imported from the Riak TS QueryResult */
+	protected ArrayList<String> columnList;
 	
+	/** Rows of data copied from Riak TS QueryResult to JDBC ResultSet */
+	protected ArrayList<Object[]> rowData;
+
+	/** Whether or not the ResultSet is closed */
 	protected boolean closed;
+
+	private Object[] currentRow;
+	private Object[] insertRow;
+	private boolean inserting = false;
 	
 	
 	ResultSet() { 
@@ -67,11 +72,8 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	
-	protected Object[] insertRow;
-	protected boolean inserting = false;
-	
 	public void moveToInsertRow() throws SQLException {
-		// Throw exception if there are now columns or rows
+		// Throw exception if there are no columns or rows in the QueryResult
 		if (columnCount == 0 || rowsInResult == 0) throw new SQLException();
 		
 		// Create a new Object[] to store column values
@@ -91,7 +93,7 @@ public class ResultSet implements java.sql.ResultSet {
 		// Set inserting back to false
 		inserting = false;
 		
-		// Update currentRow to equal or newly added row
+		// Update currentRow to equal our newly added row
 		currentRow = rowData.get(rowData.size() - 1);
 	}
 	
