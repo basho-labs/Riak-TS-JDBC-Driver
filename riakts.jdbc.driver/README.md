@@ -102,6 +102,7 @@ Version 0.2:
 - Added executeUpdate() for CREATE TABLE and INSERT
 - Fixed Type conversion bugs in ResultSet
 - Added and corrected tests in DriverTest to verify support for CREATE TABLE, INSERT, SELECT, DESCRIBE TABLE
+- Added tests for next(), previous(), first(), last(), absolute(), relative(), beforeFirst(), afterLast(), isFirst(), isLast(), isBeforeFirst(), isAfterLast()
 - Updated and expanded documentation
 
 Version 0.1:
