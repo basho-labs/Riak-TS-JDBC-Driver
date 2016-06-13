@@ -50,7 +50,6 @@ public class ResultSet implements java.sql.ResultSet {
 	private Object[] insertRow;
 	private boolean inserting = false;
 	
-	
 	ResultSet() { 
 		closed = false;
 		rowData = new ArrayList<Object[]>();
@@ -261,13 +260,8 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean absolute(int row) throws SQLException {
-		if (rowData.size() > 0 && row <= rowData.size()) {
-			rowPosition = row;
-			setCurrentRow(rowPosition);
-			return true;
-		}
-		if (row == -1 && rowData.size() > 0) {
-			rowPosition = rowData.size() - 1;
+		if (rowData.size() > 0 && row <= rowData.size() && row >= 0) {
+			rowPosition = row - 1;
 			setCurrentRow(rowPosition);
 			return true;
 		}

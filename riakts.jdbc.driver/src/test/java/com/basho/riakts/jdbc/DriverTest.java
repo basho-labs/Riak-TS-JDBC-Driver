@@ -188,6 +188,60 @@ public class DriverTest {
 		rs.close();
 	}
 	
+	@Test
+	/***
+	 * Tests methods that moves the ResultSet cursor
+	 * The tests are based on a ResultSet that returns 9 records
+	 * @throws ParseException
+	 * @throws SQLException
+	 */
+	public void testRowPosition() throws ParseException, SQLException {
+		// Start and end date to search on
+		String startDateStr = "06/06/2016 0:00:00.00";
+		String endDateStr = "06/06/2016 23:59:59.59";
+
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringToEpoch(endDateStr) + ";";
+		//System.out.println(sqlStatement);
+
+		Statement statement = conn.createStatement();
+		ResultSet rs = statement.executeQuery(sqlStatement);
+		Assert.assertTrue(rs != null);
+		
+		// Move to first row in ResultSet
+		rs.first();
+		Assert.assertTrue(rs.getRow() == 0);
+		
+		// Move to the next row in the ResultSet
+		rs.next();
+		Assert.assertTrue(rs.getRow() == 1);
+		
+		// Move to last row in ResultSet 
+		rs.last();
+		Assert.assertTrue(rs.getRow() == 8);
+		
+		// Move to the previous row read
+		rs.previous();
+		Assert.assertTrue(rs.getRow() == 7);
+		
+		// Move to row number 4 (which is actually row[3]
+		rs.absolute(4);
+		Assert.assertTrue(rs.getRow() == 3);
+		
+		// Move 2 rows forward in the ResultSet
+		rs.relative(2);
+		Assert.assertTrue(rs.getRow() == 5);
+		
+		// Move to before the first row of the ResultSet
+		rs.beforeFirst();
+		Assert.assertTrue(rs.getRow() == -1);
+		
+		// Move to after the last row of the ResultSet
+		rs.afterLast();
+		Assert.assertTrue(rs.getRow() == -1);
+	}
+	
 	
 	@Test 
 	public void testConnection() throws SQLException {
