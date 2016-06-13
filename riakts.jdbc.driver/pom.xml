@@ -4,7 +4,30 @@
   <artifactId>riakts.jdbc.driver</artifactId>
   <version>0.2</version>
   <name>Riak TS JDBC Driver</name>
-  
+
+  <build>
+<plugins>
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-assembly-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>create-my-bundle</id>
+      <phase>package</phase>
+      <goals>
+        <goal>single</goal>
+      </goals>
+      <configuration>
+        <descriptorRefs>
+          <descriptorRef>jar-with-dependencies</descriptorRef>
+        </descriptorRefs>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+</plugins>
+  </build>
+
   <dependencies>
   	<dependency>
   		<groupId>com.basho.riak</groupId>
