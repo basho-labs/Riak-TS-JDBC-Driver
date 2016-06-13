@@ -32,7 +32,9 @@ See the following documentation for more information on querying Riak TS with SQ
 
 Currently the Riak TS JDBC driver only implements a small subset of the functionality typically found in a fully featured driver. When reading from a ResultSet the following operations are supported:
 
-- next()
+- next(), previous(), first(), last(), absolute(), relative(), beforeFirst(), afterLast()
+- getRow()
+- isFirst(), isLast(), isBeforeFirst(), isAfterLast()
 - close()
 - getTimestamp(int columnIndex), getTimestamp(String columnLabel)
 - getDouble(int columnIndex), getDouble(String columnLabel)
