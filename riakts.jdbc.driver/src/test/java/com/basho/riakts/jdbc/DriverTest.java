@@ -212,6 +212,7 @@ public class DriverTest {
 		// Move to first row in ResultSet
 		rs.first();
 		Assert.assertTrue(rs.getRow() == 0);
+		Assert.assertTrue(rs.isFirst());
 		
 		// Move to the next row in the ResultSet
 		rs.next();
@@ -220,6 +221,7 @@ public class DriverTest {
 		// Move to last row in ResultSet 
 		rs.last();
 		Assert.assertTrue(rs.getRow() == 8);
+		Assert.assertTrue(rs.isLast());
 		
 		// Move to the previous row read
 		rs.previous();
@@ -236,10 +238,11 @@ public class DriverTest {
 		// Move to before the first row of the ResultSet
 		rs.beforeFirst();
 		Assert.assertTrue(rs.getRow() == -1);
+		Assert.assertTrue(rs.isBeforeFirst());
 		
 		// Move to after the last row of the ResultSet
 		rs.afterLast();
-		Assert.assertTrue(rs.getRow() == -1);
+		Assert.assertTrue(rs.isAfterLast());
 	}
 	
 	

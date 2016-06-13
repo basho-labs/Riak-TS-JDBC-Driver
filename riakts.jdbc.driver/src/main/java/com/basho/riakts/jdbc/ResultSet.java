@@ -234,7 +234,7 @@ public class ResultSet implements java.sql.ResultSet {
 
 	public void afterLast() throws SQLException {
 		currentRow = null;
-		rowPosition = -1;
+		rowPosition = rowData.size() + 1;
 	}
 
 	public boolean first() throws SQLException {
