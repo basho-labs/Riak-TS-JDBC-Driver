@@ -172,19 +172,19 @@ public class DriverTest {
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
-		System.out.println(sqlStatement);
+		//System.out.println(sqlStatement);
 		
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
 		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
-		if (rs != null) {
-			while (rs.next()) {
-				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-			}
-		}
+//		if (rs != null) {
+//			while (rs.next()) {
+//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
+//			}
+//		}
 		rs.close();
 	}
 	
