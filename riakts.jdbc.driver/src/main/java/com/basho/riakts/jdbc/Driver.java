@@ -2,6 +2,7 @@ package com.basho.riakts.jdbc;
 
 import java.net.UnknownHostException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
@@ -9,6 +10,17 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 public class Driver implements java.sql.Driver {
+	
+	/***
+	 * Register the driver with DriverManager
+	 */
+    static {
+        try {
+            DriverManager.registerDriver(new Driver());
+        } 
+        catch (SQLException e) {
+        }
+    }
 	
 	// Variables need to be updated on a per release basis
 	private static int MAJOR_VERSION = 0;

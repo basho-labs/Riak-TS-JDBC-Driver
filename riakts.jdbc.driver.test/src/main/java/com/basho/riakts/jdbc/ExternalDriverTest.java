@@ -18,12 +18,6 @@ public class ExternalDriverTest {
 
 		try {
 			Class.forName(JDBC_DRIVER);
-			
-			Driver d = new Driver();
-			conn = (Connection) d.connect(DB_URL, null);
-			
-			// TODO: Figure out the following connection error when trying to connect via DriverManager:
-			// "java.sql.SQLException: No suitable driver found for riakts://127.0.0.1:8087"
 			conn = (Connection) DriverManager.getConnection(DB_URL);
 			
 			String sql = "SELECT * FROM jdbcDriverTest WHERE joined >= 1465185600000 AND joined <= 1465271999059;";
