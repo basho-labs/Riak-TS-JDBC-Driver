@@ -126,7 +126,7 @@ public class DriverTest {
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
 				"(name, age, joined, weight) " +
 				"VALUES " +
-				"('Craig', 92, " + Utility.dateStringToEpoch(timeStamp) + ", 202.5);";
+				"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
 		
 		Statement statement = conn.createStatement();
     	int result = statement.executeUpdate(sqlStatement);
@@ -152,7 +152,7 @@ public class DriverTest {
 			String sqlStatement = "INSERT INTO jdbcDriverTest " +
 					"(name, age, joined, weight) " +
 					"VALUES " +
-					"('" + person[0] + "', " + person[1] + ", " + Utility.dateStringToEpoch(person[2]) + 
+					"('" + person[0] + "', " + person[1] + ", " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(person[2]) + 
 					", " + person[3] + ");";
 			//System.out.println(sqlStatement);
 			Statement statement = conn.createStatement();
@@ -166,25 +166,25 @@ public class DriverTest {
 	@Test
 	public void testSqlSelect() throws SQLException, ParseException {
 		// Start and end date to search on
-		String startDateStr = "06/06/2016 0:00:00.00";
-		String endDateStr = "06/06/2016 23:59:59.59";
+		String startDateStr = "06/01/2016 0:00:00.00";
+		String endDateStr = "06/11/2016 23:59:59.59";
 		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
-				Utility.dateStringToEpoch(startDateStr) +
-				" AND joined <= " + Utility.dateStringToEpoch(endDateStr) + ";";
-		//System.out.println(sqlStatement);
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+		System.out.println(sqlStatement);
 		
 		Statement statement = conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
-		// Print out ResultSet for demonstraiton purposes only, commented out for normal test runs 
-//		if (rs != null) {
-//			while (rs.next()) {
-//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-//			}
-//		}
+		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
+		if (rs != null) {
+			while (rs.next()) {
+				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
+			}
+		}
 		rs.close();
 	}
 	
@@ -201,8 +201,8 @@ public class DriverTest {
 		String endDateStr = "06/06/2016 23:59:59.59";
 
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
-				Utility.dateStringToEpoch(startDateStr) +
-				" AND joined <= " + Utility.dateStringToEpoch(endDateStr) + ";";
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		//System.out.println(sqlStatement);
 
 		Statement statement = conn.createStatement();

@@ -154,8 +154,8 @@ public class Utility {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static long dateStringToEpoch(String dateString) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS");
+	public static long dateStringMMddyyyyHHmmssSSToEpoch(String dateString) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS");
 		Date date = sdf.parse(dateString);
 		return date.getTime();
 	}
