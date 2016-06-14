@@ -98,6 +98,10 @@ A copy of the current version of the compiled JAR file is located in https://git
 **Important Note** remove **-DskipTests** if you want the JUnit tests to execute during the build.  
 
 # Release Notes
+Version 0.3:
+- Fix riakts.jdbc.driver.Driver to register with DriverManager so that third party apps can use the driver
+- Create an external test project (riakts.jdbc.driver.test) to test that the driver works with third party apps
+
 Version 0.2:
 - Added executeUpdate() for CREATE TABLE and INSERT
 - Fixed Type conversion bugs in ResultSet
