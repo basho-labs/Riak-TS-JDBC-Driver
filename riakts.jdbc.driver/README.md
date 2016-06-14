@@ -11,8 +11,8 @@ String startDateStr = "06/06/2016 0:00:00.00";
 String endDateStr = "06/06/2016 23:59:59.59";
 		
 String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
-	Utility.dateStringToEpoch(startDateStr) +
-	" AND joined <= " + Utility.dateStringToEpoch(endDateStr) + ";";
+	Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+	" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		
 Statement statement = conn.createStatement();
 ResultSet rs = statement.executeQuery(sqlStatement);
@@ -70,7 +70,7 @@ String timeStamp = "06/06/2016 12:30:00.00";
 String sqlStatement = "INSERT INTO jdbcDriverTest " +
 	"(name, age, joined, weight) " +
 	"VALUES " +
-	"('Craig', 92, " + Utility.dateStringToEpoch(timeStamp) + ", 202.5);";
+	"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
 		
 Statement statement = conn.createStatement();
 int result = statement.executeUpdate(sqlStatement);
