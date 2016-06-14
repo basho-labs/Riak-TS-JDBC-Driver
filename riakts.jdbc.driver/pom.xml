@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.basho</groupId>
   <artifactId>riakts.jdbc.driver</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
   <name>Riak TS JDBC Driver</name>
 
   <build>
