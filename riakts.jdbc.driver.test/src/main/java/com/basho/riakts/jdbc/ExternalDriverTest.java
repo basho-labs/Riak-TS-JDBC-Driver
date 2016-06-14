@@ -13,12 +13,11 @@ public class ExternalDriverTest {
 	static final String DB_URL = "riakts://127.0.0.1:8087";
 	
 	public static void main(String[] args) {
-		Connection conn = null;
-		Statement stmt = null;
+		java.sql.Connection conn = null;
 
 		try {
 			Class.forName(JDBC_DRIVER);
-			conn = (Connection) DriverManager.getConnection(DB_URL);
+			conn = DriverManager.getConnection(DB_URL);
 			
 			String sql = "SELECT * FROM jdbcDriverTest WHERE joined >= 1465185600000 AND joined <= 1465271999059;";
 			Statement statement = conn.createStatement();
@@ -34,7 +33,5 @@ public class ExternalDriverTest {
 		catch (Exception e) {
 			System.out.print(e);
 		}
-
 	}
-
 }
