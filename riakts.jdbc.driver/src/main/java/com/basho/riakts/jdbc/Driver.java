@@ -11,6 +11,11 @@ import java.util.logging.Logger;
 
 public class Driver implements java.sql.Driver {
 	
+	// Variables need to be updated on a per release basis
+	private static int MAJOR_VERSION = 0;
+	private static int MINOR_VERSION = 4;
+	private static boolean JDBC_COMPLIANT = false;
+	
 	/***
 	 * Register the driver with DriverManager
 	 */
@@ -21,12 +26,6 @@ public class Driver implements java.sql.Driver {
         catch (SQLException e) {
         }
     }
-	
-	// Variables need to be updated on a per release basis
-	private static int MAJOR_VERSION = 0;
-	private static int MINOR_VERSION = 1;
-	private static boolean JDBC_COMPLIANT = false;
-
 	
 	public Connection connect(String url, Properties info) throws SQLException {
 		// Validate that either the URL is valid or required 
