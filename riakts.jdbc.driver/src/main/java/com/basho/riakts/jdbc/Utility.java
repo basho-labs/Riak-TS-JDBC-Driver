@@ -34,7 +34,6 @@ public class Utility {
 			rs.columnList.add(desc.getName());
 		}
 		rs.columnCount = rs.columnList.size();
-		
 		rs.rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object
@@ -81,12 +80,10 @@ public class Utility {
 					rs.updateString(colIndex, cell.getVarcharValue().toString());
 				}
 				colIndex++;
-			}
-			
+			}	
 			// Adds new row to the ResultSet
 			rs.insertRow();
 		}
-		
 		return rs;
 	}
 	
@@ -149,7 +146,8 @@ public class Utility {
 	
 	
 	/***
-	 * 
+	 * Simple helper method that converts date strings in the 
+	 * MM/dd/yyyy HH:mm:ss.SS format to long
 	 * @param dateString
 	 * @return
 	 * @throws ParseException

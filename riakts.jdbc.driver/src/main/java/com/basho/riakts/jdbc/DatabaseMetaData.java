@@ -8,23 +8,45 @@ import java.sql.SQLException;
 public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	
 	// These variables need to be updated with new releases
+	private static String DRIVER_NAME = "Riak TS JDBC Driver";
+	private static String DRIVER_VERSION = "0.4";
+	private static int DRIVER_MAJOR_VERSION = 0;
+	private static int DRIVER_MINOR_VERSION = 4;
+	
+	// Riak TS Product Variables
+	private static String DATABASE_PRODUCT_NAME = "Riak TS";
+	private static String DATABASE_PRODUCT_VERSION = "1.3";
+	
+	// JDBC Driver specific variables that won't update a lot
 	private static boolean IS_READ_ONLY = false; 
 	private static boolean NULLS_ARE_SORTED_HIGH = false;
 	private static boolean NULLS_ARE_SORTED_LOW = false;
 	private static boolean NULLS_ARE_SORTED_AT_START = false;
 	private static boolean NULLS_ARE_SORTED_AT_END = false;
-	private static String DATABASE_PRODUCT_NAME = "Riak TS";
-	private static String DATABASE_PRODUCT_VERSION = "1.3";
-	private static String DRIVER_NAME = "Riak TS JDBC Driver";
-	private static String DRIVER_VERSION = "0.1";
-	private static int DRIVER_MAJOR_VERSION = 0;
-	private static int DRIVER_MINOR_VERSION = 1;
 	private static boolean USES_LOCAL_FILES = false;
 	private static String SQL_KEYWORDS = "";
 	private static String STRING_FUNCTIONS = "";
 	private static String NUMERIC_FUNCTIONS = "";
 	private static String SYSTEM_FUNCTIONS = "";
 	private static String TIME_DATE_FUNCTIONS = "";
+	private static boolean ALTER_TABLE_ADD_COLUMN = false;
+	private static boolean ALTER_TABLE_DROP_COLUMN = false;
+	private static boolean COLUMN_ALIASING = false;
+	private static boolean EXPRESIONS_IN_ORDER_BY = false;
+	private static boolean ORDER_BY_UNRELATED = false;
+	private static boolean SUPPORTS_GROUP_BY = false;
+	private static boolean GROUP_BY_UNRELATED = false;
+	private static boolean GROUP_BY_BEYOND_SELECT = false;
+	private static boolean LIKE_ESCAPE_CLAUSE = false;
+	private static boolean NON_NULLABLE_COLUMNS = false;
+	private static boolean OUTER_JOINS = false;
+	private static boolean FULL_OUTER_JOINS = false;
+	private static boolean LIMITED_OUTER_JOINS = false;
+	private static String SCHEMA_TERM = "";
+	private static String PROCEDURE_TERM = "";
+	private static String CATALOG_TERM = "";
+	private static boolean UNION = false;
+	private static boolean UNION_ALL = false;
 	
 	
 	private String _url = null;
@@ -50,8 +72,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getURL() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return _url;
 	}
 
 	public String getUserName() throws SQLException {
@@ -167,279 +188,223 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getSearchStringEscape() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getExtraNameCharacters() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public boolean supportsAlterTableWithAddColumn() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return ALTER_TABLE_ADD_COLUMN;
 	}
 
 	public boolean supportsAlterTableWithDropColumn() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return ALTER_TABLE_DROP_COLUMN;
 	}
 
 	public boolean supportsColumnAliasing() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return COLUMN_ALIASING;
 	}
 
 	public boolean nullPlusNonNullIsNull() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsConvert() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	public boolean supportsConvert(int fromType, int toType)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public boolean supportsConvert(int fromType, int toType) throws SQLException {
 		return false;
 	}
 
 	public boolean supportsTableCorrelationNames() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsDifferentTableCorrelationNames() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsExpressionsInOrderBy() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return EXPRESIONS_IN_ORDER_BY;
 	}
 
 	public boolean supportsOrderByUnrelated() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return ORDER_BY_UNRELATED;
 	}
 
 	public boolean supportsGroupBy() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return SUPPORTS_GROUP_BY;
 	}
 
 	public boolean supportsGroupByUnrelated() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return GROUP_BY_UNRELATED;
 	}
 
 	public boolean supportsGroupByBeyondSelect() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return GROUP_BY_BEYOND_SELECT;
 	}
 
 	public boolean supportsLikeEscapeClause() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return LIKE_ESCAPE_CLAUSE;
 	}
 
 	public boolean supportsMultipleResultSets() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsMultipleTransactions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsNonNullableColumns() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return NON_NULLABLE_COLUMNS;
 	}
 
 	public boolean supportsMinimumSQLGrammar() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCoreSQLGrammar() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsExtendedSQLGrammar() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsANSI92EntryLevelSQL() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsANSI92IntermediateSQL() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsANSI92FullSQL() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsIntegrityEnhancementFacility() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsOuterJoins() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return OUTER_JOINS;
 	}
 
 	public boolean supportsFullOuterJoins() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return FULL_OUTER_JOINS;
 	}
 
 	public boolean supportsLimitedOuterJoins() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return LIMITED_OUTER_JOINS;
 	}
 
 	public String getSchemaTerm() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return SCHEMA_TERM;
 	}
 
 	public String getProcedureTerm() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return PROCEDURE_TERM;
 	}
 
 	public String getCatalogTerm() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return CATALOG_TERM;
 	}
 
 	public boolean isCatalogAtStart() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public String getCatalogSeparator() throws SQLException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public boolean supportsSchemasInDataManipulation() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSchemasInProcedureCalls() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSchemasInTableDefinitions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSchemasInIndexDefinitions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSchemasInPrivilegeDefinitions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCatalogsInDataManipulation() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCatalogsInProcedureCalls() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCatalogsInTableDefinitions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCatalogsInIndexDefinitions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCatalogsInPrivilegeDefinitions() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsPositionedDelete() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsPositionedUpdate() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSelectForUpdate() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsStoredProcedures() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSubqueriesInComparisons() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSubqueriesInExists() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSubqueriesInIns() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsSubqueriesInQuantifieds() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	public boolean supportsCorrelatedSubqueries() throws SQLException {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 	public boolean supportsUnion() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return UNION;
 	}
 
 	public boolean supportsUnionAll() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return UNION_ALL;
 	}
 
 	public boolean supportsOpenCursorsAcrossCommit() throws SQLException {
