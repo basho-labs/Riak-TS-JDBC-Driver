@@ -1,9 +1,12 @@
 package com.basho.riakts.jdbc;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class CreateWeatherDataTable {
 	static final String JDBC_DRIVER = "com.basho.riakts.jdbc.Driver";  
 	static final String DB_URL = "riakts://127.0.0.1:8087";
-
 	static final String sql = "" +
 			"CREATE TABLE BayAreaWeatherData (" +
 			"	    date               timestamp     not null," +
@@ -39,8 +42,19 @@ public class CreateWeatherDataTable {
 			"	    n_val=1" +
 			"	)";
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws SQLException {
+		java.sql.Connection conn = null;
+
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL);
+			Statement statement = conn.createStatement();
+			int result = statement.executeUpdate(sql);
+			System.out.print("Result Output: " + result);
+		}
+		catch (Exception e) {
+			System.out.print(e);
+		}
 	}
 	
 }
