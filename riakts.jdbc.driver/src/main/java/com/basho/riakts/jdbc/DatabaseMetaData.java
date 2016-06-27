@@ -208,6 +208,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public boolean nullPlusNonNullIsNull() throws SQLException {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
