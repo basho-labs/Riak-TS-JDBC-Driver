@@ -21,23 +21,63 @@ import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.timeseries.Query;
+import com.basho.riak.client.core.query.timeseries.QueryResult;
 
 public class PreparedStatement implements java.sql.PreparedStatement {
 	
 	private RiakClient _client;
 	private ResultSet _resultSet;
+	private String _sqlQuery;
 	
 	PreparedStatement(RiakClient client, String sql, int type, int concurrency, int holdability) { 
 		if ( type != 0 || concurrency != 0 || holdability != 0 ) throw new UnsupportedOperationException(  );
+		
 		_client = client;
+		_sqlQuery = sql;
 	}
-
+	
+	/***
+	 * Executes SQL query against Riak TS and converts QueryResult object
+	 * to ResultSet and sets _resultSet value
+	 * @param sql
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 * @throws SQLException 
+	 */
+	private void query(String sql) throws ExecutionException, InterruptedException, SQLException {
+		Query query = new Query.Builder(sql).build();
+		QueryResult queryResult = _client.execute(query);
+		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
+	} // TODO: query function exists in Statement and PreparedStatement and needs refactoring
+	
 	public ResultSet executeQuery(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			query(sql);
+			return _resultSet;
+		} 
+		catch (Exception e) {
+			throw new SQLException(e);
+		}
 	}
+	
+	public boolean execute() throws SQLException {
+		try {
+			query(_sqlQuery);
+			return true;
+		} 
+		catch (Exception e) {
+			throw new SQLException(e);
+		}
+	}
+	
+	public ResultSet getResultSet() throws SQLException {
+		return _resultSet;
+	}
+	
 
 	public int executeUpdate(String sql) throws SQLException {
 		// TODO Auto-generated method stub
@@ -109,10 +149,7 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		return false;
 	}
 
-	public ResultSet getResultSet() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public int getUpdateCount() throws SQLException {
 		// TODO Auto-generated method stub
@@ -375,10 +412,7 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		
 	}
 
-	public boolean execute() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 
 	public void addBatch() throws SQLException {
 		// TODO Auto-generated method stub
