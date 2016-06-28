@@ -20,21 +20,7 @@ public class Statement implements java.sql.Statement {
             throw new UnsupportedOperationException(  );
 		_client = client;
 	}
-	
-	/***
-	 * Executes SQL query against Riak TS and converts QueryResult object
-	 * to ResultSet and sets _resultSet value
-	 * @param sql
-	 * @throws ExecutionException
-	 * @throws InterruptedException
-	 * @throws SQLException 
-	 */
-	private void query(String sql) throws ExecutionException, InterruptedException, SQLException {
-		Query query = new Query.Builder(sql).build();
-		QueryResult queryResult = _client.execute(query);
-		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
-	}
-	
+
 	
 	public int executeUpdate(String sql) throws SQLException {
 		Query query = new Query.Builder(sql).build();
@@ -50,7 +36,7 @@ public class Statement implements java.sql.Statement {
 
 	public ResultSet executeQuery(String sql) throws SQLException {
 		try {
-			query(sql);
+			_resultSet = Utility.query(_client, sql);
 			return _resultSet;
 		} 
 		catch (Exception e) {
@@ -60,7 +46,7 @@ public class Statement implements java.sql.Statement {
 	
 	public boolean execute(String sql) throws SQLException {
 		try {
-			query(sql);
+			_resultSet = Utility.query(_client, sql);
 			return true;
 		} 
 		catch (Exception e) {

@@ -8,7 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
+import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.timeseries.Query;
 import com.basho.riak.client.core.query.timeseries.Cell;
 import com.basho.riak.client.core.query.timeseries.ColumnDescription;
 import com.basho.riak.client.core.query.timeseries.QueryResult;
@@ -16,6 +19,21 @@ import com.basho.riak.client.core.query.timeseries.Row;
 import com.google.common.net.InetAddresses;
 
 public class Utility {
+	
+	/***
+	 * Executes SQL query against Riak TS and converts QueryResult object
+	 * to ResultSet and sets _resultSet value
+	 * @param sql
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 * @throws SQLException 
+	 */
+	public static ResultSet query(RiakClient client, String sql) throws ExecutionException, InterruptedException, SQLException {
+		Query query = new Query.Builder(sql).build();
+		QueryResult queryResult = client.execute(query);
+		return Utility.getResultSetFromQueryResult(queryResult);
+	}
+	
 	
 	/***
 	 * Converts a Riak TS QueryResult object to a JDBC ResultSet 

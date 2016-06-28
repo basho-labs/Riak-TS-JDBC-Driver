@@ -21,11 +21,8 @@ import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 import com.basho.riak.client.api.RiakClient;
-import com.basho.riak.client.api.commands.timeseries.Query;
-import com.basho.riak.client.core.query.timeseries.QueryResult;
 
 public class PreparedStatement implements java.sql.PreparedStatement {
 	
@@ -40,23 +37,20 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		_sqlQuery = sql;
 	}
 	
-	/***
-	 * Executes SQL query against Riak TS and converts QueryResult object
-	 * to ResultSet and sets _resultSet value
-	 * @param sql
-	 * @throws ExecutionException
-	 * @throws InterruptedException
-	 * @throws SQLException 
-	 */
-	private void query(String sql) throws ExecutionException, InterruptedException, SQLException {
-		Query query = new Query.Builder(sql).build();
-		QueryResult queryResult = _client.execute(query);
-		_resultSet = Utility.getResultSetFromQueryResult(queryResult);
-	} // TODO: query function exists in Statement and PreparedStatement and needs refactoring
-	
+
 	public ResultSet executeQuery(String sql) throws SQLException {
 		try {
-			query(sql);
+			_resultSet = Utility.query(_client, sql);
+			return _resultSet;
+		} 
+		catch (Exception e) {
+			throw new SQLException(e);
+		}
+	}
+	
+	public ResultSet executeQuery() throws SQLException {
+		try {
+			_resultSet = Utility.query(_client, _sqlQuery);
 			return _resultSet;
 		} 
 		catch (Exception e) {
@@ -66,7 +60,7 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 	
 	public boolean execute() throws SQLException {
 		try {
-			query(_sqlQuery);
+			_resultSet = Utility.query(_client, _sqlQuery);
 			return true;
 		} 
 		catch (Exception e) {
@@ -296,10 +290,7 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		return false;
 	}
 
-	public ResultSet executeQuery() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public int executeUpdate() throws SQLException {
 		// TODO Auto-generated method stub
