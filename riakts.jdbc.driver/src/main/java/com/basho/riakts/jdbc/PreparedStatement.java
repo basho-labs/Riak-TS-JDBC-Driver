@@ -22,7 +22,17 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import com.basho.riak.client.api.RiakClient;
+
 public class PreparedStatement implements java.sql.PreparedStatement {
+	
+	private RiakClient _client;
+	private ResultSet _resultSet;
+	
+	PreparedStatement(RiakClient client, String sql, int type, int concurrency, int holdability) { 
+		if ( type != 0 || concurrency != 0 || holdability != 0 ) throw new UnsupportedOperationException(  );
+		_client = client;
+	}
 
 	public ResultSet executeQuery(String sql) throws SQLException {
 		// TODO Auto-generated method stub
