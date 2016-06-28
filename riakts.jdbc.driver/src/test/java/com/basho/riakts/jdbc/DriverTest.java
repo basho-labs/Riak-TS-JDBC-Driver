@@ -188,6 +188,32 @@ public class DriverTest {
 		rs.close();
 	}
 	
+	
+	@Test
+	public void testPreparedStatement() throws ParseException, SQLException {
+		// Start and end date to search on
+		String startDateStr = "06/01/2016 0:00:00.00";
+		String endDateStr = "06/11/2016 23:59:59.59";
+		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+		
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
+		ResultSet rs = statement.executeQuery();
+		Assert.assertTrue(rs != null);
+		
+		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
+//		if (rs != null) {
+//			while (rs.next()) {
+//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
+//			}
+//		}
+		rs.close();		
+	}
+	
+	
 	@Test
 	/***
 	 * Tests methods that moves the ResultSet cursor
