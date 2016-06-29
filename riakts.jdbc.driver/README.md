@@ -1,8 +1,11 @@
 # Riak TS JDBC Driver
-A basic JDBC driver for Basho's open source Riak TS (Time Series) database (docs.basho.com/riakts/latest/). The driver implements support for the following JDBC features also supported by Riak TS:
+A basic JDBC driver for Basho's open source Riak TS (Time Series) database (https://docs.basho.com/riakts/latest/). The driver implements support for the following JDBC features also supported by Riak TS:
 
 - executeQuery(String sql) for SELECT and DESCRIBE TABLE statements
 - executeUpdate(String sql) for CREATE TABLE and INSERT statements
+
+**Note**: The driver has been tested with the following reporting tools:
+- Jaspersoft Studio 6.3.0
 
 The following example code demonstrates how to use the driver to execute a SELECT statement:
 ```Java
@@ -26,7 +29,15 @@ if (rs != null) {
 }
 rs.close();;
 ```
-**Note** Riak TS stores dates as Unix Epochs and the code above demonstrates how to convert Java dates to Epoch for queries.
+**Note** Riak TS stores dates as Unix Epochs and the code above uses a helper function to convert a date string to an Epoch (long) value.
+
+```Java
+public static long dateStringMMddyyyyHHmmssSSToEpoch(String dateString) throws ParseException {
+	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS");
+	Date date = sdf.parse(dateString);
+	return date.getTime();
+}
+```
 
 See the following documentation for more information on querying Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/querying/
 
@@ -85,7 +96,7 @@ When writing data from the Riak TS QueryResult object to the JDBC ResultSet obje
 - Timestamp -> Timestamp
 - Varchar -> String
 - Boolean -> Boolean
-- Sint64 -> Long
+- Sint64 -> Long/Bigint
 - Double -> Double
 
 # Building the JDBC Driver
@@ -98,6 +109,11 @@ A copy of the current version of the compiled JAR file is located in https://git
 **Important Note** remove **-DskipTests** if you want the JUnit tests to execute during the build.  
 
 # Release Notes
+Version 0.5
+- Tested to support report creation in Jaspersoft Studio 6.3.0 (http://community.jaspersoft.com/project/jaspersoft-studio/releases)
+- Added PreporedStatement, ResultSetMetaData, and ColumnInfo classes as part of refactoring to support reporting tools
+- Lots of minor refactoring and bug fixes throughout 
+
 Version 0.4
 - Corrected bug in dateStringToEpoch, changed method to dateStringMMddyyyyHHmmssSSToEpoch for clarity
 

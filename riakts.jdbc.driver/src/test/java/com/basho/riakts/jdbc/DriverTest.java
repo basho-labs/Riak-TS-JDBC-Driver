@@ -180,12 +180,12 @@ public class DriverTest {
 		Assert.assertTrue(rs != null);
 		
 		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
-//		if (rs != null) {
-//			while (rs.next()) {
-//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-//			}
-//		}
+		if (rs != null) {
+			while (rs.next()) {
+				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
+			}
+		}
 		rs.close();
 	}
 	

@@ -9,9 +9,9 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	
 	// These variables need to be updated with new releases
 	private static String DRIVER_NAME = "Riak TS JDBC Driver";
-	private static String DRIVER_VERSION = "0.4";
+	private static String DRIVER_VERSION = "0.5";
 	private static int DRIVER_MAJOR_VERSION = 0;
-	private static int DRIVER_MINOR_VERSION = 4;
+	private static int DRIVER_MINOR_VERSION = 5;
 	
 	// Riak TS Product Variables
 	private static String DATABASE_PRODUCT_NAME = "Riak TS";

@@ -34,21 +34,25 @@ public class ResultSetMetaData implements java.sql.ResultSetMetaData {
 	public int getColumnCount() throws SQLException {
 		return _columnCount;
 	}
+	
+	// NOTE: In get methods below we subtract one from column to adjust for the fact
+	// that JDBC indexes columns starting with 1 insted of the 0 based index of our
+	// List<ColumnInfo> object
 
 	public String getColumnLabel(int column) throws SQLException {
-		return _columns.get(column).getColumnLabel();
+		return _columns.get( column - 1 ).getColumnLabel();
 	}
 
 	public String getColumnName(int column) throws SQLException {
-		return _columns.get(column).getColumnName();
+		return _columns.get( column - 1 ).getColumnName();
 	}
 
 	public int getColumnType(int column) throws SQLException {
-		return _columns.get(column).getColumnType();
+		return _columns.get( column - 1 ).getColumnType();
 	}
 
 	public String getColumnTypeName(int column) throws SQLException {
-		return _columns.get(column).getColumnTypeName();
+		return _columns.get( column - 1 ).getColumnTypeName();
 	}
 	
 	

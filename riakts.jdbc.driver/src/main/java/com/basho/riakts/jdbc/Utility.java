@@ -44,10 +44,9 @@ public class Utility {
 		// Create new empty ResultSet
 		ResultSet rs = new ResultSet();
 		
-		// TODO: Refactor to set appropriate values in ResultSetMetaData
-		
-
-		// Get column names from the QueryResult object
+		// Get column names from the QueryResult object, add to the columnList ArrayList and
+		// ResultSetMetaData ColumnInfo List
+		// TODO: Refactor code to remove duplication of storing column info in two places
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
@@ -55,8 +54,8 @@ public class Utility {
 			rs.getMetaData().addColumn(desc.getName());
 		}
 		
+		// TODO: Refactor to remove duplication of storing column count in two places
 		rs.columnCount = rs.columnList.size();
-		
 		rs.rsMetaData.setColumnCount(rs.columnList.size());
 		rs.rowsInResult = queryResult.getRowsCount();
 		
@@ -79,7 +78,7 @@ public class Utility {
 				// row of the correct type (boolean, double, long, date, varchar)
 				// Start by handling null cell values returned
 				// Also set columnType information in ResultSetMetaData
-				// TODO: Find efficient method to not repeatedly set column type as we write the data ******
+				// TODO: Find efficient method to not repeatedly set column type as we write the data
 				if (cell == null) {
 					rs.updateNull(colIndex);
 				}

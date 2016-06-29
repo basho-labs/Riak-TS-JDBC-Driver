@@ -121,8 +121,12 @@ public class ResultSet implements java.sql.ResultSet {
 
 	
 	// Start - Get Methods that have been implemented for Riak TS
+	// NOTE: In get methods below we subtract one from column to adjust for the fact
+	// that JDBC indexes columns starting with 1 insted of the 0 based index of our
+	// currentRow Object[] ONLY when attempting to get a value by index
+	
 	public Timestamp getTimestamp(int columnIndex) throws SQLException {
-		return (Timestamp) currentRow[columnIndex];
+		return (Timestamp) currentRow[ columnIndex - 1 ];
 	}
 
 	public Timestamp getTimestamp(String columnLabel) throws SQLException {
@@ -130,7 +134,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public double getDouble(int columnIndex) throws SQLException {
-		return Double.parseDouble( (String) currentRow[columnIndex] );
+		return Double.parseDouble( (String) currentRow[ columnIndex - 1 ] );
 	}
 	
 	public double getDouble(String columnLabel) throws SQLException {
@@ -138,7 +142,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public String getString(int columnIndex) throws SQLException {
-		return (String) currentRow[columnIndex];
+		return (String) currentRow[ columnIndex - 1 ];
 	}
 	
 	public String getString(String columnLabel) throws SQLException {
@@ -146,7 +150,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {
-		return (Boolean) currentRow[columnIndex];
+		return (Boolean) currentRow[ columnIndex - 1 ];
 	}
 
 	public boolean getBoolean(String columnLabel) throws SQLException {
@@ -154,7 +158,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public long getLong(int columnIndex) throws SQLException {
-		return (Long) currentRow[columnIndex] ;
+		return (Long) currentRow[ columnIndex - 1 ] ;
 	}
 
 	public long getLong(String columnLabel) throws SQLException {
@@ -162,7 +166,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public Object getObject(int columnIndex) throws SQLException {
-		return currentRow[columnIndex];
+		return currentRow[ columnIndex - 1 ];
 	}
 
 	public Object getObject(String columnLabel) throws SQLException {
