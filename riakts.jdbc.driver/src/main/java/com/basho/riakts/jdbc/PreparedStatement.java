@@ -23,6 +23,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.timeseries.Query;
+import com.basho.riak.client.core.query.timeseries.QueryResult;
 
 public class PreparedStatement implements java.sql.PreparedStatement {
 	
@@ -72,11 +74,18 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		return _resultSet;
 	}
 	
-
+	
 	public int executeUpdate(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		Query query = new Query.Builder(sql).build();
+		try {
+			QueryResult queryResult = _client.execute(query);
+			return queryResult.getRowsCount();
+		}
+		catch (Exception e) {
+			throw new SQLException(e);
+		}
 	}
+
 
 	public void close() throws SQLException {
 		// TODO Auto-generated method stub
