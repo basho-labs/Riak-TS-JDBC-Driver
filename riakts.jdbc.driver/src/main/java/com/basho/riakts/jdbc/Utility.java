@@ -21,8 +21,8 @@ import com.google.common.net.InetAddresses;
 public class Utility {
 	
 	/***
-	 * Executes SQL query against Riak TS and converts QueryResult object
-	 * to ResultSet and sets _resultSet value
+	 * Executes SQL query against Riak TS and converts the 
+	 * QueryResult object to a ResultSet
 	 * @param sql
 	 * @throws ExecutionException
 	 * @throws InterruptedException
@@ -31,7 +31,7 @@ public class Utility {
 	public static ResultSet query(RiakClient client, String sql) throws ExecutionException, InterruptedException, SQLException {
 		Query query = new Query.Builder(sql).build();
 		QueryResult queryResult = client.execute(query);
-		return Utility.getResultSetFromQueryResult(queryResult);
+		return getResultSetFromQueryResult(queryResult);
 	}
 	
 	
@@ -41,7 +41,7 @@ public class Utility {
 	 * @return java.sql.ResultSet
 	 * @throws SQLException 
 	 */
-	public static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
+	private static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
 		// Create new empty ResultSet
 		com.basho.riakts.jdbc.ResultSet rs = new com.basho.riakts.jdbc.ResultSet();
 
