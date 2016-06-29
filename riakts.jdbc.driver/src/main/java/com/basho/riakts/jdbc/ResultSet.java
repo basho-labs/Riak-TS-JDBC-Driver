@@ -10,7 +10,6 @@ import java.sql.Clob;
 import java.sql.Date;
 import java.sql.NClob;
 import java.sql.Ref;
-import java.sql.ResultSetMetaData;
 import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -57,6 +56,7 @@ public class ResultSet implements java.sql.ResultSet {
 		closed = false;
 		rowData = new ArrayList<Object[]>();
 		columnList = new ArrayList<String>();
+		rsMetaData = new ResultSetMetaData();
 	}
 	
 	public void close() throws SQLException {
@@ -183,7 +183,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public ResultSetMetaData getMetaData() throws SQLException {
-		return null;
+		return rsMetaData;
 	}
 
 	public int findColumn(String columnLabel) throws SQLException {

@@ -1,6 +1,5 @@
 package com.basho.riakts.jdbc;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -43,7 +42,10 @@ public class Utility {
 	 */
 	private static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
 		// Create new empty ResultSet
-		com.basho.riakts.jdbc.ResultSet rs = new com.basho.riakts.jdbc.ResultSet();
+		ResultSet rs = new ResultSet();
+		
+		// TODO: Refactor to set appropriate values in ResultSetMetaData
+		
 
 		// Get column names from the QueryResult object
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
@@ -51,7 +53,11 @@ public class Utility {
 			ColumnDescription desc = columns.next();
 			rs.columnList.add(desc.getName());
 		}
+		
 		rs.columnCount = rs.columnList.size();
+		
+		rs.rsMetaData.setColumnCount(rs.columnList.size());
+		
 		rs.rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object
