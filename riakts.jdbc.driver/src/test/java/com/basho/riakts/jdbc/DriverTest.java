@@ -204,6 +204,7 @@ public class DriverTest {
 		ResultSet rs = statement.executeQuery();
 		
 		ResultSetMetaData rsmd = rs.getMetaData();
+		String columnName1 = rsmd.getColumnName(1);
 		
 		
 		Assert.assertTrue(rs != null);

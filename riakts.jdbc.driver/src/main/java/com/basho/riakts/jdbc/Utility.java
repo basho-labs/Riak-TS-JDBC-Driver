@@ -52,12 +52,12 @@ public class Utility {
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
 			rs.columnList.add(desc.getName());
+			rs.getMetaData().addColumn(desc.getName());
 		}
 		
 		rs.columnCount = rs.columnList.size();
 		
 		rs.rsMetaData.setColumnCount(rs.columnList.size());
-		
 		rs.rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object
@@ -78,22 +78,28 @@ public class Utility {
 				// Check cell type for the 5 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
 				// Start by handling null cell values returned
+				// Also set columnType information in ResultSetMetaData
+				// TODO: Find efficient method to not repeatedly set column type as we write the data ******
 				if (cell == null) {
 					rs.updateNull(colIndex);
 				}
 				else if (cell.hasBoolean()) {
 					rs.updateBoolean(colIndex, cell.getBoolean());
+					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.BOOLEAN, "java.sql.Types.BOOLEAN");
 				}
 				else if (cell.hasDouble()) {
 					rs.updateDouble(colIndex, cell.getDouble());
+					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.DOUBLE, "java.sql.Types.DOUBLE");
 				}
 				else if (cell.hasLong()) {
 					rs.updateLong(colIndex, cell.getLong());
+					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.BIGINT, "java.sql.Types.BIGINT");
 				}
 				else if (cell.hasTimestamp()) {
 					try {
 						// Convert from Epoch as Long to java.sql.Timestamp
 						rs.updateTimestamp(colIndex, new Timestamp(cell.getTimestamp()));
+						rs.getMetaData().updateColumnType(colIndex, java.sql.Types.TIMESTAMP, "java.sql.Types.TIMESTAMP");
 					} 
 					catch (Exception e) {
 						rs.updateDate(colIndex, null);
@@ -102,6 +108,7 @@ public class Utility {
 				else if (cell.hasVarcharValue()) {
 					// Get varchar as plain string for compatibility
 					rs.updateString(colIndex, cell.getVarcharValue().toString());
+					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.VARCHAR, "java.sql.Types.VARCHAR");
 				}
 				colIndex++;
 			}	
