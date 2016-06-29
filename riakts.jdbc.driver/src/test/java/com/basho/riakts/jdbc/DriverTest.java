@@ -1,6 +1,7 @@
 package com.basho.riakts.jdbc;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -201,6 +202,10 @@ public class DriverTest {
 		
 		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
 		ResultSet rs = statement.executeQuery();
+		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		
 		Assert.assertTrue(rs != null);
 		
 		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 

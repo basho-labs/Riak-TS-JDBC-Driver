@@ -28,6 +28,9 @@ public class ResultSet implements java.sql.ResultSet {
 	protected int direction = FETCH_FORWARD;
 	protected int fetchDirection = FETCH_FORWARD;
 	
+	/** */
+	protected ResultSetMetaData rsMetaData;
+	
 	/** The current row number that is being written to or read from. */
     protected int rowPosition = POS_BEFORE_FIRST;
     
