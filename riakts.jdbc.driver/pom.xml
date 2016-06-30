@@ -2,30 +2,49 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.basho</groupId>
   <artifactId>riakts.jdbc.driver</artifactId>
+  <packaging>jar</packaging>
   <version>0.5</version>
   <name>Riak TS JDBC Driver</name>
+  <description>JDBC Driver for Riak TS</description>
+  <url>https://github.com/cvitter/Riak-TS-JDBC-Driver</url>
+  
+  <licenses>
+  	<license>
+    	<name>The Apache Software License, Version 2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+        <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  
+  <developers>
+  	<developer>
+  		<name>Craig Vitter</name>
+  		<url>https://github.com/cvitter</url>
+  	</developer>
+  </developers>
 
   <build>
-<plugins>
-<plugin>
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-assembly-plugin</artifactId>
-  <executions>
-    <execution>
-      <id>create-my-bundle</id>
-      <phase>package</phase>
-      <goals>
-        <goal>single</goal>
-      </goals>
-      <configuration>
-        <descriptorRefs>
-          <descriptorRef>jar-with-dependencies</descriptorRef>
-        </descriptorRefs>
-      </configuration>
-    </execution>
-  </executions>
-</plugin>
-</plugins>
+	<plugins>
+		<plugin>
+ 			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-assembly-plugin</artifactId>
+  			<executions>
+    			<execution>
+      				<id>create-my-bundle</id>
+      				<phase>package</phase>
+      				<goals>
+        				<goal>single</goal>
+      				</goals>
+      				<configuration>
+        				<descriptorRefs>
+          					<descriptorRef>jar-with-dependencies</descriptorRef>
+        				</descriptorRefs>
+      				</configuration>
+    			</execution>
+  			</executions>
+		</plugin>
+	</plugins>
   </build>
 
   <dependencies>
@@ -48,4 +67,8 @@
 	</dependency>
 	
   </dependencies>
+  
+  <scm>
+  	<url>https://github.com/cvitter/Riak-TS-JDBC-Driver</url>
+  </scm>
 </project>
