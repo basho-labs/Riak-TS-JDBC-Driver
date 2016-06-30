@@ -16,7 +16,6 @@
 package com.basho.riakts.jdbc;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -165,7 +164,8 @@ public class DriverTest {
 			{"Anna", "27", "06/06/2016 15:30:00.00", "110.5"},
 			{"John", "17", "06/06/2016 16:30:00.00", "170.5"},
 			{"Sophia", "12", "06/06/2016 17:30:00.00", "115.9"},
-			{"Bob", "32", "06/06/2016 18:30:00.00", "220.1"}
+			{"Bob", "32", "06/06/2016 18:30:00.00", "220.1"},
+			{"Julie", "44", "06/06/2016 22:30:00.00", "132.5"}
 	};
 	
 	@Test
@@ -336,11 +336,53 @@ public class DriverTest {
 		rs.close();	
 	}
 	
+	@Test
+	/***
+	 * Test insert using PreparedStatement and executeUpdate()
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
+	public void testPreparedStatementSqlInsert() throws SQLException, ParseException {
+		// Create timestamp string for our record
+		String timeStamp = "06/06/2016 22:30:00.00";
+		
+		String sqlStatement = "INSERT INTO jdbcDriverTest " +
+				"(name, age, joined, weight) " +
+				"VALUES " +
+				"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
+		
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
+    	int result = statement.executeUpdate();
+    	// Insert returns 0 on success
+    	Assert.assertTrue(result == 0);
+	}
+	
+	@Test
+	/***
+	 * Test insert using PreparedStatement and executeUpdate(sql)
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
+	public void testPreparedStatementSqlInsert2() throws SQLException, ParseException {
+		// Create timestamp string for our record
+		String timeStamp = "06/06/2016 22:30:00.00";
+		
+		String sqlStatement = "INSERT INTO jdbcDriverTest " +
+				"(name, age, joined, weight) " +
+				"VALUES " +
+				"('Julie', 44, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 132.5);";
+		
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+    	int result = statement.executeUpdate(sqlStatement);
+    	// Insert returns 0 on success
+    	Assert.assertTrue(result == 0);
+	}
+	
 	
 	@Test
 	/***
 	 * Tests methods that moves the ResultSet cursor
-	 * The tests are based on a ResultSet that returns 9 records
+	 * The tests are based on a ResultSet that returns 10 records
 	 * @throws ParseException
 	 * @throws SQLException
 	 */
@@ -369,12 +411,12 @@ public class DriverTest {
 		
 		// Move to last row in ResultSet 
 		rs.last();
-		Assert.assertTrue(rs.getRow() == 8);
+		Assert.assertTrue(rs.getRow() == 9);
 		Assert.assertTrue(rs.isLast());
 		
 		// Move to the previous row read
 		rs.previous();
-		Assert.assertTrue(rs.getRow() == 7);
+		Assert.assertTrue(rs.getRow() == 8);
 		
 		// Move to row number 4 (which is actually row[3]
 		rs.absolute(4);
