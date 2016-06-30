@@ -1,11 +1,22 @@
 # Riak TS JDBC Driver
-A basic JDBC driver for Basho's open source Riak TS (Time Series) database (https://docs.basho.com/riakts/latest/). The driver implements support for the following JDBC features also supported by Riak TS:
 
-- executeQuery(String sql) for SELECT and DESCRIBE TABLE statements
+A basic JDBC driver for Basho's open source Riak TS (Time Series) database (https://docs.basho.com/riakts/latest/). 
+
+**Note**: So far the driver has been tested with the following reporting tools:
+- Jaspersoft Studio 6.3.0
+
+# Using the Driver in Code
+
+The driver implements support for the following JDBC features also supported by Riak TS:
+
+**java.sql.Statement***
+- executeQuery(String sql), execute(String sql), getResultSet() for SELECT and DESCRIBE TABLE statements
 - executeUpdate(String sql) for CREATE TABLE and INSERT statements
 
-**Note**: The driver has been tested with the following reporting tools:
-- Jaspersoft Studio 6.3.0
+**java.sql.PreparedStatement***
+- executeQuery(String sql), executeQuery(), execute(), getResultSet() for SELECT and DESCRIBE TABLE statements
+- executeUpdate(String sql) for CREATE TABLE and INSERT statements
+
 
 The following example code demonstrates how to use the driver to execute a SELECT statement:
 ```Java
@@ -109,26 +120,26 @@ A copy of the current version of the compiled JAR file is located in https://git
 **Important Note** remove **-DskipTests** if you want the JUnit tests to execute during the build.  
 
 # Release Notes
-Version 0.5
+**Version 0.5**
 - Tested to support report creation in Jaspersoft Studio 6.3.0 (http://community.jaspersoft.com/project/jaspersoft-studio/releases)
 - Added PreporedStatement, ResultSetMetaData, and ColumnInfo classes as part of refactoring to support reporting tools
 - Lots of minor refactoring and bug fixes throughout 
 
-Version 0.4
+**Version 0.4**
 - Corrected bug in dateStringToEpoch, changed method to dateStringMMddyyyyHHmmssSSToEpoch for clarity
 
-Version 0.3:
+**Version 0.3**
 - Fix riakts.jdbc.driver.Driver to register with DriverManager so that third party apps can use the driver
 - Create an external test project (riakts.jdbc.driver.test) to test that the driver works with third party apps
 
-Version 0.2:
+**Version 0.2**
 - Added executeUpdate() for CREATE TABLE and INSERT
 - Fixed Type conversion bugs in ResultSet
 - Added and corrected tests in DriverTest to verify support for CREATE TABLE, INSERT, SELECT, DESCRIBE TABLE
 - Added tests for next(), previous(), first(), last(), absolute(), relative(), beforeFirst(), afterLast(), isFirst(), isLast(), isBeforeFirst(), isAfterLast()
 - Updated and expanded documentation
 
-Version 0.1:
+**Version 0.1**
 - Initial Release
 
 # Feedback
