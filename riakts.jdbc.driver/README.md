@@ -9,11 +9,11 @@ A basic JDBC driver for Basho's open source Riak TS (Time Series) database (http
 
 The driver implements support for the following JDBC features also supported by Riak TS:
 
-**java.sql.Statement***
+**java.sql.Statement**
 - executeQuery(String sql), execute(String sql), getResultSet() for SELECT and DESCRIBE TABLE statements
 - executeUpdate(String sql) for CREATE TABLE and INSERT statements
 
-**java.sql.PreparedStatement***
+**java.sql.PreparedStatement**
 - executeQuery(String sql), executeQuery(), execute(), getResultSet() for SELECT and DESCRIBE TABLE statements
 - executeUpdate(String sql) for CREATE TABLE and INSERT statements
 
