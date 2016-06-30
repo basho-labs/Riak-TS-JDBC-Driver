@@ -3,7 +3,7 @@
 A basic JDBC driver for Basho's open source Riak TS (Time Series) database (https://docs.basho.com/riakts/latest/). 
 
 **Note**: So far the driver has been tested with the following reporting tools:
-- Jaspersoft Studio 6.3.0
+- Jaspersoft Studio 6.3.0 (http://community.jaspersoft.com/project/jaspersoft-studio/releases)
 
 # Using the Driver in Code
 

@@ -135,6 +135,12 @@ public class DriverTest {
 	
 	
 	@Test
+	/****
+	 * Test insertion of data via SQL INSERT INTO command, successful insert
+	 * returns a 0 value
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void testSqlInsertData() throws SQLException, ParseException {
 		// Create timestamp string for our record
 		String timeStamp = "06/06/2016 12:30:00.00";
@@ -163,6 +169,12 @@ public class DriverTest {
 	};
 	
 	@Test
+	/***
+	 * Another insert test example, primarily used to add additional
+	 * data to the test table as opposed to actually testing inserts
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void testSqlInsertMultipleRows() throws SQLException, ParseException {
 		for (String[] person : PEOPLE) {
 			String sqlStatement = "INSERT INTO jdbcDriverTest " +
@@ -180,6 +192,11 @@ public class DriverTest {
 	
 	
 	@Test
+	/***
+	 * Tests java.sql.Statement.executeQuery( sql )
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
 	public void testSqlSelect() throws SQLException, ParseException {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
@@ -195,17 +212,47 @@ public class DriverTest {
 		Assert.assertTrue(rs != null);
 		
 		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
-		if (rs != null) {
-			while (rs.next()) {
-				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-			}
-		}
+//		if (rs != null) {
+//			while (rs.next()) {
+//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
+//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
+//			}
+//		}
 		rs.close();
 	}
 	
 	
 	@Test
+	/***
+	 * Tests the statement.execute( sql ) and statement.getResultSet()
+	 * executes a query and returns the result set retrieved by the query
+	 * @throws SQLException
+	 * @throws ParseException
+	 */
+	public void testSqlSelectWithExecute() throws SQLException, ParseException {
+		// Start and end date to search on
+		String startDateStr = "06/01/2016 0:00:00.00";
+		String endDateStr = "06/11/2016 23:59:59.59";
+		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+		//System.out.println(sqlStatement);
+		
+		Statement statement = conn.createStatement();
+		boolean success = statement.execute(sqlStatement);
+		Assert.assertTrue(success);
+		ResultSet rs = statement.getResultSet();
+		Assert.assertTrue(rs != null);
+		rs.close();
+	}
+	
+	
+	@Test
+	/***
+	 * Tests using java.sql.PreparedStatement( sql) and .executeQuery()
+	 * @throws SQLException
+	 */
 	public void testPreparedStatement() throws ParseException, SQLException {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
@@ -217,20 +264,7 @@ public class DriverTest {
 		
 		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
 		ResultSet rs = statement.executeQuery();
-		
-		ResultSetMetaData rsmd = rs.getMetaData();
-		String columnName1 = rsmd.getColumnName(1);
-		
-		
 		Assert.assertTrue(rs != null);
-		
-		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
-//		if (rs != null) {
-//			while (rs.next()) {
-//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-//			}
-//		}
 		rs.close();		
 	}
 	
