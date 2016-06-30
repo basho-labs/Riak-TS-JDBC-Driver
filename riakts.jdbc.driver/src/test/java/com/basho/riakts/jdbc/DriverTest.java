@@ -108,6 +108,30 @@ public class DriverTest {
 	    }
 	}	
 	
+	@Test
+	/***
+	 * Tests the close method of Statement
+	 * @throws SQLException
+	 */
+	public void testStatementClose() throws SQLException {
+		Statement statement = conn.createStatement();
+		Assert.assertFalse( statement.isClosed() );
+		statement.close();
+		Assert.assertTrue( statement.isClosed() );
+	}
+	
+	@Test
+	/***
+	 * Tests the close method of PreparedStatement
+	 * @throws SQLException
+	 */
+	public void testPreparedStatementClose() throws SQLException {
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		Assert.assertFalse( statement.isClosed() );
+		statement.close();
+		Assert.assertTrue( statement.isClosed() );
+	}
+	
 	
 	@Test
 	/***

@@ -46,12 +46,14 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 	private RiakClient _client;
 	private ResultSet _resultSet;
 	private String _sqlQuery;
+	private boolean _isClosed;
 	
 	PreparedStatement(RiakClient client, String sql, int type, int concurrency, int holdability) { 
 		if ( type != 0 || concurrency != 0 || holdability != 0 ) throw new UnsupportedOperationException(  );
 		
 		_client = client;
 		_sqlQuery = sql;
+		_isClosed = false;
 	}
 	
 
@@ -113,8 +115,10 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 
 
 	public void close() throws SQLException {
-		// TODO Auto-generated method stub
-		
+		_client = null;
+		_resultSet = null;
+		_sqlQuery = null;
+		_isClosed = true;
 	}
 
 	public int getMaxFieldSize() throws SQLException {
@@ -284,8 +288,7 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 	}
 
 	public boolean isClosed() throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		return _isClosed;
 	}
 
 	public void setPoolable(boolean poolable) throws SQLException {
