@@ -224,7 +224,7 @@ public class DriverTest {
 	
 	@Test
 	/***
-	 * Tests the statement.execute( sql ) and statement.getResultSet()
+	 * Tests statement.execute( sql ) and statement.getResultSet()
 	 * executes a query and returns the result set retrieved by the query
 	 * @throws SQLException
 	 * @throws ParseException
@@ -266,6 +266,74 @@ public class DriverTest {
 		ResultSet rs = statement.executeQuery();
 		Assert.assertTrue(rs != null);
 		rs.close();		
+	}
+	
+	@Test
+	/***
+	 * Test does not pass sql statement into prepareStatement() constructor to
+	 * test executeQuery( sql ) works properly
+	 * @throws ParseException
+	 * @throws SQLException
+	 */
+	public void testPreparedStatementExecuteQueryWithSql() throws ParseException, SQLException {
+		// Start and end date to search on
+		String startDateStr = "06/01/2016 0:00:00.00";
+		String endDateStr = "06/11/2016 23:59:59.59";
+		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+		
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		ResultSet rs = statement.executeQuery(sqlStatement);
+		Assert.assertTrue(rs != null);
+		rs.close();		
+	}
+	
+	@Test
+	/***
+	 * Tests statement.execute( ) and statement.getResultSet()
+	 * @throws ParseException
+	 * @throws SQLException
+	 */
+	public void testPreparedStatementExecute() throws ParseException, SQLException {
+		// Start and end date to search on
+		String startDateStr = "06/01/2016 0:00:00.00";
+		String endDateStr = "06/11/2016 23:59:59.59";
+		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+		
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
+		boolean success = statement.execute();
+		Assert.assertTrue(success);
+		ResultSet rs = statement.getResultSet();
+		Assert.assertTrue(rs != null);
+		rs.close();	
+	}
+	
+	@Test
+	/***
+	 * Tests statement.execute( sql ) and statement.getResultSet()
+	 * @throws ParseException
+	 * @throws SQLException
+	 */
+	public void testPreparedStatementExecuteWithSql() throws ParseException, SQLException {
+		// Start and end date to search on
+		String startDateStr = "06/01/2016 0:00:00.00";
+		String endDateStr = "06/11/2016 23:59:59.59";
+		
+		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
+				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
+				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+		
+		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		boolean success = statement.execute(sqlStatement);
+		Assert.assertTrue(success);
+		ResultSet rs = statement.getResultSet();
+		Assert.assertTrue(rs != null);
+		rs.close();	
 	}
 	
 	

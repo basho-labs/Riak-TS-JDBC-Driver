@@ -85,6 +85,16 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		}
 	}
 	
+	public boolean execute(String sql) throws SQLException {
+		try {
+			_resultSet = Utility.query(_client, sql);
+			return true;
+		} 
+		catch (Exception e) {
+			throw new SQLException(e);
+		}
+	}
+	
 	public ResultSet getResultSet() throws SQLException {
 		return _resultSet;
 	}
@@ -161,12 +171,6 @@ public class PreparedStatement implements java.sql.PreparedStatement {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public boolean execute(String sql) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 
 
 	public int getUpdateCount() throws SQLException {
