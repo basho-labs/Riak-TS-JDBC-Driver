@@ -19,6 +19,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * @author cvitter
+ * Example code that creates a table in Riak TS (using the JDBC Driver) 
+ * that will be used to store data from the Bay Area Bike Share program 
+ * (http://www.bayareabikeshare.com/open-data).
+ */
 public class CreateWeatherDataTable {
 	static final String JDBC_DRIVER = "com.basho.riakts.jdbc.Driver";  
 	static final String DB_URL = "riakts://127.0.0.1:8087";

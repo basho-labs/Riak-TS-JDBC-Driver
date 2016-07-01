@@ -24,6 +24,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author cvitter
+ * Example code that writes data to the table created in CreateWeatherDataTable.java. 
+ * The data to load is found in the 201508_weather_data.csv file. Note: You will 
+ * need to update the path (see: DATA_FILE) to the file to match the location on your machine in 
+ * order to execute this code successfully.
+ */
 public class LoadWeatherData {
 	static final String JDBC_DRIVER = "com.basho.riakts.jdbc.Driver";  
 	static final String DB_URL = "riakts://127.0.0.1:8087";

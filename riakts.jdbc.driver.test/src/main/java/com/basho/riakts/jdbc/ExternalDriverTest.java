@@ -21,7 +21,8 @@ import java.sql.Statement;
 
 /**
  * @author cvitter
- *
+ * Simple example code that verifies that the Riak TS JDBC Driver can 
+ * perform a select against Riak TS and return a ResultSet.
  */
 public class ExternalDriverTest {
 	static final String JDBC_DRIVER = "com.basho.riakts.jdbc.Driver";  
