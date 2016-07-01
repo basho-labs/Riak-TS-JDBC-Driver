@@ -17,6 +17,7 @@ The driver implements support for the following JDBC features also supported by 
 - executeQuery(String sql), executeQuery(), execute(), getResultSet() for SELECT and DESCRIBE TABLE statements
 - executeUpdate(String sql) for CREATE TABLE and INSERT statements
 
+**Note**: Currently there is no advantage (performance or otherwise) to using PreparedStatement over Statement.
 
 The following example code demonstrates how to use the driver to execute a SELECT statement:
 ```Java
