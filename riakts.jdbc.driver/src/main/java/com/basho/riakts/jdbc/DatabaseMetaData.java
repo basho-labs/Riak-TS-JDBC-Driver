@@ -90,6 +90,14 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	public DatabaseMetaData(String url, String userName) {
 		_url = url;
 	}
+	
+	public int getDatabaseMajorVersion() throws SQLException {
+		return DRIVER_MAJOR_VERSION;
+	}
+
+	public int getDatabaseMinorVersion() throws SQLException {
+		return DRIVER_MINOR_VERSION;
+	}
 
 	public boolean allProceduresAreCallable() throws SQLException {
 		return ALL_PROCEDURES_CALLABLE;
@@ -818,16 +826,6 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public int getResultSetHoldability() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getDatabaseMajorVersion() throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getDatabaseMinorVersion() throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
 	}
