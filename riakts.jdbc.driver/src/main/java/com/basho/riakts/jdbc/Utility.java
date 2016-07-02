@@ -19,13 +19,17 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 import com.basho.riak.client.api.RiakClient;
+import com.basho.riak.client.api.commands.buckets.ListBuckets;
 import com.basho.riak.client.api.commands.timeseries.Query;
+import com.basho.riak.client.core.query.Namespace;
 import com.basho.riak.client.core.query.timeseries.Cell;
 import com.basho.riak.client.core.query.timeseries.ColumnDescription;
 import com.basho.riak.client.core.query.timeseries.QueryResult;
@@ -46,6 +50,26 @@ public class Utility {
 		Query query = new Query.Builder(sql).build();
 		QueryResult queryResult = client.execute(query);
 		return getResultSetFromQueryResult(queryResult);
+	}
+	
+	
+	/***
+	 * Returns a list of buckets contained in a given bucket type
+	 * @param client
+	 * @param bucket
+	 * @return List<String> containing all of the buckets for a given bucket type
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
+	public static List<String> getBuckets(RiakClient client, String bucket) throws ExecutionException, InterruptedException {
+		List<String> buckets = new ArrayList<String>();
+		ListBuckets lb = new ListBuckets.Builder(bucket).build();
+		ListBuckets.Response resp = client.execute(lb);
+		for (Namespace ns : resp)
+		{
+			buckets.add(ns.getBucketNameAsString());
+		}
+		return buckets;
 	}
 	
 	
@@ -204,6 +228,11 @@ public class Utility {
 		Date date = sdf.parse(dateString);
 		return date.getTime();
 	} // Tested
+	
+	
+	
+
+	
 	
 	
 	private static boolean isInetAddress( String url ) {

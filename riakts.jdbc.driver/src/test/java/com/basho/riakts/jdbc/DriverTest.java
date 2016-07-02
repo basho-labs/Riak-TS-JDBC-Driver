@@ -19,7 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 import junit.framework.Assert;
 
@@ -458,6 +460,13 @@ public class DriverTest {
 		// Move to after the last row of the ResultSet
 		rs.afterLast();
 		Assert.assertTrue(rs.isAfterLast());
+	}
+	
+	
+	@Test
+	public void testGetBuckets() throws ExecutionException, InterruptedException {
+		List<String> buckets = _conn.getBuckets("jdbcDriverTest");
+		Assert.assertTrue( buckets.size() > 0 ); 
 	}
 	
 	

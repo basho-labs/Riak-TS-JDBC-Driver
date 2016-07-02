@@ -33,6 +33,7 @@ import java.sql.Struct;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 import com.basho.riak.client.api.RiakClient;
@@ -165,6 +166,19 @@ public class Connection implements java.sql.Connection {
 			return true;
 		}
 	}
+	
+	
+	/***
+	 * 
+	 * @param bucketType
+	 * @return List<String> containing all of the buckets for a given bucket type
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
+	public List<String> getBuckets(String bucketType) throws ExecutionException, InterruptedException {
+		return Utility.getBuckets(_client, bucketType);
+	}
+	
 	
 	// TODO: Update driver to create a properties table (optionally) in Riak TS to
 	// store properties if the calling application requires
