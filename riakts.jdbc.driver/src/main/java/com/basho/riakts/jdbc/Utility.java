@@ -151,7 +151,8 @@ public class Utility {
 			return riakProperties;
 		}
 		throw new SQLException();
-	}
+	} // Tested
+	
 	
 	/***
 	 * Attempts to validate that the URL passed in can be parsed into a valid
@@ -170,7 +171,8 @@ public class Utility {
 			}
 		}
 		return false;
-	}
+	} // Tested
+	
 
 	/***
 	 * Checks to see if RiakUrl and RiakPort exist and if the values appear
@@ -187,7 +189,7 @@ public class Utility {
 			}
 		}
 		return false;
-	}
+	} // Tested
 	
 	
 	/***
@@ -201,7 +203,7 @@ public class Utility {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS");
 		Date date = sdf.parse(dateString);
 		return date.getTime();
-	}
+	} // Tested
 	
 	
 	private static boolean isInetAddress( String url ) {
