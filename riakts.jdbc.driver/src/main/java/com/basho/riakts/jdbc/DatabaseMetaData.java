@@ -22,13 +22,15 @@ import java.sql.SQLException;
 
 public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	
-	// These variables need to be updated with new releases
+	// These variables need to be updated with each new release
 	private static String DRIVER_NAME = "Riak TS JDBC Driver";
 	private static String DRIVER_VERSION = "0.5";
 	private static int DRIVER_MAJOR_VERSION = 0;
 	private static int DRIVER_MINOR_VERSION = 5;
 	
 	// Riak TS Product Variables
+	// Note: Update version a new version is released and 
+	// tested with the driver
 	private static String DATABASE_PRODUCT_NAME = "Riak TS";
 	private static String DATABASE_PRODUCT_VERSION = "1.3";
 	
@@ -62,28 +64,39 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	private static String CATALOG_TERM = "";
 	private static boolean UNION = false;
 	private static boolean UNION_ALL = false;
+	private static boolean ALL_PROCEDURES_CALLABLE = false;
+	private static boolean ALL_TABLES_SELECTABLE = true;
+	private static boolean USES_LOCAL_FILE_PER_TABLE = false;
+	private static boolean SUPPORTS_MIXED_CASE_IDENTIFIERS = true;
+	private static boolean STORES_UPPER_CASE_IDENTIFIERS = false;
+	private static boolean STORES_MIXED_CASE_IDENTIFIERS = true;
+	private static boolean SUPPORTS_MIXED_CASE_QUOTED_IDENTIFIERS = true;
+	private static boolean STORES_UPPER_CASE_QUOTED_IDENTIFIERS = false;
+	private static boolean STORES_LOWER_CASE_IDENTIFIERS = false;
+	private static boolean STORES_LOWER_CASE_QUOTED_IDENTIFIERS = false;
+	private static boolean STORES_MIXED_CASE_QUOTED_IDENTIFIERS = false;
+	private static String IDENTIFIER_QUOTE_STRING = " ";
+	private static String SEARCH_STRING_ESCAPE = null;
+	private static String EXTRA_NAME_CHARACTERS = null;
 	
 	
 	private String _url = null;
+	private String _userName = null;
 	
 	public DatabaseMetaData(String url) {
 		_url = url;
 	}
 	
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		throw new UnsupportedOperationException();
+	public DatabaseMetaData(String url, String userName) {
+		_url = url;
 	}
 
 	public boolean allProceduresAreCallable() throws SQLException {
-		throw new UnsupportedOperationException();
+		return ALL_PROCEDURES_CALLABLE;
 	}
 
 	public boolean allTablesAreSelectable() throws SQLException {
-		return true;
+		return ALL_TABLES_SELECTABLE;
 	}
 
 	public String getURL() throws SQLException {
@@ -91,7 +104,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getUserName() throws SQLException {
-		return null;
+		return _userName;
 	}
 
 	public boolean isReadOnly() throws SQLException {
@@ -141,45 +154,45 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	public boolean usesLocalFiles() throws SQLException {
 		return USES_LOCAL_FILES;
 	}
-
+	
 	public boolean usesLocalFilePerTable() throws SQLException {
-		return false;
+		return USES_LOCAL_FILE_PER_TABLE;
 	}
 
 	public boolean supportsMixedCaseIdentifiers() throws SQLException {
-		return true;
+		return SUPPORTS_MIXED_CASE_IDENTIFIERS;
 	}
 
 	public boolean storesUpperCaseIdentifiers() throws SQLException {
-		return false;
+		return STORES_UPPER_CASE_IDENTIFIERS;
 	}
 
 	public boolean storesLowerCaseIdentifiers() throws SQLException {
-		return false;
+		return STORES_LOWER_CASE_IDENTIFIERS;
 	}
 
 	public boolean storesMixedCaseIdentifiers() throws SQLException {
-		return true;
+		return STORES_MIXED_CASE_IDENTIFIERS;
 	}
 
 	public boolean supportsMixedCaseQuotedIdentifiers() throws SQLException {
-		return true;
+		return SUPPORTS_MIXED_CASE_QUOTED_IDENTIFIERS;
 	}
 
 	public boolean storesUpperCaseQuotedIdentifiers() throws SQLException {
-		return false;
+		return STORES_UPPER_CASE_QUOTED_IDENTIFIERS;
 	}
 
 	public boolean storesLowerCaseQuotedIdentifiers() throws SQLException {
-		return false;
+		return STORES_LOWER_CASE_QUOTED_IDENTIFIERS;
 	}
 
 	public boolean storesMixedCaseQuotedIdentifiers() throws SQLException {
-		return false;
+		return STORES_MIXED_CASE_QUOTED_IDENTIFIERS;
 	}
 
 	public String getIdentifierQuoteString() throws SQLException {
-		return " ";
+		return IDENTIFIER_QUOTE_STRING;
 	}
 
 	public String getSQLKeywords() throws SQLException {
@@ -203,11 +216,11 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	}
 
 	public String getSearchStringEscape() throws SQLException {
-		return null;
+		return SEARCH_STRING_ESCAPE;
 	}
 
 	public String getExtraNameCharacters() throws SQLException {
-		return null;
+		return EXTRA_NAME_CHARACTERS;
 	}
 
 	public boolean supportsAlterTableWithAddColumn() throws SQLException {
@@ -893,6 +906,14 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	public boolean generatedKeyAlwaysReturned() throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public <T> T unwrap(Class<T> iface) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+
+	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+		throw new UnsupportedOperationException();
 	}
 
 }
