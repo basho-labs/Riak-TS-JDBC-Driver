@@ -29,19 +29,19 @@ import org.junit.Test;
 
 public class DriverTest {
 
-	Driver d = null;
-	Connection conn = null;
+	private Driver _driver = null;
+	private Connection _conn = null;
 	
 	@Before
 	public void setUp() throws Exception {
-		d = new Driver();
-		conn = (Connection) d.connect("riakts://127.0.0.1:8087", null);
+		_driver = new Driver();
+		_conn = (Connection) _driver.connect("riakts://127.0.0.1:8087", null);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		conn.close();
-		d = null;
+		_conn.close();
+		_driver = null;
 	}
 	
 	
@@ -68,7 +68,7 @@ public class DriverTest {
 	    		") WITH (n_val = 1)";
 			//System.out.println(sqlStatement);
 			
-			Statement statement = conn.createStatement();
+			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	// Create Table returns 0 on success
 	    	Assert.assertTrue(result == 0);
@@ -99,7 +99,7 @@ public class DriverTest {
 	    			") " +
 	    		")  WITH (n_val = 1)";
 			
-			Statement statement = conn.createStatement();
+			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	Assert.assertFalse(result > -1);
 	    }
@@ -114,7 +114,7 @@ public class DriverTest {
 	 * @throws SQLException
 	 */
 	public void testStatementClose() throws SQLException {
-		Statement statement = conn.createStatement();
+		Statement statement = _conn.createStatement();
 		Assert.assertFalse( statement.isClosed() );
 		statement.close();
 		Assert.assertTrue( statement.isClosed() );
@@ -126,7 +126,7 @@ public class DriverTest {
 	 * @throws SQLException
 	 */
 	public void testPreparedStatementClose() throws SQLException {
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
 		Assert.assertFalse( statement.isClosed() );
 		statement.close();
 		Assert.assertTrue( statement.isClosed() );
@@ -142,7 +142,7 @@ public class DriverTest {
 	 */
 	public void testSqlDescribeTable() throws SQLException {
 		String sqlStatement = "DESCRIBE jdbcDriverTest;";
-		Statement statement = conn.createStatement();
+		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		
 		Assert.assertTrue(rs != null);
@@ -173,7 +173,7 @@ public class DriverTest {
 				"VALUES " +
 				"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
 		
-		Statement statement = conn.createStatement();
+		Statement statement = _conn.createStatement();
     	int result = statement.executeUpdate(sqlStatement);
     	// Insert returns 0 on success
     	Assert.assertTrue(result == 0);
@@ -207,7 +207,7 @@ public class DriverTest {
 					"('" + person[0] + "', " + person[1] + ", " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(person[2]) + 
 					", " + person[3] + ");";
 			//System.out.println(sqlStatement);
-			Statement statement = conn.createStatement();
+			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	// Insert returns 0 on success
 	    	Assert.assertTrue(result == 0);			
@@ -231,7 +231,7 @@ public class DriverTest {
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		//System.out.println(sqlStatement);
 		
-		Statement statement = conn.createStatement();
+		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
@@ -263,7 +263,7 @@ public class DriverTest {
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		//System.out.println(sqlStatement);
 		
-		Statement statement = conn.createStatement();
+		Statement statement = _conn.createStatement();
 		boolean success = statement.execute(sqlStatement);
 		Assert.assertTrue(success);
 		ResultSet rs = statement.getResultSet();
@@ -286,7 +286,7 @@ public class DriverTest {
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement(sqlStatement);
 		ResultSet rs = statement.executeQuery();
 		Assert.assertTrue(rs != null);
 		rs.close();		
@@ -308,7 +308,7 @@ public class DriverTest {
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		rs.close();		
@@ -329,7 +329,7 @@ public class DriverTest {
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement(sqlStatement);
 		boolean success = statement.execute();
 		Assert.assertTrue(success);
 		ResultSet rs = statement.getResultSet();
@@ -352,7 +352,7 @@ public class DriverTest {
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
 		boolean success = statement.execute(sqlStatement);
 		Assert.assertTrue(success);
 		ResultSet rs = statement.getResultSet();
@@ -375,7 +375,7 @@ public class DriverTest {
 				"VALUES " +
 				"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
 		
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement(sqlStatement);
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement(sqlStatement);
     	int result = statement.executeUpdate();
     	// Insert returns 0 on success
     	Assert.assertTrue(result == 0);
@@ -396,7 +396,7 @@ public class DriverTest {
 				"VALUES " +
 				"('Julie', 44, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 132.5);";
 		
-		PreparedStatement statement = (PreparedStatement) conn.prepareStatement("");
+		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
     	int result = statement.executeUpdate(sqlStatement);
     	// Insert returns 0 on success
     	Assert.assertTrue(result == 0);
@@ -420,7 +420,7 @@ public class DriverTest {
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
 		//System.out.println(sqlStatement);
 
-		Statement statement = conn.createStatement();
+		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
@@ -463,14 +463,14 @@ public class DriverTest {
 	
 	@Test 
 	public void testConnection() throws SQLException {
-		Assert.assertTrue( conn != null ); 
-		Assert.assertTrue( conn.getMetaData() != null );
-		Assert.assertFalse( conn.isClosed() );
+		Assert.assertTrue( _conn != null ); 
+		Assert.assertTrue( _conn.getMetaData() != null );
+		Assert.assertFalse( _conn.isClosed() );
 	}
 
 	@Test
 	public void testAcceptsURL() throws SQLException {
-		Assert.assertTrue( d.acceptsURL("riakts://127.0.0.1:8087") );
+		Assert.assertTrue( _driver.acceptsURL("riakts://127.0.0.1:8087") );
 	}
 	
 	@Test
@@ -478,7 +478,7 @@ public class DriverTest {
 		Properties info = new Properties();
 		info.setProperty("RiakUrl", "127.0.0.1");
 		info.setProperty("RiakPort", "8087");
-		Assert.assertTrue( d.acceptsProperties(info) );
+		Assert.assertTrue( _driver.acceptsProperties(info) );
 	}
 
 }
