@@ -463,6 +463,8 @@ public class DriverTest {
 	
 	@Test 
 	public void testConnection() throws SQLException {
+		Assert.assertTrue( conn != null ); 
+		Assert.assertTrue( conn.getMetaData() != null );
 		Assert.assertFalse( conn.isClosed() );
 	}
 

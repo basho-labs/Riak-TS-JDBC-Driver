@@ -30,13 +30,13 @@ public class Statement implements java.sql.Statement {
 	private ResultSet _resultSet;
 	private boolean _isClosed;
 	
+	
 	Statement(RiakClient client, int type, int concurrency, int holdability) {
 		if ( type != 0 || concurrency != 0 || holdability != 0 )
             throw new UnsupportedOperationException(  );
 		_client = client;
 		_isClosed = false;
 	}
-
 	
 	public int executeUpdate(String sql) throws SQLException {
 		Query query = new Query.Builder(sql).build();
@@ -48,7 +48,6 @@ public class Statement implements java.sql.Statement {
 			throw new SQLException(e);
 		}
 	}
-	
 
 	public ResultSet executeQuery(String sql) throws SQLException {
 		try {
@@ -78,6 +77,10 @@ public class Statement implements java.sql.Statement {
 		_resultSet = null;
 		_client = null;
 		_isClosed = true;
+	}
+	
+	public boolean isClosed() throws SQLException {
+		return _isClosed;
 	}
 	
 	
@@ -206,10 +209,6 @@ public class Statement implements java.sql.Statement {
 
 	public int getResultSetHoldability() throws SQLException {
 		return 0;
-	}
-
-	public boolean isClosed() throws SQLException {
-		return _isClosed;
 	}
 
 	public void setPoolable(boolean poolable) throws SQLException {
