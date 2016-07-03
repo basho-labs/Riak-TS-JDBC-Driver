@@ -39,79 +39,80 @@ import java.util.Map;
 public class ResultSet implements java.sql.ResultSet {
 	protected static final int POS_BEFORE_FIRST = -1;
     protected static final int POS_AFTER_LAST = -1;
-	protected int direction = FETCH_FORWARD;
-	protected int fetchDirection = FETCH_FORWARD;
+    
+	protected int _direction = FETCH_FORWARD;
+	protected int _fetchDirection = FETCH_FORWARD;
 	
 	/** */
-	protected ResultSetMetaData rsMetaData;
+	protected ResultSetMetaData _rsMetaData;
 	
 	/** The current row number that is being written to or read from. */
-    protected int rowPosition = POS_BEFORE_FIRST;
+    protected int _rowPosition = POS_BEFORE_FIRST;
     
     /** Total number of rows in the ResultSet */
-	protected int rowsInResult = 0;
+	protected int _rowsInResult = 0;
 	
 	/** Number of columns in the ResultSet */
-	protected int columnCount = 0;
+	protected int _columnCount = 0;
 	
 	/** List of column names imported from the Riak TS QueryResult */
-	protected ArrayList<String> columnList;
+	protected ArrayList<String> _columnList;
 	
 	/** Rows of data copied from Riak TS QueryResult to JDBC ResultSet */
-	protected ArrayList<Object[]> rowData;
+	protected ArrayList<Object[]> _rowData;
 
 	/** Whether or not the ResultSet is closed */
-	protected boolean closed;
+	protected boolean _closed;
 
-	private Object[] currentRow;
-	private Object[] insertRow;
-	private boolean inserting = false;
+	private Object[] _currentRow;
+	private Object[] _insertRow;
+	private boolean _inserting = false;
 	
 	ResultSet() { 
-		closed = false;
-		rowData = new ArrayList<Object[]>();
-		columnList = new ArrayList<String>();
-		rsMetaData = new ResultSetMetaData();
+		_closed = false;
+		_rowData = new ArrayList<Object[]>();
+		_columnList = new ArrayList<String>();
+		_rsMetaData = new ResultSetMetaData();
 	}
 	
 	public void close() throws SQLException {
-		rowData = null;
-		currentRow = null;
-		columnList = null;
-		rowsInResult = 0;
-		columnCount = 0;
-		rowPosition = -1;
-		closed = true;
+		_rowData = null;
+		_currentRow = null;
+		_columnList = null;
+		_rowsInResult = 0;
+		_columnCount = 0;
+		_rowPosition = -1;
+		_closed = true;
 	}
 	
 	public boolean isClosed() throws SQLException {
-		return closed;
+		return _closed;
 	}
 	
 	
 	public void moveToInsertRow() throws SQLException {
 		// Throw exception if there are no columns or rows in the QueryResult
-		if (columnCount == 0 || rowsInResult == 0) throw new SQLException();
+		if (_columnCount == 0 || _rowsInResult == 0) throw new SQLException();
 		
 		// Create a new Object[] to store column values
-		insertRow = new Object[columnCount];
+		_insertRow = new Object[_columnCount];
 		
 		// Set inserting to true versus updating an existing row
-		inserting = true;
+		_inserting = true;
 	}
 	
 	public void insertRow() throws SQLException {
 		// Add the new row to the rowData ArrayList<Object[]>
-		rowData.add(insertRow);
+		_rowData.add(_insertRow);
 		
 		// Clear insertRow
-		insertRow = null;
+		_insertRow = null;
 		
 		// Set inserting back to false
-		inserting = false;
+		_inserting = false;
 		
 		// Update currentRow to equal our newly added row
-		currentRow = rowData.get(rowData.size() - 1);
+		_currentRow = _rowData.get(_rowData.size() - 1);
 	}
 	
 	
@@ -125,12 +126,12 @@ public class ResultSet implements java.sql.ResultSet {
 	 * @throws SQLException 
 	 */
 	protected void setColumnValue(int columnIndex, Object value) throws SQLException {
-		if (columnIndex < 0 || columnIndex > columnCount - 1) throw new SQLException();
-		if (inserting) {
-			insertRow[columnIndex] = value;
+		if (columnIndex < 0 || columnIndex > _columnCount - 1) throw new SQLException();
+		if (_inserting) {
+			_insertRow[columnIndex] = value;
 		}
 		else {
-			currentRow[columnIndex] = value;
+			_currentRow[columnIndex] = value;
 		}
 	}
 
@@ -141,51 +142,51 @@ public class ResultSet implements java.sql.ResultSet {
 	// currentRow Object[] ONLY when attempting to get a value by index
 	
 	public Timestamp getTimestamp(int columnIndex) throws SQLException {
-		return (Timestamp) currentRow[ columnIndex - 1 ];
+		return (Timestamp) _currentRow[ columnIndex - 1 ];
 	}
 
 	public Timestamp getTimestamp(String columnLabel) throws SQLException {
-		return (Timestamp) currentRow[ columnList.indexOf(columnLabel) ];
+		return (Timestamp) _currentRow[ _columnList.indexOf(columnLabel) ];
 	}
 
 	public double getDouble(int columnIndex) throws SQLException {
-		return Double.parseDouble( (String) currentRow[ columnIndex - 1 ] );
+		return Double.parseDouble( (String) _currentRow[ columnIndex - 1 ] );
 	}
 	
 	public double getDouble(String columnLabel) throws SQLException {
-		return (Double) currentRow[ columnList.indexOf(columnLabel) ];
+		return (Double) _currentRow[ _columnList.indexOf(columnLabel) ];
 	}
 
 	public String getString(int columnIndex) throws SQLException {
-		return (String) currentRow[ columnIndex - 1 ];
+		return (String) _currentRow[ columnIndex - 1 ];
 	}
 	
 	public String getString(String columnLabel) throws SQLException {
-		return (String) currentRow[ columnList.indexOf(columnLabel) ];
+		return (String) _currentRow[ _columnList.indexOf(columnLabel) ];
 	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {
-		return (Boolean) currentRow[ columnIndex - 1 ];
+		return (Boolean) _currentRow[ columnIndex - 1 ];
 	}
 
 	public boolean getBoolean(String columnLabel) throws SQLException {
-		return (Boolean) currentRow[ columnList.indexOf(columnLabel) ];
+		return (Boolean) _currentRow[ _columnList.indexOf(columnLabel) ];
 	}
 	
 	public long getLong(int columnIndex) throws SQLException {
-		return (Long) currentRow[ columnIndex - 1 ] ;
+		return (Long) _currentRow[ columnIndex - 1 ] ;
 	}
 
 	public long getLong(String columnLabel) throws SQLException {
-		return (Long) currentRow[ columnList.indexOf(columnLabel) ];
+		return (Long) _currentRow[ _columnList.indexOf(columnLabel) ];
 	}
 	
 	public Object getObject(int columnIndex) throws SQLException {
-		return currentRow[ columnIndex - 1 ];
+		return _currentRow[ columnIndex - 1 ];
 	}
 
 	public Object getObject(String columnLabel) throws SQLException {
-		return currentRow[ columnList.indexOf(columnLabel) ];
+		return _currentRow[ _columnList.indexOf(columnLabel) ];
 	}
 	// End - Get Methods that have been implemented for Riak TS
 
@@ -202,7 +203,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public ResultSetMetaData getMetaData() throws SQLException {
-		return rsMetaData;
+		return _rsMetaData;
 	}
 
 	public int findColumn(String columnLabel) throws SQLException {
@@ -218,50 +219,50 @@ public class ResultSet implements java.sql.ResultSet {
 	 * @throws SQLException
 	 */
 	private void setCurrentRow(int i) throws SQLException {
-		currentRow = rowData.get(i);
+		_currentRow = _rowData.get(i);
 	}
 	
 	public boolean isBeforeFirst() throws SQLException {
-		if (rowPosition == -1) {
+		if (_rowPosition == -1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isAfterLast() throws SQLException {
-		if (rowPosition > rowData.size() - 1) {
+		if (_rowPosition > _rowData.size() - 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isFirst() throws SQLException {
-		if (rowPosition == 0) {
+		if (_rowPosition == 0) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean isLast() throws SQLException {
-		if (rowPosition == rowData.size() - 1) {
+		if (_rowPosition == _rowData.size() - 1) {
 			return true;
 		}
 		return false;
 	}
 
 	public void beforeFirst() throws SQLException {
-		currentRow = null;
-		rowPosition = -1;
+		_currentRow = null;
+		_rowPosition = -1;
 	}
 
 	public void afterLast() throws SQLException {
-		currentRow = null;
-		rowPosition = rowData.size() + 1;
+		_currentRow = null;
+		_rowPosition = _rowData.size() + 1;
 	}
 
 	public boolean first() throws SQLException {
-		if (rowData.size() > 0) {
-			rowPosition = 0;
+		if (_rowData.size() > 0) {
+			_rowPosition = 0;
 			setCurrentRow(0);
 			return true;
 		}
@@ -269,33 +270,33 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean last() throws SQLException {
-		if (rowData.size() > 0) {
-			rowPosition = rowData.size() - 1;
-			setCurrentRow(rowPosition);
+		if (_rowData.size() > 0) {
+			_rowPosition = _rowData.size() - 1;
+			setCurrentRow(_rowPosition);
 			return true;
 		}
 		return false;
 	}
 
 	public int getRow() throws SQLException {
-		return rowPosition;
+		return _rowPosition;
 	}
 
 	public boolean absolute(int row) throws SQLException {
-		if (rowData.size() > 0 && row <= rowData.size() && row >= 0) {
-			rowPosition = row - 1;
-			setCurrentRow(rowPosition);
+		if (_rowData.size() > 0 && row <= _rowData.size() && row >= 0) {
+			_rowPosition = row - 1;
+			setCurrentRow(_rowPosition);
 			return true;
 		}
 		return false;
 	}
 
 	public boolean relative(int rows) throws SQLException {
-		if (rowData.size() > 0) {
-			int newRowPosition = rowPosition + rows;
-			if (newRowPosition > -1 && newRowPosition < rowData.size()) {
-				rowPosition = newRowPosition;
-				setCurrentRow(rowPosition);
+		if (_rowData.size() > 0) {
+			int newRowPosition = _rowPosition + rows;
+			if (newRowPosition > -1 && newRowPosition < _rowData.size()) {
+				_rowPosition = newRowPosition;
+				setCurrentRow(_rowPosition);
 				return true;
 			}
 		}
@@ -303,18 +304,18 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean previous() throws SQLException {
-		if (rowData.size() > 0 && rowPosition > 0) {
-			rowPosition--;
-			setCurrentRow(rowPosition);
+		if (_rowData.size() > 0 && _rowPosition > 0) {
+			_rowPosition--;
+			setCurrentRow(_rowPosition);
 			return true;
 		}
 		return false;
 	}
 		
 	public boolean next() throws SQLException {
-		if (rowData.size() > 0 && rowPosition < rowData.size() - 1) {
-			rowPosition++;
-			setCurrentRow(rowPosition);
+		if (_rowData.size() > 0 && _rowPosition < _rowData.size() - 1) {
+			_rowPosition++;
+			setCurrentRow(_rowPosition);
 			return true;
 		}
 		return false;
@@ -362,7 +363,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateNull(String columnLabel) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), null);
+		setColumnValue(_columnList.indexOf(columnLabel), null);
 	}
 
 	public void updateBoolean(int columnIndex, boolean x) throws SQLException {
@@ -370,7 +371,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
+		setColumnValue(_columnList.indexOf(columnLabel), x);
 	}
 
 	public void updateLong(int columnIndex, long x) throws SQLException {
@@ -378,7 +379,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateLong(String columnLabel, long x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
+		setColumnValue(_columnList.indexOf(columnLabel), x);
 	}
 
 	public void updateDouble(int columnIndex, double x) throws SQLException {
@@ -386,7 +387,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateDouble(String columnLabel, double x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
+		setColumnValue(_columnList.indexOf(columnLabel), x);
 	}
 
 	public void updateString(int columnIndex, String x) throws SQLException {
@@ -394,7 +395,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public void updateString(String columnLabel, String x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
+		setColumnValue(_columnList.indexOf(columnLabel), x);
 	}
 	
 	public void updateDate(int columnIndex, Date x) throws SQLException {
@@ -402,11 +403,11 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateDate(String columnLabel, Date x) throws SQLException {
-		setColumnValue(columnList.indexOf(columnLabel), x);
+		setColumnValue(_columnList.indexOf(columnLabel), x);
 	}
 	
 	public void updateTimestamp(String columnLabel, Timestamp x) throws SQLException { 
-		setColumnValue(columnList.indexOf(columnLabel), x);
+		setColumnValue(_columnList.indexOf(columnLabel), x);
 	}
 	
 	public void updateTimestamp(int columnIndex, Timestamp x) throws SQLException { 
@@ -691,7 +692,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public void deleteRow() throws SQLException {
-		rowData.remove(rowPosition);
+		_rowData.remove(_rowPosition);
 	}
 
 	/***

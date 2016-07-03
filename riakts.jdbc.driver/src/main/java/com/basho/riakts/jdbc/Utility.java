@@ -89,14 +89,14 @@ public class Utility {
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
-			rs.columnList.add(desc.getName());
+			rs._columnList.add(desc.getName());
 			rs.getMetaData().addColumn(desc.getName());
 		}
 		
 		// TODO: Refactor to remove duplication of storing column count in two places
-		rs.columnCount = rs.columnList.size();
-		rs.rsMetaData.setColumnCount(rs.columnList.size());
-		rs.rowsInResult = queryResult.getRowsCount();
+		rs._columnCount = rs._columnList.size();
+		rs._rsMetaData.setColumnCount(rs._columnList.size());
+		rs._rowsInResult = queryResult.getRowsCount();
 		
 		// Iterate over each row in our QueryResult object
 		Iterator<Row> rows = queryResult.iterator();
