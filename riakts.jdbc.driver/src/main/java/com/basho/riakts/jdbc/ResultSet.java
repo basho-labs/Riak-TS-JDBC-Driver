@@ -37,36 +37,23 @@ import java.util.Calendar;
 import java.util.Map;
 
 public class ResultSet implements java.sql.ResultSet {
+
 	protected static final int POS_BEFORE_FIRST = -1;
     protected static final int POS_AFTER_LAST = -1;
     
 	protected int _direction = FETCH_FORWARD;
 	protected int _fetchDirection = FETCH_FORWARD;
-	
-	/** */
+	protected int _rowPosition = POS_BEFORE_FIRST;
 	protected ResultSetMetaData _rsMetaData;
-	
-	/** The current row number that is being written to or read from. */
-    protected int _rowPosition = POS_BEFORE_FIRST;
-    
-    /** Total number of rows in the ResultSet */
 	protected int _rowsInResult = 0;
-	
-	/** Number of columns in the ResultSet */
 	protected int _columnCount = 0;
-	
-	/** List of column names imported from the Riak TS QueryResult */
 	protected ArrayList<String> _columnList;
-	
-	/** Rows of data copied from Riak TS QueryResult to JDBC ResultSet */
 	protected ArrayList<Object[]> _rowData;
-
-	/** Whether or not the ResultSet is closed */
 	protected boolean _closed;
-
 	private Object[] _currentRow;
 	private Object[] _insertRow;
 	private boolean _inserting = false;
+	
 	
 	ResultSet() { 
 		_closed = false;
