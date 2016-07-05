@@ -17,41 +17,41 @@ package com.basho.riakts.jdbc;
 
 public class ColumnInfo {
 	
-	private String columnName;
-	private String columnLabel;
-	private int columnType;
-	private String columnTypeName;
+	private String _columnName;
+	private String _columnLabel;
+	private int _columnType;
+	private String _columnTypeName;
 	
 	public String getColumnName() {
-		return columnName;
+		return _columnName;
 	}
 	
 	public void setColumnName(String columnName) {
-		this.columnName = columnName;
+		this._columnName = columnName;
 	}
 	
 	public String getColumnLabel() {
-		return columnLabel;
+		return _columnLabel;
 	}
 	
 	public void setColumnLabel(String columnLabel) {
-		this.columnLabel = columnLabel;
+		this._columnLabel = columnLabel;
 	}
 	
 	public int getColumnType() {
-		return columnType;
+		return _columnType;
 	}
 	
 	public void setColumnType(int columnType) {
-		this.columnType = columnType;
+		this._columnType = columnType;
 	}
 	
 	public String getColumnTypeName() {
-		return columnTypeName;
+		return _columnTypeName;
 	}
 	
 	public void setColumnTypeName(String columnTypeName) {
-		this.columnTypeName = columnTypeName;
+		this._columnTypeName = columnTypeName;
 	}
 
 }
