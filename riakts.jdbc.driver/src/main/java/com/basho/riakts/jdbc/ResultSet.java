@@ -41,14 +41,15 @@ public class ResultSet implements java.sql.ResultSet {
 	protected static final int POS_BEFORE_FIRST = -1;
     protected static final int POS_AFTER_LAST = -1;
     
-	protected int _direction = FETCH_FORWARD;
+    protected ResultSetMetaData _rsMetaData;
+    
+    protected int _direction = FETCH_FORWARD;
 	protected int _fetchDirection = FETCH_FORWARD;
 	protected int _rowPosition = POS_BEFORE_FIRST;
-	protected ResultSetMetaData _rsMetaData;
-	protected int _rowsInResult = 0;
-	protected int _columnCount = 0;
-	protected ArrayList<String> _columnList;
+	
+	//protected ArrayList<String> _columnList;
 	protected ArrayList<Object[]> _rowData;
+	
 	protected boolean _closed;
 	private Object[] _currentRow;
 	private Object[] _insertRow;
@@ -58,16 +59,14 @@ public class ResultSet implements java.sql.ResultSet {
 	ResultSet() { 
 		_closed = false;
 		_rowData = new ArrayList<Object[]>();
-		_columnList = new ArrayList<String>();
+		//_columnList = new ArrayList<String>();
 		_rsMetaData = new ResultSetMetaData();
 	}
 	
 	public void close() throws SQLException {
 		_rowData = null;
 		_currentRow = null;
-		_columnList = null;
-		_rowsInResult = 0;
-		_columnCount = 0;
+		//_columnList = null;
 		_rowPosition = -1;
 		_closed = true;
 	}
@@ -79,10 +78,10 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	public void moveToInsertRow() throws SQLException {
 		// Throw exception if there are no columns or rows in the QueryResult
-		if (_columnCount == 0 || _rowsInResult == 0) throw new SQLException();
+		if (_rsMetaData.getColumnCount() == 0 || _rsMetaData.getRowCount() == 0) throw new SQLException();
 		
 		// Create a new Object[] to store column values
-		_insertRow = new Object[_columnCount];
+		_insertRow = new Object[_rsMetaData.getColumnCount()];
 		
 		// Set inserting to true versus updating an existing row
 		_inserting = true;
@@ -113,7 +112,7 @@ public class ResultSet implements java.sql.ResultSet {
 	 * @throws SQLException 
 	 */
 	protected void setColumnValue(int columnIndex, Object value) throws SQLException {
-		if (columnIndex < 0 || columnIndex > _columnCount - 1) throw new SQLException();
+		if (columnIndex < 0 || columnIndex > _rsMetaData.getColumnCount() - 1) throw new SQLException();
 		if (_inserting) {
 			_insertRow[columnIndex] = value;
 		}
@@ -133,7 +132,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public Timestamp getTimestamp(String columnLabel) throws SQLException {
-		return (Timestamp) _currentRow[ _columnList.indexOf(columnLabel) ];
+		return (Timestamp) _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
 
 	public double getDouble(int columnIndex) throws SQLException {
@@ -141,7 +140,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public double getDouble(String columnLabel) throws SQLException {
-		return (Double) _currentRow[ _columnList.indexOf(columnLabel) ];
+		return (Double) _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
 
 	public String getString(int columnIndex) throws SQLException {
@@ -149,7 +148,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public String getString(String columnLabel) throws SQLException {
-		return (String) _currentRow[ _columnList.indexOf(columnLabel) ];
+		return (String) _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
 
 	public boolean getBoolean(int columnIndex) throws SQLException {
@@ -157,7 +156,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public boolean getBoolean(String columnLabel) throws SQLException {
-		return (Boolean) _currentRow[ _columnList.indexOf(columnLabel) ];
+		return (Boolean) _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
 	
 	public long getLong(int columnIndex) throws SQLException {
@@ -165,7 +164,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public long getLong(String columnLabel) throws SQLException {
-		return (Long) _currentRow[ _columnList.indexOf(columnLabel) ];
+		return (Long) _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
 	
 	public Object getObject(int columnIndex) throws SQLException {
@@ -173,7 +172,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public Object getObject(String columnLabel) throws SQLException {
-		return _currentRow[ _columnList.indexOf(columnLabel) ];
+		return _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
 	// End - Get Methods that have been implemented for Riak TS
 
@@ -350,7 +349,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateNull(String columnLabel) throws SQLException {
-		setColumnValue(_columnList.indexOf(columnLabel), null);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), null);
 	}
 
 	public void updateBoolean(int columnIndex, boolean x) throws SQLException {
@@ -358,7 +357,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateBoolean(String columnLabel, boolean x) throws SQLException {
-		setColumnValue(_columnList.indexOf(columnLabel), x);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
 	}
 
 	public void updateLong(int columnIndex, long x) throws SQLException {
@@ -366,7 +365,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateLong(String columnLabel, long x) throws SQLException {
-		setColumnValue(_columnList.indexOf(columnLabel), x);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
 	}
 
 	public void updateDouble(int columnIndex, double x) throws SQLException {
@@ -374,7 +373,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateDouble(String columnLabel, double x) throws SQLException {
-		setColumnValue(_columnList.indexOf(columnLabel), x);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
 	}
 
 	public void updateString(int columnIndex, String x) throws SQLException {
@@ -382,7 +381,7 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 
 	public void updateString(String columnLabel, String x) throws SQLException {
-		setColumnValue(_columnList.indexOf(columnLabel), x);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
 	}
 	
 	public void updateDate(int columnIndex, Date x) throws SQLException {
@@ -390,11 +389,11 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	
 	public void updateDate(String columnLabel, Date x) throws SQLException {
-		setColumnValue(_columnList.indexOf(columnLabel), x);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
 	}
 	
 	public void updateTimestamp(String columnLabel, Timestamp x) throws SQLException { 
-		setColumnValue(_columnList.indexOf(columnLabel), x);
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
 	}
 	
 	public void updateTimestamp(int columnIndex, Timestamp x) throws SQLException { 

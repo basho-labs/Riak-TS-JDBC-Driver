@@ -54,26 +54,6 @@ public class Utility {
 	
 	
 	/***
-	 * Returns a list of buckets contained in a given bucket type
-	 * @param client
-	 * @param bucket
-	 * @return List<String> containing all of the buckets for a given bucket type
-	 * @throws ExecutionException
-	 * @throws InterruptedException
-	 */
-	public static List<String> getBuckets(RiakClient client, String bucket) throws ExecutionException, InterruptedException {
-		List<String> buckets = new ArrayList<String>();
-		ListBuckets lb = new ListBuckets.Builder(bucket).build();
-		ListBuckets.Response resp = client.execute(lb);
-		for (Namespace ns : resp)
-		{
-			buckets.add(ns.getBucketNameAsString());
-		}
-		return buckets;
-	}
-	
-	
-	/***
 	 * Converts a Riak TS QueryResult object to a JDBC ResultSet 
 	 * @param queryResult com.basho.riak.client.core.query.timeseries.QueryResult
 	 * @return java.sql.ResultSet
@@ -83,20 +63,17 @@ public class Utility {
 		// Create new empty ResultSet
 		ResultSet rs = new ResultSet();
 		
-		// Get column names from the QueryResult object, add to the columnList ArrayList and
-		// ResultSetMetaData ColumnInfo List
-		// TODO: Refactor code to remove duplication of storing column info in two places
+		// Get column names from the QueryResult object, add to the ResultSetMetaData ColumnInfo List
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
+		int columnCount = 0;
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
-			rs._columnList.add(desc.getName());
 			rs.getMetaData().addColumn(desc.getName());
+			columnCount++;
 		}
 		
-		// TODO: Refactor to remove duplication of storing column count in two places
-		rs._columnCount = rs._columnList.size();
-		rs._rsMetaData.setColumnCount(rs._columnList.size());
-		rs._rowsInResult = queryResult.getRowsCount();
+		rs._rsMetaData.setColumnCount(columnCount);
+		rs._rsMetaData.setRowCount( queryResult.getRowsCount() );
 		
 		// Iterate over each row in our QueryResult object
 		Iterator<Row> rows = queryResult.iterator();
@@ -230,7 +207,24 @@ public class Utility {
 	} // Tested
 	
 	
-	
+	/***
+	 * Returns a list of buckets contained in a given bucket type
+	 * @param client
+	 * @param bucket
+	 * @return List<String> containing all of the buckets for a given bucket type
+	 * @throws ExecutionException
+	 * @throws InterruptedException
+	 */
+	public static List<String> getBuckets(RiakClient client, String bucket) throws ExecutionException, InterruptedException {
+		List<String> buckets = new ArrayList<String>();
+		ListBuckets lb = new ListBuckets.Builder(bucket).build();
+		ListBuckets.Response resp = client.execute(lb);
+		for (Namespace ns : resp)
+		{
+			buckets.add(ns.getBucketNameAsString());
+		}
+		return buckets;
+	}
 
 	
 	

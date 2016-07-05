@@ -22,9 +22,23 @@ import java.util.List;
 public class ResultSetMetaData implements java.sql.ResultSetMetaData {
 	public List<ColumnInfo> _columns = new ArrayList<ColumnInfo>();
     private int _columnCount = 0;
+    private int _rowCount = 0;
 	
 	protected void setColumnCount(int columnCount) {
 		_columnCount = columnCount;
+	}
+	
+	protected void setRowCount(int rowCount) {
+		_rowCount = rowCount;
+	}
+	
+	/***
+	 * Returns the number of rows in this ResultSet object.
+	 * @return the number of rows
+	 * @throws SQLException
+	 */
+	public int getRowCount() throws SQLException {
+		return _rowCount;
 	}
 	
 	
@@ -71,6 +85,38 @@ public class ResultSetMetaData implements java.sql.ResultSetMetaData {
 	}
 	
 	
+	
+	/***
+	 * Returns the 0 based index of the column matching the name passed in
+	 * @param columnName
+	 * @return index of the column
+	 * @throws SQLException
+	 */
+	public int getColumnIndexByName(String columnName) throws SQLException {
+		int column = 0;
+		for (ColumnInfo c : _columns) {
+			if (c.getColumnName().equalsIgnoreCase(columnName)) return column;
+			column++;
+		}
+		return -1;
+	}
+	
+	/***
+	 * Returns the 0 based index of the column matching the label passed in
+	 * @param columnLabel
+	 * @return index of the column
+	 * @throws SQLException
+	 */
+	public int getColumnIndexByLabel(String columnLabel) throws SQLException {
+		int column = 0;
+		for (ColumnInfo c : _columns) {
+			if (c.getColumnLabel().equalsIgnoreCase(columnLabel)) {
+				return column;
+			}
+			column++;
+		}
+		return -1;
+	}
 	
 
 
