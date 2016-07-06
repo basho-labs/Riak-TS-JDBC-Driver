@@ -47,7 +47,6 @@ public class ResultSet implements java.sql.ResultSet {
 	protected int _fetchDirection = FETCH_FORWARD;
 	protected int _rowPosition = POS_BEFORE_FIRST;
 	
-	//protected ArrayList<String> _columnList;
 	protected ArrayList<Object[]> _rowData;
 	
 	protected boolean _closed;
@@ -59,14 +58,12 @@ public class ResultSet implements java.sql.ResultSet {
 	ResultSet() { 
 		_closed = false;
 		_rowData = new ArrayList<Object[]>();
-		//_columnList = new ArrayList<String>();
 		_rsMetaData = new ResultSetMetaData();
 	}
 	
 	public void close() throws SQLException {
 		_rowData = null;
 		_currentRow = null;
-		//_columnList = null;
 		_rowPosition = -1;
 		_closed = true;
 	}
