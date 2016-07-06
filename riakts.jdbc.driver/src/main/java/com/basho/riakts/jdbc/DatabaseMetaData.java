@@ -32,7 +32,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	// Note: Update version a new version is released and 
 	// tested with the driver
 	private static String DATABASE_PRODUCT_NAME = "Riak TS";
-	private static String DATABASE_PRODUCT_VERSION = "1.3";
+	private static String DATABASE_PRODUCT_VERSION = "1.3.1";
 	
 	// JDBC Driver specific variables that won't update a lot
 	private static boolean IS_READ_ONLY = false; 
