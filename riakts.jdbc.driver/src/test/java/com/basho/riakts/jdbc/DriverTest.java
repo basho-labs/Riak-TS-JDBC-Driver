@@ -18,6 +18,7 @@ package com.basho.riakts.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Properties;
@@ -237,13 +238,20 @@ public class DriverTest {
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		Assert.assertTrue(rs != null);
 		
-		// Print out ResultSet for demonstration purposes only, commented out for normal test runs 
-//		if (rs != null) {
-//			while (rs.next()) {
+		if (rs != null) {
+			while (rs.next()) {
+				// Check get methods for the various supported types to make sure that
+				// they don't get broken during code refactoring
+				String name = rs.getString("name");
+				long age = rs.getLong("age");
+				Timestamp ts = rs.getTimestamp("joined");
+				double weight = rs.getDouble("weight");
+				
+				// Print out ResultSet for demonstration purposes only, commented out for normal test runs
 //				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
 //						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-//			}
-//		}
+			}
+		}
 		rs.close();
 	}
 	
