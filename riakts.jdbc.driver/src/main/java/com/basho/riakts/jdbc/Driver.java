@@ -56,12 +56,12 @@ public class Driver implements java.sql.Driver {
 		else {
 			return null;
 		}
-	}
+	} // Tested
 	
 
 	public boolean acceptsURL(String url) throws SQLException {
 		return Utility.validateRiakUrl( url );
-	}
+	} // Tested
 	
 	/***
 	 * Retrieves whether the driver thinks that it can open a connection via the properties
@@ -74,12 +74,8 @@ public class Driver implements java.sql.Driver {
 	 */
 	public boolean acceptsProperties(Properties info) throws SQLException {
 		return Utility.validateRiakProperties( info );
-	}
-
-	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
+	} // Tested
+	
 	public int getMajorVersion() {
 		return MAJOR_VERSION;
 	}
@@ -92,6 +88,12 @@ public class Driver implements java.sql.Driver {
 		return JDBC_COMPLIANT;
 	}
 
+	// Unsupported Driver methods
+	
+	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
+		throw new UnsupportedOperationException();
+	}
+	
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
 		throw new UnsupportedOperationException();
 	}
