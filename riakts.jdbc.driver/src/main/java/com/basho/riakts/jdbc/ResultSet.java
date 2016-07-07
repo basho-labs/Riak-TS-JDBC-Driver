@@ -101,12 +101,10 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	/***
 	 * Updates a column based on its index, works for both inserts of new rows
-	 * and updates of 
-	 * @param columnIndex
-	 * @param dataType
-	 * @param value
-	 * @param length
-	 * @throws SQLException 
+	 * and updates of existing rows
+	 * @param columnIndex index of the row to update
+	 * @param value column value
+	 * @throws SQLException
 	 */
 	protected void setColumnValue(int columnIndex, Object value) throws SQLException {
 		if (columnIndex < 0 || columnIndex > _rsMetaData.getColumnCount() - 1) throw new SQLException();
@@ -173,25 +171,20 @@ public class ResultSet implements java.sql.ResultSet {
 	}
 	// End - Get Methods that have been implemented for Riak TS
 
-
 	
-	public SQLWarning getWarnings() throws SQLException {
-		return null;
-	}
-
-	public void clearWarnings() throws SQLException { }
-
-	public String getCursorName() throws SQLException {
-		return null;
-	}
-
+	
 	public ResultSetMetaData getMetaData() throws SQLException {
 		return _rsMetaData;
 	}
-
+	
+	
 	public int findColumn(String columnLabel) throws SQLException {
-		return 0;
+		return _rsMetaData.getColumnIndexByLabel(columnLabel);
 	}
+	
+
+
+
 	
 	
 	
@@ -1137,5 +1130,16 @@ public class ResultSet implements java.sql.ResultSet {
 	public boolean wasNull() throws SQLException {
 		return false;
 	}	
+	
+	
+	public SQLWarning getWarnings() throws SQLException {
+		return null;
+	}
+
+	public void clearWarnings() throws SQLException { }
+
+	public String getCursorName() throws SQLException {
+		return null;
+	}
 
 }
