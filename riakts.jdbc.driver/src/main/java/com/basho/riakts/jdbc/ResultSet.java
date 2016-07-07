@@ -179,13 +179,10 @@ public class ResultSet implements java.sql.ResultSet {
 	
 	
 	public int findColumn(String columnLabel) throws SQLException {
-		return _rsMetaData.getColumnIndexByLabel(columnLabel);
+		// Add 1 to the value returned by getColumnIndexByLabel
+		return _rsMetaData.getColumnIndexByLabel(columnLabel) + 1;
 	}
-	
 
-
-
-	
 	
 	
 	// Start - Row/Cursor position related methods
@@ -196,45 +193,45 @@ public class ResultSet implements java.sql.ResultSet {
 	 */
 	private void setCurrentRow(int i) throws SQLException {
 		_currentRow = _rowData.get(i);
-	}
+	} // Tested
 	
 	public boolean isBeforeFirst() throws SQLException {
 		if (_rowPosition == -1) {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public boolean isAfterLast() throws SQLException {
 		if (_rowPosition > _rowData.size() - 1) {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public boolean isFirst() throws SQLException {
 		if (_rowPosition == 0) {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public boolean isLast() throws SQLException {
 		if (_rowPosition == _rowData.size() - 1) {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public void beforeFirst() throws SQLException {
 		_currentRow = null;
 		_rowPosition = -1;
-	}
+	} // Tested
 
 	public void afterLast() throws SQLException {
 		_currentRow = null;
 		_rowPosition = _rowData.size() + 1;
-	}
+	} // Tested
 
 	public boolean first() throws SQLException {
 		if (_rowData.size() > 0) {
@@ -243,7 +240,7 @@ public class ResultSet implements java.sql.ResultSet {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public boolean last() throws SQLException {
 		if (_rowData.size() > 0) {
@@ -252,11 +249,11 @@ public class ResultSet implements java.sql.ResultSet {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public int getRow() throws SQLException {
 		return _rowPosition;
-	}
+	} // Tested
 
 	public boolean absolute(int row) throws SQLException {
 		if (_rowData.size() > 0 && row <= _rowData.size() && row >= 0) {
@@ -265,7 +262,7 @@ public class ResultSet implements java.sql.ResultSet {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 
 	public boolean relative(int rows) throws SQLException {
 		if (_rowData.size() > 0) {
@@ -277,7 +274,7 @@ public class ResultSet implements java.sql.ResultSet {
 			}
 		}
 		return false;
-	}
+	} // Tested
 
 	public boolean previous() throws SQLException {
 		if (_rowData.size() > 0 && _rowPosition > 0) {
@@ -286,7 +283,7 @@ public class ResultSet implements java.sql.ResultSet {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 		
 	public boolean next() throws SQLException {
 		if (_rowData.size() > 0 && _rowPosition < _rowData.size() - 1) {
@@ -295,7 +292,7 @@ public class ResultSet implements java.sql.ResultSet {
 			return true;
 		}
 		return false;
-	}
+	} // Tested
 	// End - Row/Cursor position related methods
 	
 
