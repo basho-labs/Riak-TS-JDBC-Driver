@@ -66,7 +66,9 @@ Currently the Riak TS JDBC driver only implements a small subset of the function
 - getLong(int columnIndex), getLong(String columnLabel)
 - getObject(int columnIndex), getObject(String columnLabel)
 
-The driver allow you to create new tables in Riak TS using CREATE TABLE and executeUpdate() as demonstrated below:
+**Create a Table in Riak TS**
+
+The driver allows you to create new tables in Riak TS using the CREATE TABLE command and executeUpdate() as demonstrated below:
 ```Java
 String sqlStatement = "CREATE TABLE jdbcDriverTest " + 
 	"( " +
@@ -84,6 +86,8 @@ Statement statement = conn.createStatement();
 int result = statement.executeUpdate(sqlStatement);
 ```
 See the following documentation for more information about creating Riak TS tables: http://docs.basho.com/riak/ts/latest/using/creating-activating/
+
+**Write Data to Riak TS**
 
 The example below demonstrates how to add data to Riak TS using INSERT and executeUpdate():
 ```Java
