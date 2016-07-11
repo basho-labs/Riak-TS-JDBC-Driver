@@ -38,6 +38,8 @@ import com.google.common.net.InetAddresses;
 
 public class Utility {
 	
+	static ResultSet _rs;
+	
 	/***
 	 * Executes SQL query against Riak TS and converts the 
 	 * QueryResult object to a ResultSet
@@ -61,19 +63,19 @@ public class Utility {
 	 */
 	private static ResultSet getResultSetFromQueryResult(QueryResult queryResult) throws SQLException {
 		// Create new empty ResultSet
-		ResultSet rs = new ResultSet();
+		_rs = new ResultSet();
 		
 		// Get column names from the QueryResult object, add to the ResultSetMetaData ColumnInfo List
 		Iterator<ColumnDescription> columns = queryResult.getColumnDescriptionsCopy().iterator();
 		int columnCount = 0;
 		while (columns.hasNext()) {
 			ColumnDescription desc = columns.next();
-			rs.getMetaData().addColumn(desc.getName());
+			_rs.getMetaData().addColumn(desc.getName());
 			columnCount++;
 		}
 		
-		rs._rsMetaData.setColumnCount(columnCount);
-		rs._rsMetaData.setRowCount( queryResult.getRowsCount() );
+		_rs._rsMetaData.setColumnCount(columnCount);
+		_rs._rsMetaData.setRowCount( queryResult.getRowsCount() );
 		
 		// Iterate over each row in our QueryResult object
 		Iterator<Row> rows = queryResult.iterator();
@@ -82,7 +84,7 @@ public class Utility {
 			Row row = (Row) rows.next();
 			
 			// Creates new row to add to the ResultSet
-			rs.moveToInsertRow();
+			_rs.moveToInsertRow();
 			
 			// Iterate over each cell in current QueryResult row add matching column to
 			// the current ResultSet row
@@ -90,47 +92,95 @@ public class Utility {
 			int colIndex = 0;
 			while (cells.hasNext()) {
 				Cell cell = (Cell) cells.next();
+				
+				// Update the ResultSetMetaData object ColumnType for this cell
+				if (!allColumnTypesSet && cell != null) setColumnType(colIndex, cell);
+				
 				// Check cell type for the 5 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
 				// Start by handling null cell values returned
-				// Also set columnType information in ResultSetMetaData
-				// TODO: Find efficient method to not repeatedly set column type as we write the data
 				if (cell == null) {
-					rs.updateNull(colIndex);
+					_rs.updateNull(colIndex);
 				}
 				else if (cell.hasBoolean()) {
-					rs.updateBoolean(colIndex, cell.getBoolean());
-					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.BOOLEAN, "java.sql.Types.BOOLEAN");
+					_rs.updateBoolean(colIndex, cell.getBoolean());
 				}
 				else if (cell.hasDouble()) {
-					rs.updateDouble(colIndex, cell.getDouble());
-					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.DOUBLE, "java.sql.Types.DOUBLE");
+					_rs.updateDouble(colIndex, cell.getDouble());
 				}
 				else if (cell.hasLong()) {
-					rs.updateLong(colIndex, cell.getLong());
-					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.BIGINT, "java.sql.Types.BIGINT");
+					_rs.updateLong(colIndex, cell.getLong());
 				}
 				else if (cell.hasTimestamp()) {
 					try {
 						// Convert from Epoch as Long to java.sql.Timestamp
-						rs.updateTimestamp(colIndex, new Timestamp(cell.getTimestamp()));
-						rs.getMetaData().updateColumnType(colIndex, java.sql.Types.TIMESTAMP, "java.sql.Types.TIMESTAMP");
+						_rs.updateTimestamp(colIndex, new Timestamp(cell.getTimestamp()));
 					} 
 					catch (Exception e) {
-						rs.updateDate(colIndex, null);
+						_rs.updateDate(colIndex, null);
 					}
 				}
 				else if (cell.hasVarcharValue()) {
 					// Get varchar as plain string for compatibility
-					rs.updateString(colIndex, cell.getVarcharValue().toString());
-					rs.getMetaData().updateColumnType(colIndex, java.sql.Types.VARCHAR, "java.sql.Types.VARCHAR");
+					_rs.updateString(colIndex, cell.getVarcharValue().toString());
 				}
 				colIndex++;
 			}	
 			// Adds new row to the ResultSet
-			rs.insertRow();
+			_rs.insertRow();
 		}
-		return rs;
+		return _rs;
+	}
+	
+	
+	private static boolean allColumnTypesSet = false;
+	private static String[] columnTypes = null;
+	
+	/***
+	 * 
+	 * @param index
+	 * @param cell
+	 * @throws SQLException
+	 */
+	private static void setColumnType(int index, Cell cell) throws SQLException {
+		// Create a new arry to hold the data types of each column to help us determine
+		// that they have all been set in the ResultSetMetaData object
+		if (columnTypes == null) columnTypes = new String[ _rs._rsMetaData.getColumnCount() ];
+		
+		// Check the data type and update the correct ColumnType in the ResultSetMetaData object
+		if (cell.hasBoolean()) {
+			_rs.getMetaData().updateColumnType(index, java.sql.Types.BOOLEAN, "java.sql.Types.BOOLEAN");
+			columnTypes[index] = "BOOLEAN";
+		}
+		else if (cell.hasDouble()) {
+			_rs.getMetaData().updateColumnType(index, java.sql.Types.DOUBLE, "java.sql.Types.DOUBLE");
+			columnTypes[index] = "DOUBLE";
+		}
+		else if (cell.hasLong()) {
+			_rs.getMetaData().updateColumnType(index, java.sql.Types.BIGINT, "java.sql.Types.BIGINT");
+			columnTypes[index] = "BIGINT";
+		}
+		else if (cell.hasTimestamp()) {
+			_rs.getMetaData().updateColumnType(index, java.sql.Types.TIMESTAMP, "java.sql.Types.TIMESTAMP");
+			columnTypes[index] = "TIMESTAMP";
+		}
+		else if (cell.hasVarcharValue()) {
+			_rs.getMetaData().updateColumnType(index, java.sql.Types.VARCHAR, "java.sql.Types.VARCHAR");
+			columnTypes[index] = "VARCHAR";
+		}
+		
+		// Check to see if all column data types are set
+		checkIfAllColumnTypesSet();
+	}
+	
+	/***
+	 * Flips allColumnTypesSet to true if we have set all of the data types
+	 */
+	private static void checkIfAllColumnTypesSet() {
+		for (String type : columnTypes) {
+			if (type == null) return;
+		}
+		allColumnTypesSet = true;
 	}
 	
 	
