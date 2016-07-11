@@ -252,6 +252,12 @@ public class DriverTest {
 //						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
 			}
 		}
+		
+		Assert.assertTrue(rs.getMetaData().getColumnTypeName(1).equalsIgnoreCase("java.sql.Types.VARCHAR"));
+		Assert.assertTrue(rs.getMetaData().getColumnTypeName(2).equalsIgnoreCase("java.sql.Types.BIGINT"));
+		Assert.assertTrue(rs.getMetaData().getColumnTypeName(3).equalsIgnoreCase("java.sql.Types.TIMESTAMP"));
+		Assert.assertTrue(rs.getMetaData().getColumnTypeName(4).equalsIgnoreCase("java.sql.Types.DOUBLE"));
+		
 		rs.close();
 	}
 	

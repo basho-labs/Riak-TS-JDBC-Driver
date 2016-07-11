@@ -137,7 +137,8 @@ public class Utility {
 	private static String[] columnTypes = null;
 	
 	/***
-	 * 
+	 * Sets the data type associated with the specified column in the
+	 * ResultSetMetaData object
 	 * @param index
 	 * @param cell
 	 * @throws SQLException
@@ -171,10 +172,11 @@ public class Utility {
 		
 		// Check to see if all column data types are set
 		checkIfAllColumnTypesSet();
-	}
+	} // TESTED
 	
 	/***
-	 * Flips allColumnTypesSet to true if we have set all of the data types
+	 * Flips allColumnTypesSet to true if we have set the data type for
+	 * each column in the ResultSetMetaData object
 	 */
 	private static void checkIfAllColumnTypesSet() {
 		for (String type : columnTypes) {
