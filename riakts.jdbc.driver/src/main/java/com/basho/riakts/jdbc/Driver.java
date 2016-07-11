@@ -27,9 +27,9 @@ import java.util.logging.Logger;
 public class Driver implements java.sql.Driver {
 	
 	// Variables need to be updated on a per release basis
-	private static int MAJOR_VERSION = 0;
-	private static int MINOR_VERSION = 5;
-	private static boolean JDBC_COMPLIANT = false;
+	private final static int MAJOR_VERSION = 0;
+	private final static int MINOR_VERSION = 5;
+	private final static boolean JDBC_COMPLIANT = false;
 	
 	/***
 	 * Register the driver with DriverManager

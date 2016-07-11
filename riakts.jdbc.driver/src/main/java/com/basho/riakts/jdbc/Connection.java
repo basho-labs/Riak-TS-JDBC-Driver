@@ -45,10 +45,10 @@ public class Connection implements java.sql.Connection {
 	private DatabaseMetaData _metaData = null;
 	private Properties _properties = null;
 	
-	private static boolean IS_READ_ONLY = false;
-	private static boolean AUTO_COMMIT = true;
-	private static int TRANSACTION_ISOLATION = java.sql.Connection.TRANSACTION_NONE;
-	private static int RESULTSET_HOLDABILITY = ResultSet.HOLD_CURSORS_OVER_COMMIT;
+	private final static boolean IS_READ_ONLY = false;
+	private final static boolean AUTO_COMMIT = true;
+	private final static int TRANSACTION_ISOLATION = java.sql.Connection.TRANSACTION_NONE;
+	private final static int RESULTSET_HOLDABILITY = ResultSet.HOLD_CURSORS_OVER_COMMIT;
 	
 	/***
 	 * Connection - instantiates a RiakClient using the connection information passed in

@@ -38,8 +38,8 @@ import java.util.Map;
 
 public class ResultSet implements java.sql.ResultSet {
 
-	protected static final int POS_BEFORE_FIRST = -1;
-    protected static final int POS_AFTER_LAST = -1;
+	protected final static int POS_BEFORE_FIRST = -1;
+    protected final static int POS_AFTER_LAST = -1;
     
     protected ResultSetMetaData _rsMetaData;
     

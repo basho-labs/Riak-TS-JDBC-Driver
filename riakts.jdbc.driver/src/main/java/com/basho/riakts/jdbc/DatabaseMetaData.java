@@ -23,61 +23,61 @@ import java.sql.SQLException;
 public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 	
 	// These variables need to be updated with each new release
-	private static String DRIVER_NAME = "Riak TS JDBC Driver";
-	private static String DRIVER_VERSION = "0.5";
-	private static int DRIVER_MAJOR_VERSION = 0;
-	private static int DRIVER_MINOR_VERSION = 5;
+	private final static String DRIVER_NAME = "Riak TS JDBC Driver";
+	private final static String DRIVER_VERSION = "0.5";
+	private final static int DRIVER_MAJOR_VERSION = 0;
+	private final static int DRIVER_MINOR_VERSION = 5;
 	
 	// Riak TS Product Variables
 	// Note: Update version a new version is released and 
 	// tested with the driver
-	private static String DATABASE_PRODUCT_NAME = "Riak TS";
-	private static String DATABASE_PRODUCT_VERSION = "1.3.1";
+	private final static String DATABASE_PRODUCT_NAME = "Riak TS";
+	private final static String DATABASE_PRODUCT_VERSION = "1.3.1";
 	
 	// JDBC Driver specific variables that won't update a lot
-	private static boolean IS_READ_ONLY = false; 
-	private static boolean NULLS_ARE_SORTED_HIGH = false;
-	private static boolean NULLS_ARE_SORTED_LOW = false;
-	private static boolean NULLS_ARE_SORTED_AT_START = false;
-	private static boolean NULLS_ARE_SORTED_AT_END = false;
-	private static boolean USES_LOCAL_FILES = false;
-	private static String SQL_KEYWORDS = "";
-	private static String STRING_FUNCTIONS = "";
-	private static String NUMERIC_FUNCTIONS = "";
-	private static String SYSTEM_FUNCTIONS = "";
-	private static String TIME_DATE_FUNCTIONS = "";
-	private static boolean ALTER_TABLE_ADD_COLUMN = false;
-	private static boolean ALTER_TABLE_DROP_COLUMN = false;
-	private static boolean COLUMN_ALIASING = false;
-	private static boolean EXPRESIONS_IN_ORDER_BY = false;
-	private static boolean ORDER_BY_UNRELATED = false;
-	private static boolean SUPPORTS_GROUP_BY = false;
-	private static boolean GROUP_BY_UNRELATED = false;
-	private static boolean GROUP_BY_BEYOND_SELECT = false;
-	private static boolean LIKE_ESCAPE_CLAUSE = false;
-	private static boolean NON_NULLABLE_COLUMNS = false;
-	private static boolean OUTER_JOINS = false;
-	private static boolean FULL_OUTER_JOINS = false;
-	private static boolean LIMITED_OUTER_JOINS = false;
-	private static String SCHEMA_TERM = "";
-	private static String PROCEDURE_TERM = "";
-	private static String CATALOG_TERM = "";
-	private static boolean UNION = false;
-	private static boolean UNION_ALL = false;
-	private static boolean ALL_PROCEDURES_CALLABLE = false;
-	private static boolean ALL_TABLES_SELECTABLE = true;
-	private static boolean USES_LOCAL_FILE_PER_TABLE = false;
-	private static boolean SUPPORTS_MIXED_CASE_IDENTIFIERS = true;
-	private static boolean STORES_UPPER_CASE_IDENTIFIERS = false;
-	private static boolean STORES_MIXED_CASE_IDENTIFIERS = true;
-	private static boolean SUPPORTS_MIXED_CASE_QUOTED_IDENTIFIERS = true;
-	private static boolean STORES_UPPER_CASE_QUOTED_IDENTIFIERS = false;
-	private static boolean STORES_LOWER_CASE_IDENTIFIERS = false;
-	private static boolean STORES_LOWER_CASE_QUOTED_IDENTIFIERS = false;
-	private static boolean STORES_MIXED_CASE_QUOTED_IDENTIFIERS = false;
-	private static String IDENTIFIER_QUOTE_STRING = " ";
-	private static String SEARCH_STRING_ESCAPE = null;
-	private static String EXTRA_NAME_CHARACTERS = null;
+	private final static boolean IS_READ_ONLY = false; 
+	private final static boolean NULLS_ARE_SORTED_HIGH = false;
+	private final static boolean NULLS_ARE_SORTED_LOW = false;
+	private final static boolean NULLS_ARE_SORTED_AT_START = false;
+	private final static boolean NULLS_ARE_SORTED_AT_END = false;
+	private final static boolean USES_LOCAL_FILES = false;
+	private final static String SQL_KEYWORDS = "";
+	private final static String STRING_FUNCTIONS = "";
+	private final static String NUMERIC_FUNCTIONS = "";
+	private final static String SYSTEM_FUNCTIONS = "";
+	private final static String TIME_DATE_FUNCTIONS = "";
+	private final static boolean ALTER_TABLE_ADD_COLUMN = false;
+	private final static boolean ALTER_TABLE_DROP_COLUMN = false;
+	private final static boolean COLUMN_ALIASING = false;
+	private final static boolean EXPRESIONS_IN_ORDER_BY = false;
+	private final static boolean ORDER_BY_UNRELATED = false;
+	private final static boolean SUPPORTS_GROUP_BY = false;
+	private final static boolean GROUP_BY_UNRELATED = false;
+	private final static boolean GROUP_BY_BEYOND_SELECT = false;
+	private final static boolean LIKE_ESCAPE_CLAUSE = false;
+	private final static boolean NON_NULLABLE_COLUMNS = false;
+	private final static boolean OUTER_JOINS = false;
+	private final static boolean FULL_OUTER_JOINS = false;
+	private final static boolean LIMITED_OUTER_JOINS = false;
+	private final static String SCHEMA_TERM = "";
+	private final static String PROCEDURE_TERM = "";
+	private final static String CATALOG_TERM = "";
+	private final static boolean UNION = false;
+	private final static boolean UNION_ALL = false;
+	private final static boolean ALL_PROCEDURES_CALLABLE = false;
+	private final static boolean ALL_TABLES_SELECTABLE = true;
+	private final static boolean USES_LOCAL_FILE_PER_TABLE = false;
+	private final static boolean SUPPORTS_MIXED_CASE_IDENTIFIERS = true;
+	private final static boolean STORES_UPPER_CASE_IDENTIFIERS = false;
+	private final static boolean STORES_MIXED_CASE_IDENTIFIERS = true;
+	private final static boolean SUPPORTS_MIXED_CASE_QUOTED_IDENTIFIERS = true;
+	private final static boolean STORES_UPPER_CASE_QUOTED_IDENTIFIERS = false;
+	private final static boolean STORES_LOWER_CASE_IDENTIFIERS = false;
+	private final static boolean STORES_LOWER_CASE_QUOTED_IDENTIFIERS = false;
+	private final static boolean STORES_MIXED_CASE_QUOTED_IDENTIFIERS = false;
+	private final static String IDENTIFIER_QUOTE_STRING = " ";
+	private final static String SEARCH_STRING_ESCAPE = null;
+	private final static String EXTRA_NAME_CHARACTERS = null;
 	
 	
 	private String _url = null;
