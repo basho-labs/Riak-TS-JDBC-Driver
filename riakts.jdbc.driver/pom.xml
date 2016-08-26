@@ -51,7 +51,7 @@
   	<dependency>
   		<groupId>com.basho.riak</groupId>
   		<artifactId>riak-client</artifactId>
-  		<version>2.0.6</version>
+  		<version>2.0.7</version>
   	</dependency>
   	<!-- http://mvnrepository.com/artifact/com.google.guava/guava -->
 	<dependency>
@@ -71,4 +71,7 @@
   <scm>
   	<url>https://github.com/cvitter/Riak-TS-JDBC-Driver</url>
   </scm>
+  <issueManagement>
+  	<url>https://github.com/cvitter/Riak-TS-JDBC-Driver/issues</url>
+  </issueManagement>
 </project>

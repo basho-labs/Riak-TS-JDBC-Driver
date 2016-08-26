@@ -24,8 +24,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-import junit.framework.Assert;
-
+import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,11 +73,11 @@ public class DriverTest {
 			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	// Create Table returns 0 on success
-	    	Assert.assertTrue(result == 0);
+	    	assertTrue(result == 0);
 	    }
 	    catch (Exception e) {
 	    	String error = e.getMessage();
-	    	Assert.assertTrue(error.contains("already_active"));
+	    	assertTrue(error.contains("already_active"));
 	    }
 	}
 	
@@ -104,10 +103,10 @@ public class DriverTest {
 			
 			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
-	    	Assert.assertFalse(result > -1);
+	    	assertFalse(result > -1);
 	    }
 	    catch (Exception e) {
-	    	Assert.assertTrue( e != null );
+	    	assertTrue( e != null );
 	    }
 	}	
 	
@@ -118,9 +117,9 @@ public class DriverTest {
 	 */
 	public void testStatementClose() throws SQLException {
 		Statement statement = _conn.createStatement();
-		Assert.assertFalse( statement.isClosed() );
+		assertFalse( statement.isClosed() );
 		statement.close();
-		Assert.assertTrue( statement.isClosed() );
+		assertTrue( statement.isClosed() );
 	}
 	
 	@Test
@@ -130,9 +129,9 @@ public class DriverTest {
 	 */
 	public void testPreparedStatementClose() throws SQLException {
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
-		Assert.assertFalse( statement.isClosed() );
+		assertFalse( statement.isClosed() );
 		statement.close();
-		Assert.assertTrue( statement.isClosed() );
+		assertTrue( statement.isClosed() );
 	}
 	
 	
@@ -148,13 +147,13 @@ public class DriverTest {
 		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		
 		int columnCount = 0;
 		while (rs.next()) {
 			columnCount++;
 		}
-		Assert.assertTrue(columnCount == 4);
+		assertTrue(columnCount == 4);
 		
 		rs.close();
 	}
@@ -179,7 +178,7 @@ public class DriverTest {
 		Statement statement = _conn.createStatement();
     	int result = statement.executeUpdate(sqlStatement);
     	// Insert returns 0 on success
-    	Assert.assertTrue(result == 0);
+    	assertTrue(result == 0);
 	}
 	
 	
@@ -213,7 +212,7 @@ public class DriverTest {
 			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
 	    	// Insert returns 0 on success
-	    	Assert.assertTrue(result == 0);			
+	    	assertTrue(result == 0);			
 		}
 	}
 	
@@ -236,7 +235,7 @@ public class DriverTest {
 		
 		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		
 		if (rs != null) {
 			while (rs.next()) {
@@ -253,10 +252,10 @@ public class DriverTest {
 			}
 		}
 		
-		Assert.assertTrue(rs.getMetaData().getColumnTypeName(1).equalsIgnoreCase("java.sql.Types.VARCHAR"));
-		Assert.assertTrue(rs.getMetaData().getColumnTypeName(2).equalsIgnoreCase("java.sql.Types.BIGINT"));
-		Assert.assertTrue(rs.getMetaData().getColumnTypeName(3).equalsIgnoreCase("java.sql.Types.TIMESTAMP"));
-		Assert.assertTrue(rs.getMetaData().getColumnTypeName(4).equalsIgnoreCase("java.sql.Types.DOUBLE"));
+		assertTrue(rs.getMetaData().getColumnTypeName(1).equalsIgnoreCase("java.sql.Types.VARCHAR"));
+		assertTrue(rs.getMetaData().getColumnTypeName(2).equalsIgnoreCase("java.sql.Types.BIGINT"));
+		assertTrue(rs.getMetaData().getColumnTypeName(3).equalsIgnoreCase("java.sql.Types.TIMESTAMP"));
+		assertTrue(rs.getMetaData().getColumnTypeName(4).equalsIgnoreCase("java.sql.Types.DOUBLE"));
 		
 		rs.close();
 	}
@@ -281,9 +280,9 @@ public class DriverTest {
 		
 		Statement statement = _conn.createStatement();
 		boolean success = statement.execute(sqlStatement);
-		Assert.assertTrue(success);
+		assertTrue(success);
 		ResultSet rs = statement.getResultSet();
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		rs.close();
 	}
 	
@@ -304,7 +303,7 @@ public class DriverTest {
 		
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement(sqlStatement);
 		ResultSet rs = statement.executeQuery();
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		rs.close();		
 	}
 	
@@ -326,7 +325,7 @@ public class DriverTest {
 		
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
 		ResultSet rs = statement.executeQuery(sqlStatement);
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		rs.close();		
 	}
 	
@@ -347,9 +346,9 @@ public class DriverTest {
 		
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement(sqlStatement);
 		boolean success = statement.execute();
-		Assert.assertTrue(success);
+		assertTrue(success);
 		ResultSet rs = statement.getResultSet();
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		rs.close();	
 	}
 	
@@ -370,9 +369,9 @@ public class DriverTest {
 		
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
 		boolean success = statement.execute(sqlStatement);
-		Assert.assertTrue(success);
+		assertTrue(success);
 		ResultSet rs = statement.getResultSet();
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		rs.close();	
 	}
 	
@@ -394,7 +393,7 @@ public class DriverTest {
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement(sqlStatement);
     	int result = statement.executeUpdate();
     	// Insert returns 0 on success
-    	Assert.assertTrue(result == 0);
+    	assertTrue(result == 0);
 	}
 	
 	@Test
@@ -415,7 +414,7 @@ public class DriverTest {
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
     	int result = statement.executeUpdate(sqlStatement);
     	// Insert returns 0 on success
-    	Assert.assertTrue(result == 0);
+    	assertTrue(result == 0);
 	}
 	
 	
@@ -438,62 +437,62 @@ public class DriverTest {
 
 		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
-		Assert.assertTrue(rs != null);
+		assertTrue(rs != null);
 		
 		// Move to first row in ResultSet
 		rs.first();
-		Assert.assertTrue(rs.getRow() == 0);
-		Assert.assertTrue(rs.isFirst());
+		assertTrue(rs.getRow() == 0);
+		assertTrue(rs.isFirst());
 		
 		// Move to the next row in the ResultSet
 		rs.next();
-		Assert.assertTrue(rs.getRow() == 1);
+		assertTrue(rs.getRow() == 1);
 		
 		// Move to last row in ResultSet 
 		rs.last();
-		Assert.assertTrue(rs.getRow() == 9);
-		Assert.assertTrue(rs.isLast());
+		assertTrue(rs.getRow() == 9);
+		assertTrue(rs.isLast());
 		
 		// Move to the previous row read
 		rs.previous();
-		Assert.assertTrue(rs.getRow() == 8);
+		assertTrue(rs.getRow() == 8);
 		
 		// Move to row number 4 (which is actually row[3]
 		rs.absolute(4);
-		Assert.assertTrue(rs.getRow() == 3);
+		assertTrue(rs.getRow() == 3);
 		
 		// Move 2 rows forward in the ResultSet
 		rs.relative(2);
-		Assert.assertTrue(rs.getRow() == 5);
+		assertTrue(rs.getRow() == 5);
 		
 		// Move to before the first row of the ResultSet
 		rs.beforeFirst();
-		Assert.assertTrue(rs.getRow() == -1);
-		Assert.assertTrue(rs.isBeforeFirst());
+		assertTrue(rs.getRow() == -1);
+		assertTrue(rs.isBeforeFirst());
 		
 		// Move to after the last row of the ResultSet
 		rs.afterLast();
-		Assert.assertTrue(rs.isAfterLast());
+		assertTrue(rs.isAfterLast());
 	}
 	
 	
 	@Test
 	public void testGetBuckets() throws ExecutionException, InterruptedException {
 		List<String> buckets = _conn.getBuckets("jdbcDriverTest");
-		Assert.assertTrue( buckets.size() > 0 ); 
+		assertTrue( buckets.size() > 0 ); 
 	}
 	
 	
 	@Test 
 	public void testConnection() throws SQLException {
-		Assert.assertTrue( _conn != null ); 
-		Assert.assertTrue( _conn.getMetaData() != null );
-		Assert.assertFalse( _conn.isClosed() );
+		assertTrue( _conn != null ); 
+		assertTrue( _conn.getMetaData() != null );
+		assertFalse( _conn.isClosed() );
 	}
 
 	@Test
 	public void testAcceptsURL() throws SQLException {
-		Assert.assertTrue( _driver.acceptsURL("riakts://127.0.0.1:8087") );
+		assertTrue( _driver.acceptsURL("riakts://127.0.0.1:8087") );
 	}
 	
 	@Test
@@ -501,7 +500,7 @@ public class DriverTest {
 		Properties info = new Properties();
 		info.setProperty("RiakUrl", "127.0.0.1");
 		info.setProperty("RiakPort", "8087");
-		Assert.assertTrue( _driver.acceptsProperties(info) );
+		assertTrue( _driver.acceptsProperties(info) );
 	}
 
 }
