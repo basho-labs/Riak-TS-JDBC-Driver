@@ -31,8 +31,8 @@ import org.junit.Test;
 
 public class DriverTest {
 
-	private Driver _driver = null;
-	private Connection _conn = null;
+	private static Driver _driver = null;
+	private static Connection _conn = null;
 	
 	@Before
 	public void setUp() throws Exception {
