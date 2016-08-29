@@ -21,6 +21,8 @@
   	<developer>
   		<name>Craig Vitter</name>
   		<url>https://github.com/cvitter</url>
+  		<organization>Basho Technologies, Inc</organization>
+        <organizationUrl>http://www.basho.com</organizationUrl>
   	</developer>
   </developers>
 

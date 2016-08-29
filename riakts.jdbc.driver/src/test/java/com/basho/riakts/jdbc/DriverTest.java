@@ -155,7 +155,7 @@ public class DriverTest {
 		while (rs.next()) {
 			columnCount++;
 		}
-		assertTrue(columnCount == 4);
+		assertTrue(columnCount == 5);
 		
 		rs.close();
 	}
@@ -410,9 +410,9 @@ public class DriverTest {
 		String timeStamp = "06/06/2016 22:30:00.00";
 		
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
-				"(name, age, joined, weight) " +
+				"(name, age, joined, weight, active) " +
 				"VALUES " +
-				"('Julie', 44, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 132.5);";
+				"('Julie', 44, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 132.5, true);";
 		
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
     	int result = statement.executeUpdate(sqlStatement);
