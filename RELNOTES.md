@@ -1,5 +1,11 @@
 # Release Notes
 
+**Version 0.6**
+- Updated tests to reflect new functionality in Riak TS 1.4 that allows the use of ISO 8061 dates in addition to the epoch
+- Updated tests SQL INSERT tests to test capability of inserting boolean values based on bug fix in Riak TS 1.4
+- Updated tests for JUnit 4, modified POM to include the dependency
+- Updated file headers for move to github.com/basho-labs and expanded license text
+
 **Version 0.5**
 - Tested to support report creation in Jaspersoft Studio 6.3.0 (http://community.jaspersoft.com/project/jaspersoft-studio/releases)
 - Added PreporedStatement, ResultSetMetaData, and ColumnInfo classes as part of refactoring to support reporting tools
