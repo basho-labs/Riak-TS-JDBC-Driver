@@ -63,6 +63,7 @@ public class DriverTest {
 	    			"age			sint64   	not null, " +
 	    			"joined        	timestamp 	not null, " +
 	    			"weight		 	double		not null, " +
+	    			"active		 	boolean		not null, " +
 	    			"PRIMARY KEY ( " +
 	    			"(quantum(joined, 5, 'd')), " +
 	    			"	joined, name, age " +
@@ -95,6 +96,7 @@ public class DriverTest {
 	    			"age			sint64   	not null, " +
 	    			"joined        	timestamp 	not null, " +
 	    			"weight		 	double		not null, " +
+	    			"active		 	boolean		not null, " +
 	    			"PRIMARY KEY ( " +
 	    			"(quantum(joined, 5, 'd')), " +
 	    			"	badColumn, name, age " +
@@ -171,9 +173,9 @@ public class DriverTest {
 		String timeStamp = "06/06/2016 12:30:00.00";
 		
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
-				"(name, age, joined, weight) " +
+				"(name, age, joined, weight, active) " +
 				"VALUES " +
-				"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
+				"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5, true);";
 		
 		Statement statement = _conn.createStatement();
     	int result = statement.executeUpdate(sqlStatement);
@@ -183,15 +185,15 @@ public class DriverTest {
 	
 	
 	private static String[][] PEOPLE = {
-			{"Lucy", "22", "06/06/2016 10:30:00.00", "104.0"},
-			{"Tom", "35", "06/06/2016 11:30:00.00", "180.5"},
-			{"Sarah", "15", "06/06/2016 13:30:00.00", "100.1"},
-			{"Mark", "42", "06/06/2016 14:30:00.00", "160.8"},
-			{"Anna", "27", "06/06/2016 15:30:00.00", "110.5"},
-			{"John", "17", "06/06/2016 16:30:00.00", "170.5"},
-			{"Sophia", "12", "06/06/2016 17:30:00.00", "115.9"},
-			{"Bob", "32", "06/06/2016 18:30:00.00", "220.1"},
-			{"Julie", "44", "06/06/2016 22:30:00.00", "132.5"}
+			{"Lucy", "22", "06/06/2016 10:30:00.00", "104.0", "true"},
+			{"Tom", "35", "06/06/2016 11:30:00.00", "180.5", "true"},
+			{"Sarah", "15", "06/06/2016 13:30:00.00", "100.1", "true"},
+			{"Mark", "42", "06/06/2016 14:30:00.00", "160.8", "true"},
+			{"Anna", "27", "06/06/2016 15:30:00.00", "110.5", "true"},
+			{"John", "17", "06/06/2016 16:30:00.00", "170.5", "true"},
+			{"Sophia", "12", "06/06/2016 17:30:00.00", "115.9", "true"},
+			{"Bob", "32", "06/06/2016 18:30:00.00", "220.1", "true"},
+			{"Julie", "44", "06/06/2016 22:30:00.00", "132.5", "true"}
 	};
 	
 	@Test
@@ -204,10 +206,10 @@ public class DriverTest {
 	public void testSqlInsertMultipleRows() throws SQLException, ParseException {
 		for (String[] person : PEOPLE) {
 			String sqlStatement = "INSERT INTO jdbcDriverTest " +
-					"(name, age, joined, weight) " +
+					"(name, age, joined, weight, active) " +
 					"VALUES " +
 					"('" + person[0] + "', " + person[1] + ", " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(person[2]) + 
-					", " + person[3] + ");";
+					", " + person[3] + ", " + person[4] + ");";
 			//System.out.println(sqlStatement);
 			Statement statement = _conn.createStatement();
 	    	int result = statement.executeUpdate(sqlStatement);
@@ -231,7 +233,7 @@ public class DriverTest {
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
-		//System.out.println(sqlStatement);
+		System.out.println(sqlStatement);
 		
 		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
@@ -245,6 +247,7 @@ public class DriverTest {
 				long age = rs.getLong("age");
 				Timestamp ts = rs.getTimestamp("joined");
 				double weight = rs.getDouble("weight");
+				boolean active = rs.getBoolean("active");
 				
 				// Print out ResultSet for demonstration purposes only, commented out for normal test runs
 //				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
@@ -256,6 +259,7 @@ public class DriverTest {
 		assertTrue(rs.getMetaData().getColumnTypeName(2).equalsIgnoreCase("java.sql.Types.BIGINT"));
 		assertTrue(rs.getMetaData().getColumnTypeName(3).equalsIgnoreCase("java.sql.Types.TIMESTAMP"));
 		assertTrue(rs.getMetaData().getColumnTypeName(4).equalsIgnoreCase("java.sql.Types.DOUBLE"));
+		assertTrue(rs.getMetaData().getColumnTypeName(5).equalsIgnoreCase("java.sql.Types.BOOLEAN"));
 		
 		rs.close();
 	}
