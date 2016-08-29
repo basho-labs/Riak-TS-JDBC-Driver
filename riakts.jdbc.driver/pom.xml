@@ -3,7 +3,7 @@
   <groupId>com.basho</groupId>
   <artifactId>riakts.jdbc.driver</artifactId>
   <packaging>jar</packaging>
-  <version>0.5</version>
+  <version>0.6</version>
   <name>Riak TS JDBC Driver</name>
   <description>JDBC Driver for Riak TS</description>
   <url>https://github.com/basho-labs/Riak-TS-JDBC-Driver</url>
