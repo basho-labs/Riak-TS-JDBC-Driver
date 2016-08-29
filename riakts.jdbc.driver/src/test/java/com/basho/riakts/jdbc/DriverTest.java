@@ -227,13 +227,12 @@ public class DriverTest {
 	 */
 	public void testSqlSelect() throws SQLException, ParseException {
 		// Start and end date to search on
-		String startDateStr = "06/01/2016 0:00:00.00";
-		String endDateStr = "06/11/2016 23:59:59.59";
+		String startDateStr = "'2016-06-05 10:00:00'";
+		String endDateStr = "'2016-06-08 10:30:00'";
 		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
-				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
-				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
-		System.out.println(sqlStatement);
+				startDateStr + " AND joined <= " + endDateStr + ";";
+		//System.out.println(sqlStatement);
 		
 		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
