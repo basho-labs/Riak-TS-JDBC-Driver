@@ -7,3 +7,5 @@ Currently this repository has two Java projects:
 - riakts.jdbc.driver (https://github.com/basho-labs/Riak-TS-JDBC-Driver/tree/master/riakts.jdbc.driver)
 
 - riakts.jdbc.driver.test (https://github.com/basho-labs/Riak-TS-JDBC-Driver/tree/master/riakts.jdbc.driver.test): External test code to test the functionality of the Raik TS JDBC Driver
+
+See each projects individual ReadMe.md files for more information.
