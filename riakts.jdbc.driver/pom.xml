@@ -6,7 +6,7 @@
   <version>0.5</version>
   <name>Riak TS JDBC Driver</name>
   <description>JDBC Driver for Riak TS</description>
-  <url>https://github.com/cvitter/Riak-TS-JDBC-Driver</url>
+  <url>https://github.com/basho-labs/Riak-TS-JDBC-Driver</url>
   
   <licenses>
   	<license>
@@ -69,9 +69,9 @@
   </dependencies>
   
   <scm>
-  	<url>https://github.com/cvitter/Riak-TS-JDBC-Driver</url>
+  	<url>https://github.com/basho-labs/Riak-TS-JDBC-Driver</url>
   </scm>
   <issueManagement>
-  	<url>https://github.com/cvitter/Riak-TS-JDBC-Driver/issues</url>
+  	<url>https://github.com/basho-labs/Riak-TS-JDBC-Driver/issues</url>
   </issueManagement>
 </project>
