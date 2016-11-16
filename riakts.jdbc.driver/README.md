@@ -104,7 +104,7 @@ int result = statement.executeUpdate(sqlStatement);
 // Insert returns 0 on success
 Assert.assertTrue(result == 0);
 ```
-**Important Note** In Riak TS 1.3 there is a bug that prevents insertion of boolean values via the SQL Insert command. This bug should be corrected in 1.4. See the following documentation for more information about adding data to Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/writingdata/#adding-data-via-sql
+**Important Note** In Riak TS 1.3.X there was a bug that prevented the insertion of boolean values via the SQL Insert command. This bug was be corrected in 1.4. See the following documentation for more information about adding data to Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/writingdata/#adding-data-via-sql
 
 # Riak TS to JDBC Data Types
 When writing data from the Riak TS QueryResult object to the JDBC ResultSet object the driver converts Riak TS's data types using the following mapping:
