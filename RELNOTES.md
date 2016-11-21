@@ -1,5 +1,8 @@
 # Release Notes
 
+**Version 0.7**
+- Updated to use Version 2.1.0 of the Riak Java Client (https://github.com/basho/riak-java-client/releases/tag/riak-client-2.1.0)
+
 **Version 0.6**
 - Updated tests to reflect new functionality in Riak TS 1.4 that allows the use of ISO 8061 dates in addition to the epoch
 - Updated tests SQL INSERT tests to test capability of inserting boolean values based on bug fix in Riak TS 1.4
