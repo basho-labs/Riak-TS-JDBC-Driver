@@ -122,7 +122,16 @@ A copy of the current version of the compiled JAR file is located in https://git
 2. Open the projects root directory from the command line: > /riakts.jdbc.driver
 3. Build the JAR using the following Maven command: > mvn install -DskipTests
 
-**Important Note** remove **-DskipTests** if you want the JUnit tests to execute during the build.  
+**Important Note** remove **-DskipTests** if you want the JUnit tests to execute during the build. 
 
-# Feedback
+
+# License
+**The Riak TS JDBC Client** is Open Source software released under the Apache 2.0 License. Please see the [LICENSE](LICENSE) file for full license details.
+
+# Authors
+* Author: [Craig Vitter](https://github.com/cvitter)
+* Author: 
+
+# Contributors 
 Please submit Issues and/or Pull Requests.
+
