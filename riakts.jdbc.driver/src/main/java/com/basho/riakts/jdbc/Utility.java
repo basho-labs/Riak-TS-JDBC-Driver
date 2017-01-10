@@ -15,6 +15,7 @@
  */
 package com.basho.riakts.jdbc;
 
+import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -96,11 +97,15 @@ public class Utility {
 				// Update the ResultSetMetaData object ColumnType for this cell
 				if (!allColumnTypesSet && cell != null) setColumnType(colIndex, cell);
 				
-				// Check cell type for the 5 data types and add a new column to the
+				// Check cell type for the 6 data types and add a new column to the
 				// row of the correct type (boolean, double, long, date, varchar)
 				// Start by handling null cell values returned
 				if (cell == null) {
 					_rs.updateNull(colIndex);
+				}
+				else if (cell.hasBlob()) {
+					Blob blob = new javax.sql.rowset.serial.SerialBlob(cell.getBlob());
+					_rs.updateBlob(colIndex, blob);
 				}
 				else if (cell.hasBoolean()) {
 					_rs.updateBoolean(colIndex, cell.getBoolean());
@@ -144,7 +149,7 @@ public class Utility {
 	 * @throws SQLException
 	 */
 	private static void setColumnType(int index, Cell cell) throws SQLException {
-		// Create a new arry to hold the data types of each column to help us determine
+		// Create a new array to hold the data types of each column to help us determine
 		// that they have all been set in the ResultSetMetaData object
 		if (columnTypes == null) columnTypes = new String[ _rs._rsMetaData.getColumnCount() ];
 		
@@ -152,6 +157,10 @@ public class Utility {
 		if (cell.hasBoolean()) {
 			_rs.getMetaData().updateColumnType(index, java.sql.Types.BOOLEAN, "java.sql.Types.BOOLEAN");
 			columnTypes[index] = "BOOLEAN";
+		}
+		else if (cell.hasBlob()) {
+			_rs.getMetaData().updateColumnType(index, java.sql.Types.BLOB, "java.sql.Types.BLOB");
+			columnTypes[index] = "BLOB";
 		}
 		else if (cell.hasDouble()) {
 			_rs.getMetaData().updateColumnType(index, java.sql.Types.DOUBLE, "java.sql.Types.DOUBLE");

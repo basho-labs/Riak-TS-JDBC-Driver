@@ -169,6 +169,15 @@ public class ResultSet implements java.sql.ResultSet {
 	public Object getObject(String columnLabel) throws SQLException {
 		return _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
 	}
+	
+	public Blob getBlob(int columnIndex) throws SQLException {
+		return (Blob) _currentRow[ columnIndex - 1 ];
+	}
+	
+	public Blob getBlob(String columnLabel) throws SQLException {
+		return (Blob) _currentRow[ _rsMetaData.getColumnIndexByLabel(columnLabel) ];
+	}
+	
 	// End - Get Methods that have been implemented for Riak TS
 
 	
@@ -338,6 +347,14 @@ public class ResultSet implements java.sql.ResultSet {
 	public void updateNull(String columnLabel) throws SQLException {
 		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), null);
 	}
+	
+	public void updateBlob(int columnIndex, Blob x) throws SQLException { 
+		setColumnValue(columnIndex, x);
+	}
+	
+	public void updateBlob(String columnLabel, Blob x) throws SQLException { 
+		setColumnValue( _rsMetaData.getColumnIndexByLabel(columnLabel), x);
+	}
 
 	public void updateBoolean(int columnIndex, boolean x) throws SQLException {
 		setColumnValue(columnIndex, x);
@@ -495,14 +512,7 @@ public class ResultSet implements java.sql.ResultSet {
 	 * Method not implemented - no value returned
 	 */
 	public void updateRef(String columnLabel, Ref x) throws SQLException { }
-	/***
-	 * Method not implemented - no value returned
-	 */
-	public void updateBlob(int columnIndex, Blob x) throws SQLException { }
-	/***
-	 * Method not implemented - no value returned
-	 */
-	public void updateBlob(String columnLabel, Blob x) throws SQLException { }
+
 	/***
 	 * Method not implemented - no value returned
 	 */
@@ -808,13 +818,6 @@ public class ResultSet implements java.sql.ResultSet {
 	/***
 	 * Not implemented - throws UnsupportedOperationException
 	 */
-	public Blob getBlob(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	/***
-	 * Not implemented - throws UnsupportedOperationException
-	 */
 	public Clob getClob(int columnIndex) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
@@ -823,13 +826,6 @@ public class ResultSet implements java.sql.ResultSet {
 	 * Not implemented - throws UnsupportedOperationException
 	 */
 	public Array getArray(int columnIndex) throws SQLException {
-		throw new UnsupportedOperationException();
-	}
-
-	/***
-	 * Not implemented - throws UnsupportedOperationException
-	 */
-	public Blob getBlob(String columnLabel) throws SQLException {
 		throw new UnsupportedOperationException();
 	}
 
