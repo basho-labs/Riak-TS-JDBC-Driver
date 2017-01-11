@@ -37,6 +37,8 @@ if (rs != null) {
 rs.close();;
 ```
 
+**Note**: The Riak TS timestamp data type uses the Unix epoch but you can write and query dates in SQL use the ISO 8061 date format as illustrated in the example above and below.
+
 See the following documentation for more information on querying Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/querying/
 
 Currently the Riak TS JDBC driver only implements a small subset of the functionality typically found in a fully featured driver. When reading from a ResultSet the following operations are supported:
@@ -90,6 +92,8 @@ int result = statement.executeUpdate(sqlStatement);
 // Insert returns 0 on success
 Assert.assertTrue(result == 0);
 ```
+
+**Important Note**: Inserting data into Riak TS is not as fast as using native methods supported by the Riak Java Client (https://github.com/basho/riak-java-client) directly to insert data.
 
 # Riak TS to JDBC Data Types
 When writing data from the Riak TS QueryResult object to the JDBC ResultSet object the driver converts Riak TS's data types using the following mapping:
