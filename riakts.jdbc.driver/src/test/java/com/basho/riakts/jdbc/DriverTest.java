@@ -56,7 +56,6 @@ public class DriverTest {
 	 *    1. The table is created successfully and executeUpdate() returns 0
 	 *    2. The table already exists and executeUpdate() throws an error that says:
 	 *       "Failed to create table jdbcDriverTestTable: already_active"
-	 * 
 	 * Version 0.8: Added blob column introduced in Riak TS 1.5
 	 */
 	public void testSqlCreateTableSuccess() {
@@ -148,8 +147,8 @@ public class DriverTest {
 	 * also verifies that the right number of rows is returned in the ResultSet
 	 * to match the number of columns in the table (6)
 	 * @throws SQLException
-	 * 
 	 * Version 0.8: Updated column count to reflect addition of blobText column in jdbcDriverTest
+	 * @throws SQLException
 	 */
 	public void testSqlDescribeTable() throws SQLException {
 		String sqlStatement = "DESCRIBE jdbcDriverTest;";
@@ -172,9 +171,7 @@ public class DriverTest {
 	/****
 	 * Test insertion of data via SQL INSERT INTO command, successful insert
 	 * returns a 0 value
-	 * 
 	 * Version 0.8: Added blobText column to insert, change to ISO 8061 time format
-	 * 
 	 * @throws SQLException
 	 * @throws ParseException
 	 */
@@ -182,7 +179,7 @@ public class DriverTest {
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
 				"(name, age, joined, weight, active, blobText) " +
 				"VALUES " +
-				"('Craig', 92, '2016-06-06 12:30:00', 202.5, true, 'xxxxxxxxxxxxxxx');";
+				"('Craig', 92, '2016-06-06 12:30:00', 202.5, true, null);";
 		//System.out.println(sqlStatement);
 		
 		Statement statement = _conn.createStatement();
@@ -195,10 +192,10 @@ public class DriverTest {
 	private static String[][] PEOPLE = {
 			{"Lucy", "22", "2016-06-06 10:30:00", "104.0", "true", "xxxxxxxxxxx"},
 			{"Tom", "35", "2016-06-06 11:30:00", "180.5", "true", "xxxxxxxxxxx"},
-			{"Sarah", "15", "2016-06-06 13:30:00", "100.1", "true", "xxxxxxxxxxx"},
+			{"Sarah", "15", "2016-06-06 13:30:00", "100.1", "true", ""},
 			{"Mark", "42", "2016-06-06 14:30:00", "160.8", "true", "xxxxxxxxxxx"},
 			{"Anna", "27", "2016-06-06 15:30:00", "110.5", "true", "xxxxxxxxxxx"},
-			{"John", "17", "2016-06-06 16:30:00", "170.5", "true", "xxxxxxxxxxx"},
+			{"John", "17", "2016-06-06 16:30:00", "170.5", "true", ""},
 			{"Sophia", "12", "2016-06-06 17:30:00", "115.9", "true", "xxxxxxxxxxx"},
 			{"Bob", "32", "2016-06-06 18:30:00", "220.1", "true", "xxxxxxxxxxx"},
 			{"Julie", "44", "2016-06-06 22:30:00", "132.5", "true", "xxxxxxxxxxx"}
@@ -208,9 +205,7 @@ public class DriverTest {
 	/***
 	 * Another insert test example, primarily used to add additional
 	 * data to the test table as opposed to actually testing inserts
-	 * 
 	 * Version 0.8: Added blobText column to insert, change to ISO 8061 time format
-	 * 
 	 * @throws SQLException
 	 * @throws ParseException
 	 */
@@ -233,43 +228,41 @@ public class DriverTest {
 	@Test
 	/***
 	 * Tests java.sql.Statement.executeQuery( sql )
-	 * Version 0.8: Updated to use ISO 8061 time format
+	 * Version 0.8: Updated to use ISO 8061 time format, test retrieval of blobs
 	 * @throws SQLException
 	 * @throws ParseException
 	 */
 	public void testSqlSelect() throws SQLException, ParseException {
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= '2016-06-05 10:00:00'" + 
 				" AND joined <= '2016-06-08 10:30:00';";
-		System.out.println(sqlStatement);
-		
 		Statement statement = _conn.createStatement();
 		ResultSet rs = statement.executeQuery(sqlStatement);
 		assertTrue(rs != null);
 		
-		if (rs != null) {
-			while (rs.next()) {
-				// Check get methods for the various supported types to make sure that
-				// they don't get broken during code refactoring
-				String name = rs.getString("name");
-				long age = rs.getLong("age");
-				Timestamp ts = rs.getTimestamp("joined");
-				double weight = rs.getDouble("weight");
-				boolean active = rs.getBoolean("active");
-				Blob blobText = rs.getBlob("blobText");
-				String test = "test";
-				// Print out ResultSet for demonstration purposes only, commented out for normal test runs
-//				System.out.println( rs.getString("name") + " | " + rs.getLong("age") + 
-//						" | " + rs.getTimestamp("joined")  + " | " + rs.getDouble("weight"));
-			}
-		}
+		// Following code is helpful for testing the library after refactoring to ensure
+		// that we haven't broken the supported data types
+//		if (rs != null) {
+//			while (rs.next()) {
+//				String name = rs.getString("name");
+//				long age = rs.getLong("age");
+//				Timestamp ts = rs.getTimestamp("joined");
+//				double weight = rs.getDouble("weight");
+//				boolean active = rs.getBoolean("active");
+//				Blob blobText = rs.getBlob("blobText");
+//
+//				String bloblString = null;
+//				try { bloblString = new String(blobText.getBytes(1l, (int) blobText.length())); } catch (Exception ex) { }
+//				System.out.println( name + " | " + age +  " | " + ts  + " | " + weight+ " | " + bloblString);
+//			}
+//		}
 		
+		// Verify that we retrieved the right data types
 		assertTrue(rs.getMetaData().getColumnTypeName(1).equalsIgnoreCase("java.sql.Types.VARCHAR"));
 		assertTrue(rs.getMetaData().getColumnTypeName(2).equalsIgnoreCase("java.sql.Types.BIGINT"));
 		assertTrue(rs.getMetaData().getColumnTypeName(3).equalsIgnoreCase("java.sql.Types.TIMESTAMP"));
 		assertTrue(rs.getMetaData().getColumnTypeName(4).equalsIgnoreCase("java.sql.Types.DOUBLE"));
 		assertTrue(rs.getMetaData().getColumnTypeName(5).equalsIgnoreCase("java.sql.Types.BOOLEAN"));
 		assertTrue(rs.getMetaData().getColumnTypeName(6).equalsIgnoreCase("java.sql.Types.BLOB"));
-		
 		rs.close();
 	}
 	
@@ -285,7 +278,6 @@ public class DriverTest {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
 		String endDateStr = "06/11/2016 23:59:59.59";
-		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
@@ -309,7 +301,6 @@ public class DriverTest {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
 		String endDateStr = "06/11/2016 23:59:59.59";
-		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
@@ -331,7 +322,6 @@ public class DriverTest {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
 		String endDateStr = "06/11/2016 23:59:59.59";
-		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
@@ -352,7 +342,6 @@ public class DriverTest {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
 		String endDateStr = "06/11/2016 23:59:59.59";
-		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
@@ -375,7 +364,6 @@ public class DriverTest {
 		// Start and end date to search on
 		String startDateStr = "06/01/2016 0:00:00.00";
 		String endDateStr = "06/11/2016 23:59:59.59";
-		
 		String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
 				Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
 				" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
@@ -397,7 +385,6 @@ public class DriverTest {
 	public void testPreparedStatementSqlInsert() throws SQLException, ParseException {
 		// Create timestamp string for our record
 		String timeStamp = "06/06/2016 22:30:00.00";
-		
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
 				"(name, age, joined, weight) " +
 				"VALUES " +
@@ -416,13 +403,10 @@ public class DriverTest {
 	 * @throws ParseException
 	 */
 	public void testPreparedStatementSqlInsert2() throws SQLException, ParseException {
-		// Create timestamp string for our record
-		String timeStamp = "06/06/2016 22:30:00.00";
-		
 		String sqlStatement = "INSERT INTO jdbcDriverTest " +
 				"(name, age, joined, weight, active) " +
 				"VALUES " +
-				"('Julie', 44, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 132.5, true);";
+				"('Julie', 44, '2016-06-06 22:30:00', 132.5, true);";
 		
 		PreparedStatement statement = (PreparedStatement) _conn.prepareStatement("");
     	int result = statement.executeUpdate(sqlStatement);
