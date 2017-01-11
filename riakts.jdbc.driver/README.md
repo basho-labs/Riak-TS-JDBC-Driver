@@ -10,24 +10,19 @@ A basic JDBC driver for Basho's open source Riak TS (Time Series) database (http
 The driver implements support for the following JDBC features also supported by Riak TS:
 
 **java.sql.Statement**
-- executeQuery(String sql), execute(String sql), getResultSet() for SELECT and DESCRIBE TABLE statements
-- executeUpdate(String sql) for CREATE TABLE and INSERT statements
+- executeQuery(String sql), execute(String sql), getResultSet() for **SELECT** and **DESCRIBE TABLE** statements
+- executeUpdate(String sql) for **CREATE TABLE** and **INSERT** statements
 
 **java.sql.PreparedStatement**
-- executeQuery(String sql), executeQuery(), execute(), getResultSet() for SELECT and DESCRIBE TABLE statements
-- executeUpdate(String sql) for CREATE TABLE and INSERT statements
+- executeQuery(String sql), executeQuery(), execute(), getResultSet() for **SELECT** and **DESCRIBE TABLE** statements
+- executeUpdate(String sql) for **CREATE TABLE** and **INSERT** statements
 
 **Note**: Currently there is no advantage (performance or otherwise) to using PreparedStatement over Statement.
 
 The following example code demonstrates how to use the driver to execute a SELECT statement:
 ```Java
-// Start and end date to search on
-String startDateStr = "06/06/2016 0:00:00.00";
-String endDateStr = "06/06/2016 23:59:59.59";
-		
-String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= " + 
-	Utility.dateStringMMddyyyyHHmmssSSToEpoch(startDateStr) +
-	" AND joined <= " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(endDateStr) + ";";
+String sqlStatement = "SELECT * FROM jdbcDriverTest WHERE joined >= '2016-06-05 10:00:00'" + 
+	" AND joined <= '2016-06-08 10:30:00';";
 		
 Statement statement = conn.createStatement();
 ResultSet rs = statement.executeQuery(sqlStatement);
@@ -40,15 +35,6 @@ if (rs != null) {
 	}
 }
 rs.close();;
-```
-**Note** Riak TS stores dates as Unix Epochs and the code above uses a helper function to convert a date string to an Epoch (long) value.
-
-```Java
-public static long dateStringMMddyyyyHHmmssSSToEpoch(String dateString) throws ParseException {
-	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS");
-	Date date = sdf.parse(dateString);
-	return date.getTime();
-}
 ```
 
 See the following documentation for more information on querying Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/querying/
@@ -65,6 +51,7 @@ Currently the Riak TS JDBC driver only implements a small subset of the function
 - getBoolean(int columnIndex), getBoolean(String columnLabel)
 - getLong(int columnIndex), getLong(String columnLabel)
 - getObject(int columnIndex), getObject(String columnLabel)
+- getBlob(int columnIndex), getBlob(String columnLabel)
 
 **Create a Table in Riak TS**
 
@@ -76,11 +63,13 @@ String sqlStatement = "CREATE TABLE jdbcDriverTest " +
 	    "age			sint64   	not null, " +
 	    "joined        	timestamp 	not null, " +
 	    "weight		 	double		not null, " +
+	    "active		 	boolean		not null, " +
+	    "blobText	 	blob, " +
 	    "PRIMARY KEY ( " +
-	    "(quantum(joined, 365, 'd')), " +
-	    "	joined, name, age " +
-	") " +
-")";
+	    	"(quantum(joined, 5, 'd')), " +
+	    	"	joined, name, age " +
+	    	") " +
+	") WITH (n_val = 1)";
 			
 Statement statement = conn.createStatement();
 int result = statement.executeUpdate(sqlStatement);
@@ -91,20 +80,16 @@ See the following documentation for more information about creating Riak TS tabl
 
 The example below demonstrates how to add data to Riak TS using INSERT and executeUpdate():
 ```Java
-// Create timestamp string for our record
-String timeStamp = "06/06/2016 12:30:00.00";
-		
 String sqlStatement = "INSERT INTO jdbcDriverTest " +
-	"(name, age, joined, weight) " +
+	"(name, age, joined, weight, active, blobText) " +
 	"VALUES " +
-	"('Craig', 92, " + Utility.dateStringMMddyyyyHHmmssSSToEpoch(timeStamp) + ", 202.5);";
+	"('Craig', 92, '2016-06-06 12:30:00', 202.5, true, 'xxxxxxxxxxxxxxx');";
 		
 Statement statement = conn.createStatement();
 int result = statement.executeUpdate(sqlStatement);
 // Insert returns 0 on success
 Assert.assertTrue(result == 0);
 ```
-**Important Note** In Riak TS 1.3.X there was a bug that prevented the insertion of boolean values via the SQL Insert command. This bug was be corrected in 1.4. See the following documentation for more information about adding data to Riak TS with SQL: http://docs.basho.com/riak/ts/latest/using/writingdata/#adding-data-via-sql
 
 # Riak TS to JDBC Data Types
 When writing data from the Riak TS QueryResult object to the JDBC ResultSet object the driver converts Riak TS's data types using the following mapping:
@@ -114,6 +99,7 @@ When writing data from the Riak TS QueryResult object to the JDBC ResultSet obje
 - Boolean -> Boolean
 - Sint64 -> Long/Bigint
 - Double -> Double
+- Blob -> Blob 
 
 # Building the JDBC Driver
 A copy of the current version of the compiled JAR file is located in https://github.com/cvitter/Riak-TS-JDBC-Driver/releases. If you want to build your own version of the JAR file using Maven you can do so with the following steps:
@@ -130,7 +116,6 @@ A copy of the current version of the compiled JAR file is located in https://git
 
 # Authors
 * Author: [Craig Vitter](https://github.com/cvitter)
-* Author: 
 
 # Contributors 
 Please submit Issues and/or Pull Requests.
