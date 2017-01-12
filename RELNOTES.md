@@ -1,5 +1,12 @@
 # Release Notes
 
+**Version 0.8**
+
+- Updated to use Riak Java Client 2.1.1 (https://github.com/basho/riak-java-client/releases/tag/riak-client-2.1.1) from 2.1.0.
+- Added support for blob data type added in Riak TS 1.5
+- Updated unit tests to reflect support for blob data type
+- Update examples and usage notes in ReadMe
+
 **Version 0.7**
 - Updated to use Version 2.1.0 of the Riak Java Client (https://github.com/basho/riak-java-client/releases/tag/riak-client-2.1.0)
 
