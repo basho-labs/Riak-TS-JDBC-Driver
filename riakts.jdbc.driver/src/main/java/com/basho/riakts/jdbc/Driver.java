@@ -28,7 +28,7 @@ public class Driver implements java.sql.Driver {
 	
 	// Variables need to be updated on a per release basis
 	private final static int MAJOR_VERSION = 0;
-	private final static int MINOR_VERSION = 7;
+	private final static int MINOR_VERSION = 8;
 	private final static boolean JDBC_COMPLIANT = false;
 	
 	/***
